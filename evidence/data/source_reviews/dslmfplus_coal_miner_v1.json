@@ -1,0 +1,746 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-07-16T23:32:26.507085+08:00",
+  "status": "pass",
+  "dataset_entry": {
+    "dataset_id": "dslmfplus_coal_miner_v1",
+    "dataset_version": "figshare-22654945-v1-file-40215118",
+    "source_location": "local_existing_verified_official_download",
+    "source_path_or_url": "G:/datasets/mining1/archives/dslmfplus_v1.7z",
+    "archive_sha256": "685453ff0409c9dd241bcce716901948e441fd122b38262b5dc60c19ab199fa0",
+    "archive_md5": "71b41987bbc0a95a877fdff7c3fe9840",
+    "license_id": "CC0-1.0",
+    "license_evidence_path": "evidence/data/source_snapshots/dslmfplus_coal_miner_v1/article_v1.json",
+    "transfer_route": "local_existing_upload",
+    "selection_evidence": "Selected only from official CC0 identity, full archive integrity, verified coal-miner ontology, 58 official scene groups, and a real minimal adapter run; no model predictions or performance were read.",
+    "pretraining_conditions": [
+      "single_coal",
+      "multi_coal"
+    ],
+    "adapter_contract": {
+      "schema_version": 1,
+      "kind": "yolo_detection",
+      "archive_subdir": "DsLMF/data2023_yolo/coal_miner_data2023_yolo",
+      "record_id_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "images/(?P<split>train|val)/(?P<record>(?:[0-9]+|[pP][0-9]+-[0-9]+))[.]jpg",
+          "template": "{split}-{record}"
+        }
+      },
+      "raw_group_rule": {
+        "filename_range_lookup": {
+          "source": "relative_path",
+          "pattern": "images/(?P<split>train|val)/(?P<record>(?:[0-9]+|[pP][0-9]+-[0-9]+))[.]jpg",
+          "record_group": "record",
+          "ranges": [
+            {
+              "value": "scenario-01",
+              "start": "0000001",
+              "end": "0000852"
+            },
+            {
+              "value": "scenario-01",
+              "start": "0000958",
+              "end": "0001379"
+            },
+            {
+              "value": "scenario-01",
+              "start": "0002570",
+              "end": "0002931"
+            },
+            {
+              "value": "scenario-01",
+              "start": "0004389",
+              "end": "0004679"
+            },
+            {
+              "value": "scenario-01",
+              "start": "0005087",
+              "end": "0005712"
+            },
+            {
+              "value": "scenario-01",
+              "start": "0006265",
+              "end": "0006576"
+            },
+            {
+              "value": "scenario-01",
+              "start": "0006752",
+              "end": "0007469"
+            },
+            {
+              "value": "scenario-01",
+              "start": "0007945",
+              "end": "0010143"
+            },
+            {
+              "value": "scenario-01",
+              "start": "0010509",
+              "end": "0010556"
+            },
+            {
+              "value": "scenario-01",
+              "start": "p12-3",
+              "end": "p12-22"
+            },
+            {
+              "value": "scenario-01",
+              "start": "p14-1",
+              "end": "p15-24"
+            },
+            {
+              "value": "scenario-01",
+              "start": "p19-1",
+              "end": "p24-38"
+            },
+            {
+              "value": "scenario-01",
+              "start": "p27-1097",
+              "end": "p27-1164"
+            },
+            {
+              "value": "scenario-02",
+              "start": "0000853",
+              "end": "0000957"
+            },
+            {
+              "value": "scenario-02",
+              "start": "0003254",
+              "end": "0004386"
+            },
+            {
+              "value": "scenario-02",
+              "start": "0007856",
+              "end": "0007944"
+            },
+            {
+              "value": "scenario-02",
+              "start": "0010736",
+              "end": "0010817"
+            },
+            {
+              "value": "scenario-02",
+              "start": "p29-125",
+              "end": "p29-377"
+            },
+            {
+              "value": "scenario-02",
+              "start": "p29-1696",
+              "end": "p30-912"
+            },
+            {
+              "value": "scenario-02",
+              "start": "p30-945",
+              "end": "p30-975"
+            },
+            {
+              "value": "scenario-03",
+              "start": "0001380",
+              "end": "0002450"
+            },
+            {
+              "value": "scenario-03",
+              "start": "0004680",
+              "end": "0005086"
+            },
+            {
+              "value": "scenario-03",
+              "start": "0005834",
+              "end": "0006179"
+            },
+            {
+              "value": "scenario-03",
+              "start": "0010173",
+              "end": "0010508"
+            },
+            {
+              "value": "scenario-03",
+              "start": "p1-1",
+              "end": "p6-902"
+            },
+            {
+              "value": "scenario-03",
+              "start": "p11-1",
+              "end": "p11-662"
+            },
+            {
+              "value": "scenario-03",
+              "start": "p27-1",
+              "end": "p27-475"
+            },
+            {
+              "value": "scenario-04",
+              "start": "0002451",
+              "end": "0002569"
+            },
+            {
+              "value": "scenario-04",
+              "start": "0002932",
+              "end": "0003253"
+            },
+            {
+              "value": "scenario-04",
+              "start": "0006180",
+              "end": "0006264"
+            },
+            {
+              "value": "scenario-04",
+              "start": "0007470",
+              "end": "0007855"
+            },
+            {
+              "value": "scenario-04",
+              "start": "0010144",
+              "end": "0010170"
+            },
+            {
+              "value": "scenario-04",
+              "start": "p7-1",
+              "end": "p9-228"
+            },
+            {
+              "value": "scenario-04",
+              "start": "p10-1",
+              "end": "p10-617"
+            },
+            {
+              "value": "scenario-04",
+              "start": "p16-30",
+              "end": "p18-55"
+            },
+            {
+              "value": "scenario-04",
+              "start": "p27-482",
+              "end": "p27-1085"
+            },
+            {
+              "value": "scenario-05",
+              "start": "0004387",
+              "end": "0004388"
+            },
+            {
+              "value": "scenario-06",
+              "start": "0005713",
+              "end": "0005833"
+            },
+            {
+              "value": "scenario-07",
+              "start": "0006577",
+              "end": "0006751"
+            },
+            {
+              "value": "scenario-08",
+              "start": "0010557",
+              "end": "0010735"
+            },
+            {
+              "value": "scenario-09",
+              "start": "p9-255",
+              "end": "p9-264"
+            },
+            {
+              "value": "scenario-10",
+              "start": "p13-1",
+              "end": "p13-32"
+            },
+            {
+              "value": "scenario-11",
+              "start": "p25-1",
+              "end": "p25-4"
+            },
+            {
+              "value": "scenario-12",
+              "start": "p26-1",
+              "end": "p26-102"
+            },
+            {
+              "value": "scenario-13",
+              "start": "p28-82",
+              "end": "p28-924"
+            },
+            {
+              "value": "scenario-13",
+              "start": "p31-10",
+              "end": "p31-719"
+            },
+            {
+              "value": "scenario-13",
+              "start": "p33-39",
+              "end": "p33-165"
+            },
+            {
+              "value": "scenario-13",
+              "start": "p35-1",
+              "end": "p36-74"
+            },
+            {
+              "value": "scenario-14",
+              "start": "p29-498",
+              "end": "p29-1695"
+            },
+            {
+              "value": "scenario-15",
+              "start": "p30-924",
+              "end": "p30-934"
+            },
+            {
+              "value": "scenario-16",
+              "start": "p31-720",
+              "end": "p31-907"
+            },
+            {
+              "value": "scenario-16",
+              "start": "p31-932",
+              "end": "p31-1039"
+            },
+            {
+              "value": "scenario-17",
+              "start": "p31-908",
+              "end": "p31-931"
+            },
+            {
+              "value": "scenario-18",
+              "start": "p32-1",
+              "end": "p32-217"
+            },
+            {
+              "value": "scenario-19",
+              "start": "p34-1",
+              "end": "p34-89"
+            },
+            {
+              "value": "scenario-20",
+              "start": "p37-1",
+              "end": "p37-42"
+            },
+            {
+              "value": "scenario-21",
+              "start": "p38-4",
+              "end": "p39-16"
+            },
+            {
+              "value": "scenario-21",
+              "start": "p49-3",
+              "end": "p51-73"
+            },
+            {
+              "value": "scenario-21",
+              "start": "p55-1",
+              "end": "p55-21"
+            },
+            {
+              "value": "scenario-22",
+              "start": "p40-1",
+              "end": "p42-30"
+            },
+            {
+              "value": "scenario-23",
+              "start": "p43-7",
+              "end": "p43-123"
+            },
+            {
+              "value": "scenario-24",
+              "start": "p44-1",
+              "end": "p44-117"
+            },
+            {
+              "value": "scenario-24",
+              "start": "p46-1",
+              "end": "p46-110"
+            },
+            {
+              "value": "scenario-25",
+              "start": "p45-1",
+              "end": "p45-123"
+            },
+            {
+              "value": "scenario-26",
+              "start": "p47-1",
+              "end": "p47-34"
+            },
+            {
+              "value": "scenario-27",
+              "start": "p48-1",
+              "end": "p48-70"
+            },
+            {
+              "value": "scenario-27",
+              "start": "p52-1",
+              "end": "p52-123"
+            },
+            {
+              "value": "scenario-27",
+              "start": "p56-31",
+              "end": "p56-123"
+            },
+            {
+              "value": "scenario-28",
+              "start": "p53-14",
+              "end": "p54-8"
+            },
+            {
+              "value": "scenario-29",
+              "start": "p57-1",
+              "end": "p57-188"
+            },
+            {
+              "value": "scenario-30",
+              "start": "p58-1",
+              "end": "p58-404"
+            },
+            {
+              "value": "scenario-31",
+              "start": "p59-1",
+              "end": "p59-206"
+            },
+            {
+              "value": "scenario-31",
+              "start": "p64-39",
+              "end": "p64-552"
+            },
+            {
+              "value": "scenario-31",
+              "start": "p67-1",
+              "end": "p67-32"
+            },
+            {
+              "value": "scenario-31",
+              "start": "p71-1",
+              "end": "p71-171"
+            },
+            {
+              "value": "scenario-32",
+              "start": "p60-1",
+              "end": "p60-28"
+            },
+            {
+              "value": "scenario-32",
+              "start": "p63-2",
+              "end": "p63-292"
+            },
+            {
+              "value": "scenario-32",
+              "start": "p74-1",
+              "end": "p76-224"
+            },
+            {
+              "value": "scenario-32",
+              "start": "p78-1",
+              "end": "p78-107"
+            },
+            {
+              "value": "scenario-33",
+              "start": "p61-1",
+              "end": "p61-6328"
+            },
+            {
+              "value": "scenario-34",
+              "start": "p62-1",
+              "end": "p62-81"
+            },
+            {
+              "value": "scenario-34",
+              "start": "p77-1",
+              "end": "p77-85"
+            },
+            {
+              "value": "scenario-35",
+              "start": "p65-1",
+              "end": "p65-24"
+            },
+            {
+              "value": "scenario-36",
+              "start": "p66-1",
+              "end": "p66-44"
+            },
+            {
+              "value": "scenario-36",
+              "start": "p69-1",
+              "end": "p69-14"
+            },
+            {
+              "value": "scenario-37",
+              "start": "p68-1",
+              "end": "p68-162"
+            },
+            {
+              "value": "scenario-38",
+              "start": "p70-1",
+              "end": "p70-54"
+            },
+            {
+              "value": "scenario-39",
+              "start": "p73-5",
+              "end": "p73-95"
+            },
+            {
+              "value": "scenario-40",
+              "start": "p79-1",
+              "end": "p79-39"
+            },
+            {
+              "value": "scenario-40",
+              "start": "p80-14",
+              "end": "p80-84"
+            },
+            {
+              "value": "scenario-41",
+              "start": "p80-1",
+              "end": "p80-13"
+            },
+            {
+              "value": "scenario-41",
+              "start": "p80-85",
+              "end": "p80-96"
+            },
+            {
+              "value": "scenario-42",
+              "start": "p81-1",
+              "end": "p81-61"
+            },
+            {
+              "value": "scenario-43",
+              "start": "p82-1",
+              "end": "p83-749"
+            },
+            {
+              "value": "scenario-44",
+              "start": "p84-1",
+              "end": "p84-155"
+            },
+            {
+              "value": "scenario-45",
+              "start": "p99-65",
+              "end": "p112-50"
+            },
+            {
+              "value": "scenario-45",
+              "start": "p145-1",
+              "end": "p145-1069"
+            },
+            {
+              "value": "scenario-45",
+              "start": "p185-29",
+              "end": "p198-628"
+            },
+            {
+              "value": "scenario-46",
+              "start": "p113-1",
+              "end": "p115-171"
+            },
+            {
+              "value": "scenario-47",
+              "start": "p119-115",
+              "end": "p121-178"
+            },
+            {
+              "value": "scenario-48",
+              "start": "p122-1",
+              "end": "p129-50"
+            },
+            {
+              "value": "scenario-49",
+              "start": "p146-1",
+              "end": "p148-179"
+            },
+            {
+              "value": "scenario-50",
+              "start": "p149-75",
+              "end": "p149-1012"
+            },
+            {
+              "value": "scenario-51",
+              "start": "p151-1",
+              "end": "p154-1202"
+            },
+            {
+              "value": "scenario-51",
+              "start": "p208-1",
+              "end": "p212-1174"
+            },
+            {
+              "value": "scenario-52",
+              "start": "p155-1",
+              "end": "p155-182"
+            },
+            {
+              "value": "scenario-53",
+              "start": "p156-43",
+              "end": "p162-37"
+            },
+            {
+              "value": "scenario-53",
+              "start": "p164-1",
+              "end": "p169-589"
+            },
+            {
+              "value": "scenario-54",
+              "start": "p170-172",
+              "end": "p176-86"
+            },
+            {
+              "value": "scenario-55",
+              "start": "p176-88",
+              "end": "p184-199"
+            },
+            {
+              "value": "scenario-56",
+              "start": "p199-1",
+              "end": "p206-1116"
+            },
+            {
+              "value": "scenario-57",
+              "start": "p207-78",
+              "end": "p207-92"
+            },
+            {
+              "value": "scenario-58",
+              "start": "p220-3",
+              "end": "p222-723"
+            }
+          ]
+        }
+      },
+      "modality_rule": {
+        "constant": "visible"
+      },
+      "pair_id_rule": {
+        "null": true
+      },
+      "sequence_id_rule": {
+        "null": true
+      },
+      "timestamp_rule": {
+        "null": true
+      },
+      "yolo": {
+        "image_globs": [
+          "images/**/*.jpg"
+        ],
+        "image_root": "images",
+        "label_root": "labels",
+        "class_names": {
+          "0": "coal_miner"
+        },
+        "missing_label_policy": "error",
+        "excluded_image_stems": [
+          "0010171",
+          "0010172",
+          "p12-1",
+          "p12-2",
+          "p63-1"
+        ]
+      }
+    },
+    "minimal_sample_records": [
+      {
+        "record_id": "train-0000001",
+        "raw_group_id": "scenario-01",
+        "member_path": "DsLMF/data2023_yolo/coal_miner_data2023_yolo/images/train/0000001.jpg",
+        "modality": "visible"
+      },
+      {
+        "record_id": "train-0000853",
+        "raw_group_id": "scenario-02",
+        "member_path": "DsLMF/data2023_yolo/coal_miner_data2023_yolo/images/train/0000853.jpg",
+        "modality": "visible"
+      },
+      {
+        "record_id": "train-0001507",
+        "raw_group_id": "scenario-03",
+        "member_path": "DsLMF/data2023_yolo/coal_miner_data2023_yolo/images/train/0001507.jpg",
+        "modality": "visible"
+      }
+    ]
+  },
+  "official_source": {
+    "article_id": 22654945,
+    "doi": "10.6084/m9.figshare.22654945.v1",
+    "file_id": 40215118,
+    "file_name": "DsLMF.7z",
+    "file_bytes": 24421851538,
+    "official_md5": "71b41987bbc0a95a877fdff7c3fe9840",
+    "license_name": "CC0",
+    "article_snapshot_sha256": "8d4c73dede55f8b190f3145f63f669554d6edacd9d70dc2ae183c06928e39301"
+  },
+  "archive_integrity": {
+    "status": "pass",
+    "evidence_path": "state/source_validation/dslmfplus_range_probe/archive_integrity_pass.json",
+    "evidence_sha256": "eb17a9df63d88b4819346e3b592986082834edcb03a5fa6d9b5a58ec24c373b4",
+    "seven_zip_crc": "pass",
+    "archive_file_count": 414067,
+    "full_local_extractions": 0
+  },
+  "annotation_and_group_audit": {
+    "status": "pass",
+    "evidence_path": "state/source_validation/dslmfplus_coal_miner_v1/archive_audit.json",
+    "evidence_sha256": "632c6f5ae96c676cc52c079b20db670fc44700e03d5f9399d88c4a61aa40ca61",
+    "yolo_image_label_pairs": 30704,
+    "verified_negative_label_count": 13,
+    "official_scene_group_count": 58,
+    "eligible_image_count": 30699,
+    "reviewed_excluded_image_stems": [
+      "0010171",
+      "0010172",
+      "p12-1",
+      "p12-2",
+      "p63-1"
+    ],
+    "official_train_val_scene_overlap_count": 56,
+    "canonical_split_requirement": "ignore_official_random_split_and_split_by_official_scene_group",
+    "mapping_path": "state/source_validation/dslmfplus_coal_miner_v1/scenario_map.json",
+    "mapping_sha256": "e3f1f5f40080050dad10f1dae2c939455006d9a8b8b4c294ef3e9fe3c170cd3e",
+    "mapping_pdf_path": "state/source_validation/dslmfplus_coal_miner_v1/Datasets illustration/coal_miner_DsLMF.pdf",
+    "mapping_pdf_sha256": "4cb2fdccd8eb65f5c15e40bf3e864298940b7cfd1a83abeb5ee5143f6fec15ad",
+    "secondary_coco_execution_truth": "yolo_original_names_and_splits"
+  },
+  "minimal_adapter_test": {
+    "status": "pass",
+    "sample_archive_path": "state/source_validation/dslmfplus_coal_miner_v1/dslmfplus_coal_miner_minimal.zip",
+    "sample_archive_sha256": "f5fd268673b169ef00fbbed9444a36aa194d6064978265a7f4ab7370cd1da88a",
+    "sample_archive_bytes": 481640,
+    "sample_member_count": 16,
+    "record_count": 3,
+    "record_ids": [
+      "train-0000001",
+      "train-0000853",
+      "train-0001507"
+    ],
+    "raw_group_ids": [
+      "scenario-01",
+      "scenario-02",
+      "scenario-03"
+    ],
+    "negative_record_ids": [
+      "train-0001507"
+    ],
+    "reviewed_excluded_image_stems": [
+      "0010171",
+      "0010172",
+      "p12-1",
+      "p12-2",
+      "p63-1"
+    ],
+    "manifest_path": "state/source_validation/dslmfplus_coal_miner_v1/minimal_adapter_manifest.json",
+    "manifest_sha256": "992e80515d53c37d26a64a18a6ba2bf312e518c6d865d044df2f61a4f81f36ee",
+    "evidence_path": "state/source_validation/dslmfplus_coal_miner_v1/minimal_adapter_test.json",
+    "evidence_sha256": "01ddba3c871812338ae472b23f9914adb943d0a7eb572c5395857da9e0cb84c5"
+  },
+  "eligibility_decision": {
+    "license_access": "pass_cc0",
+    "archive_integrity": "pass",
+    "annotation_and_ontology": "pass_with_five_reviewed_filename_drops",
+    "independent_group_floor": "pass",
+    "single_coal_source": "eligible",
+    "confirmatory_multi_coal_source": "eligible"
+  },
+  "scope_boundary": {
+    "full_local_extractions": 0,
+    "minimal_local_extracted_file_count": 16,
+    "minimal_local_extracted_bytes": 475844,
+    "model_predictions_read": 0,
+    "performance_metrics_read": 0,
+    "performance_claims_authorized": false
+  }
+}

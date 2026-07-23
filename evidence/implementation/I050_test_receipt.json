@@ -1,0 +1,102 @@
+{
+  "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/preflight/run_selected_python.ps1 -Module pytest tests/test_episode_fusion.py",
+  "config_snapshot": {
+    "environment_decision_path": "configs\\environment_decision.lock.json",
+    "environment_decision_sha256": "21f3cbe62b765d7d9f2ec8ade5d2b1a9cddf3ab5a8c979cf2b44ac09aa2be097",
+    "local_ready_receipt_sha256": "8bf451c1ed2f771960c6d8ab80cd67a8cf46aba63f8ddfc9a8e7426707921149",
+    "local_strategy": "install_compatible_missing",
+    "selected_local_python": "C:\\Users\\zyh\\miniconda3\\envs\\dl_env\\python.exe"
+  },
+  "created_at": "2026-07-15T09:27:35.0793880+00:00",
+  "details": {
+    "accepted_attempt": 5,
+    "accepted_command_runtime": "43.62s",
+    "combined_regression_collected": 39,
+    "combined_regression_passed": 39,
+    "compileall_status": "pass",
+    "control_contract": {
+      "mask_only_prior_fit_pool": "D_e_tr",
+      "no_memory_same_checkpoint_required": true,
+      "pair_alignment_shuffle_seeds": [9103, 9137, 9161],
+      "pair_alignment_shuffle_strata": ["pool", "concept", "modality", "availability"],
+      "temporal_shuffle": "within_episode_concept_derangement"
+    },
+    "episode_event_contract": {
+      "boundary_keys": ["episode_id", "step_index"],
+      "matching": "chronological_one_to_one",
+      "no_truth_units_excluded_from_macro_f1": true,
+      "state_flips": "within_episode_then_arithmetic_mean"
+    },
+    "fixture_scope": "synthetic episode tensors, policy candidates, event traces, and edge tables only",
+    "full_local_dataset_extractions": 0,
+    "fusion_contract": {
+      "abstention_threshold_grid": "0.10_to_0.90_step_0.05",
+      "graph_layers": 2,
+      "graph_provenance": "observed_pair_only",
+      "no_graph_parameter_count_matches_full": true,
+      "quality_scaler_fit_pool": "D_e_tr",
+      "trainable_models": ["calibrated_logit", "no_reliability", "no_graph", "full"],
+      "untrained_baseline": "mean"
+    },
+    "locked_policy_grid_count": 136,
+    "old_host_or_project_reference_match_count_in_implementation_and_tests": 0,
+    "policy_contract": {
+      "alarm_threshold_candidates": [0.8],
+      "beta_candidates": [0.7, 0.85],
+      "fit_pool": "D_e_pol",
+      "hysteresis_threshold_pairs": [[0.3, 0.6], [0.4, 0.7]],
+      "memory_k_candidates": [2, 3],
+      "target_answer_coverage": 0.9
+    },
+    "pytest_collected": 7,
+    "pytest_failed": 0,
+    "pytest_passed": 7,
+    "remote_connections": 0,
+    "runtime_versions": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "python": "3.10.20",
+      "torch": "2.7.1+cu128"
+    },
+    "slurm_jobs_created": 0,
+    "supplementary_event_tests_collected": 7,
+    "supplementary_event_tests_passed": 7,
+    "test_names": [
+      "test_fusion_constants_match_the_frozen_protocol",
+      "test_mean_and_calibrated_logit_baselines_respect_availability",
+      "test_reliability_graph_forward_backward_and_structural_ablations",
+      "test_graph_and_feature_contracts_reject_shortcuts_and_virtual_edges",
+      "test_event_memory_hysteresis_abstention_and_checkpoint_control",
+      "test_pair_alignment_shuffle_is_stratified_deterministic_derangement",
+      "test_event_smoke_and_non_test_policy_selection_boundaries"
+    ],
+    "verified_input_hash_count": 20
+  },
+  "hash_algorithm": "sha256",
+  "inputs": [
+    {"bytes": 6676, "path": "F:\\2026\\mining1\\configs\\environment_decision.lock.json", "sha256": "21f3cbe62b765d7d9f2ec8ade5d2b1a9cddf3ab5a8c979cf2b44ac09aa2be097"},
+    {"bytes": 9244, "path": "F:\\2026\\mining1\\evidence\\preimplementation\\local_environment_ready.json", "sha256": "8bf451c1ed2f771960c6d8ab80cd67a8cf46aba63f8ddfc9a8e7426707921149"},
+    {"bytes": 546, "path": "F:\\2026\\mining1\\env\\local-dl_env-core.lock.txt", "sha256": "19adf76eb258519cd3d9aa3a6395ca5e74fa326bac9be754eed1e3921a8d8a1d"},
+    {"bytes": 34437, "path": "F:\\2026\\mining1\\configs\\protocol_lock.template.yaml", "sha256": "fa5e23ce825f5ee3aa3b7eadefdd499c95b4882cb5de601f74b10baf07823e02"},
+    {"bytes": 39373, "path": "F:\\2026\\mining1\\configs\\artifact_contract.template.yaml", "sha256": "e8ec67423d93bcd83dc1c1b9a5e6dbde2777abc50095e33afefb71720cce7fdf"},
+    {"bytes": 12162, "path": "F:\\2026\\mining1\\notes\\implementation_contract.md", "sha256": "daabf1a6b01a3eb720ab5860b0a50863116893e4d70bc717ea6e3f309835441e"},
+    {"bytes": 5191, "path": "F:\\2026\\mining1\\evidence\\implementation\\I040_test_receipt.json", "sha256": "1767e6edf0fe8c2287b39906ea930dce9d317a56ff616145834f4aef759ee4a9"},
+    {"bytes": 4546, "path": "F:\\2026\\mining1\\evidence\\step_reviews\\I040.json", "sha256": "c49f7bb4202ac72f1d2cd4de890be8f4b1ebd9e3a68b221a45226226a71e7607"},
+    {"bytes": 815, "path": "F:\\2026\\mining1\\tools\\preflight\\run_selected_python.ps1", "sha256": "bac1165c7ab717b2b5e33ef76ea92cf8fe8858b9a2efb12a0725f1aece4f300f"},
+    {"bytes": 3619, "path": "F:\\2026\\mining1\\mining1_exp\\provenance.py", "sha256": "6bd23cd98c433964eb67669f08be50c6f49e7da4db23f407de84013a84d6042e"},
+    {"bytes": 51, "path": "F:\\2026\\mining1\\mining1_exp\\models\\__init__.py", "sha256": "2371ab9e76a077a6b4544bdea84bb77a0aa28900f3f67af3108a4fe9de2c9800"},
+    {"bytes": 34389, "path": "F:\\2026\\mining1\\mining1_exp\\models\\episode_fusion.py", "sha256": "567cddf20ddd72620036830f7676334d6d2c7be39d2041e02712bfd15596242b"},
+    {"bytes": 70, "path": "F:\\2026\\mining1\\mining1_exp\\evaluate\\__init__.py", "sha256": "d59d02b46e82d7b74084689374b8b46495cb99fbdf843a565ff383ae2edc81e0"},
+    {"bytes": 21876, "path": "F:\\2026\\mining1\\mining1_exp\\evaluate\\event_metrics.py", "sha256": "56cadb30d41d5a04219d93a6421b3f4ab8d17c6acdc73231ef273d5d634ae49b"},
+    {"bytes": 15444, "path": "F:\\2026\\mining1\\tests\\test_episode_fusion.py", "sha256": "54fd1f7964f15d328629d7ad5fc7d225016d54a4005302d08d4051ff45b21cfb"},
+    {"bytes": 6517, "path": "F:\\2026\\mining1\\tests\\test_event_metrics.py", "sha256": "c38cef5abb102e0a925deb643da4df9a8c33b275ae98bf94da34aa67d1966300"},
+    {"bytes": 934, "path": "F:\\2026\\mining1\\evidence\\implementation\\I050_attempt1_failed_memory_expectation.json", "sha256": "46533f85771ce76f141339905a021b8bd404cba0b24fbe8f0eb82725cf6a1bfb"},
+    {"bytes": 913, "path": "F:\\2026\\mining1\\evidence\\implementation\\I050_attempt2_incomplete_contract_review.json", "sha256": "511c7df590a9d8d54169121d9ebd05af4354a570d7a26db94a055133249c6aec"},
+    {"bytes": 847, "path": "F:\\2026\\mining1\\evidence\\implementation\\I050_attempt3_incomplete_episode_boundaries_and_locks.json", "sha256": "cbff1175c315231532612ff238bb890f26fe3fae81fa585008947815ef8b289e"},
+    {"bytes": 889, "path": "F:\\2026\\mining1\\evidence\\implementation\\I050_attempt4_failed_stratum_expectation.json", "sha256": "f12e7a21def518b2cdfe331f60b1c4e292e2a0668376d37091eabcad279a0fbf"}
+  ],
+  "outputs": [],
+  "schema_version": 1,
+  "status": "pass",
+  "step_id": "I050"
+}

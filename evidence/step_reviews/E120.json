@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "step_id": "E120",
+  "attempt": 1,
+  "status": "pass",
+  "reviewed_at": "2026-07-18T12:46:00Z",
+  "command_entry": "sbatch slurm/fit_s1_baselines.sbatch",
+  "dependency_status": {
+    "E069": "pass"
+  },
+  "output_artifacts": [
+    {
+      "path": "evidence/reviews/E120_job19745_review.json",
+      "sha256": "5b0d652be11b705f38c91e77d1d5c4f529f2882e2562dacdb11a2008cb0968f1"
+    },
+    {
+      "path": "evidence/remote_runs/E120/19745/baselines/run_manifest.json",
+      "sha256": "5973ac2b1649377835a4f4e4a0e98b0957aeaa04dd83cefbf32bbd7874e44e17"
+    },
+    {
+      "path": "evidence/remote_runs/E120/19745/baselines/selection.json",
+      "sha256": "66ebad9e56755b78b8a5ba030bc11844178954eda8d25b933775a7ac17e4b7ad"
+    },
+    {
+      "path": "evidence/remote_runs/E120/19745/slurm_run/step_execution_receipt.json",
+      "sha256": "e101116ef5e3193189756811408be0e6b5888c50aca7153326f27397df315041"
+    }
+  ],
+  "acceptance_checks": [
+    {
+      "id": "dependency_E069_pass",
+      "status": "pass"
+    },
+    {
+      "id": "slurm_19745_completed_zero",
+      "status": "pass"
+    },
+    {
+      "id": "persistence_rule_fit_pool_is_D_b_tr",
+      "status": "pass"
+    },
+    {
+      "id": "selection_pool_is_D_b_sel",
+      "status": "pass"
+    },
+    {
+      "id": "HGB_validation_selection_frozen",
+      "status": "pass"
+    },
+    {
+      "id": "no_test_fitting_or_test_label_opening",
+      "status": "pass"
+    },
+    {
+      "id": "source_lock_amendment_v3_bound",
+      "status": "pass"
+    },
+    {
+      "id": "small_artifacts_synchronized_and_reviewed",
+      "status": "pass"
+    }
+  ],
+  "findings": [],
+  "advance_allowed": true,
+  "downstream_locked": [
+    "E122",
+    "E123",
+    "E124",
+    "E129"
+  ],
+  "parallel_branches_unchanged": [
+    "E100",
+    "E200"
+  ],
+  "automatic_retry_used": true,
+  "retry_submission": {
+    "slurm_job_id": "19711",
+    "remote_project_root": "/data/home/xinxi-zhyh/xinxi-zhyh/projects/mining1_amendment_v2",
+    "receipt": "evidence/remote_sync/E100_E120_amendment_v2_submission.json"
+  },
+  "required_resolution": "none",
+  "source_lock_amendment": {
+    "path": "configs/source_lock_amendment.v2.json",
+    "sha256": "710dc20a0d28e839803dec537acb16533f77ed244faac4dddf7b8909b7e63bc7",
+    "independent_review": "evidence/reviews/E100_E120_source_lock_amendment_v2_review.json"
+  },
+  "performance_claims_authorized": false,
+  "downstream_unlocked": [
+    "E122"
+  ],
+  "notes": "E120 passed via Slurm 19745 after amendment v3 E059 source and materialized artifacts were repaired. Detailed review: evidence/reviews/E120_job19745_review.json."
+}

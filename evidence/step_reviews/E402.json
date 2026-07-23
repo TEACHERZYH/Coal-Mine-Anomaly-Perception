@@ -1,0 +1,58 @@
+{
+  "acceptance_checks": [
+    {
+      "id": "artifact_qa_status_pass",
+      "status": "pass"
+    },
+    {
+      "id": "required_artifacts_bound_to_v4_scope",
+      "status": "pass"
+    },
+    {
+      "id": "T1_V2_R1_metrics_not_required_when_not_applicable",
+      "status": "pass"
+    },
+    {
+      "id": "E310_not_applicable_boundary_bound",
+      "status": "pass"
+    },
+    {
+      "id": "performance_claim_authorized",
+      "status": "pass",
+      "value": false
+    },
+    {
+      "id": "no_remote_job_submitted",
+      "status": "pass",
+      "value": false
+    }
+  ],
+  "advance_allowed": true,
+  "amendment_id": "branch_visual_calibration_amendment_v4",
+  "command_receipt": {
+    "path": "evidence/command_receipts/E402.json",
+    "sha256": "f736ae25f9b46cbc0f6b932949d0a6130d7f3352be41a296eb05097a5fbbc9a9"
+  },
+  "downstream_unlocked": [
+    "E409 after E400 pass"
+  ],
+  "findings": [
+    "E402 artifact QA passed under amendment v4 by binding S1 metrics plus T1/V2/R1/E310 not_applicable reviews and fallback receipts.",
+    "The QA does not restore T1, V2, R1, episode, fusion, graph, memory, transfer-performance, or robustness-performance claims."
+  ],
+  "output_artifacts": [
+    {
+      "path": "results/C1/artifact_qa.json",
+      "sha256": "62da939117b15a8a30e24b252a337889f4ba0d55c38643c439b9773bb6f3e3e1"
+    }
+  ],
+  "performance_claims_authorized": false,
+  "reviewed_at": "2026-07-20T10:18:35.631971+00:00",
+  "schema_version": 1,
+  "source_review": {
+    "path": "evidence/reviews/E402_artifact_qa_v4_completion_review_20260720T1009Z.json",
+    "sha256": "0bcc04169ad62ead2169550e45c67d64dab60cbf81e2aba629ed638be245d2fa"
+  },
+  "status": "pass",
+  "step_id": "E402"
+}

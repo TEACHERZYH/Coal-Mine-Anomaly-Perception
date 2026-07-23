@@ -1,0 +1,56 @@
+# Runtime and cache files
+__pycache__/
+*.pyc
+*.pyo
+*.tmp
+*.temp
+*.log
+*.pid
+.pytest_cache/
+*.egg-info/
+.datasets_cache/
+checkpoints/
+runs/
+*.pt
+
+# Publication repository exclusions
+# The public repository contains code, protocol/configuration files, reviewed
+# metadata, and aggregate results. Manuscripts, test truth, per-record
+# predictions, model weights, caches, and internal remote records stay local.
+manuscript/
+figures/
+notes/
+cache/
+tmp/
+state/
+predictions/
+data/**
+evidence/**
+README_RESTART.md
+AGENTS.md
+configs/environment_decision*.json
+configs/experiment_matrix.full_v1.archive.csv
+configs/project_status.template.json
+configs/source_lock_amendment.v2.json
+plans/*candidate*.csv
+plans/*archive*.csv
+plans/*execution_history*.csv
+plans/*pre_*.csv
+results/C1/*pre_review*.csv
+results/final/manuscript_values.json
+tools/remote/
+tools/validate_minimal_plan.py
+
+# Local data preparation traces
+data/public_dataset_download_log_dryrun.csv
+data/public_dataset_download_log_local_figshare.csv
+data/methane_window_features*.npz
+
+# Office temporary lock files
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# OS metadata
+Thumbs.db
+.DS_Store

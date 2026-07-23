@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "step_id": "E100",
+  "attempt": 4,
+  "status": "pass",
+  "reviewed_at": "2026-07-18T16:08:00Z",
+  "command_entry": "sbatch slurm/train_t1_array.sbatch",
+  "dependency_status": {
+    "E069": "pass"
+  },
+  "output_artifacts": [
+    {
+      "path": "evidence/reviews/E100_job19760_thermal_completion_review.json"
+    },
+    {
+      "path": "evidence/remote_runs/E100_task0_job19701_task0/step_execution_receipt.json",
+      "sha256": "4d2d7368ce499bda8bff4d2fc9c6b1283e0e148d574320d4a2848247395c0d64"
+    },
+    {
+      "path": "evidence/remote_runs/E100_task0_job19701_task0/run_manifest.json",
+      "sha256": "36bb3be5630c7c38afd2139ca136a8c1853c1cb54d4e71fafa3655344ac158f4"
+    },
+    {
+      "path": "evidence/remote_runs/E100_task0_job19701_task0/results.csv",
+      "sha256": "450ef277dd14fc5af5dc69c4b49aa844c19d2e3face1b3b942f736ec235c425f"
+    },
+    {
+      "path": "evidence/remote_runs/E100/19760/runs/T1-THERM/seed-1701/run_manifest.json",
+      "sha256": "9bbbc43092c288e60b5bb88544d2032b9169adf1724fac0909718484b4edb3aa"
+    },
+    {
+      "path": "evidence/remote_runs/E100/19760/runs/T1-THERM/seed-1701/results.csv",
+      "sha256": "4cdb9f7e9af41ab0fc35a45ef3de4b230ce0bc53b8e579bd7da6096c232bdbc8"
+    },
+    {
+      "path": "evidence/remote_runs/E100/19760/runs/T1-THERM/seed-1701/weights/best.pt",
+      "sha256": "6c51794452648a53cb82b80709d989ef7c60f5d956e2e76d709555accec4916e"
+    },
+    {
+      "path": "state/remote_checks/20260718T1559Z_jobs19760_dependency_repair_and_retry.txt",
+      "sha256": "e71afc4f60cde19af640a510b385dc9d1eef7a62e39991e42dc47f53474b2179"
+    },
+    {
+      "path": "evidence/failures/E100/20260717T143357595639157Z-thermal-modality-map-job19701-task1/mining1_E100_19701_1.err",
+      "sha256": "3416b1d91a1cdb62e6dcfbe7955d715d826cfe5b69296ac85fe435856b20182e"
+    },
+    {
+      "path": "evidence/reviews/E100_E120_amendment_v2_terminal_import_failure_review.json",
+      "sha256": "870bcefedbbb9f2253d97414a302d28b50d04442f450db33d25dfbe4c361679c"
+    },
+    {
+      "path": "evidence/reviews/E100_job19739_thermal_view_empty_review.json"
+    }
+  ],
+  "acceptance_checks": [
+    {"id": "dependency_E069_pass", "status": "pass"},
+    {"id": "visible_locked_seed_checkpoint_complete", "status": "pass"},
+    {"id": "thermal_locked_seed_checkpoint_complete", "status": "pass"},
+    {"id": "failure_evidence_archived_locally", "status": "pass"},
+    {"id": "retry_permitted_under_versioned_source_lock", "status": "pass"},
+    {"id": "amendment_v2_retry_terminal_import_failure_reviewed", "status": "pass"},
+    {"id": "amendment_v3_thermal_view_repair_reviewed", "status": "pass"},
+    {"id": "thermal_followup_19760_completed_zero", "status": "pass"},
+    {"id": "small_artifacts_synchronized_and_reviewed", "status": "pass"}
+  ],
+  "findings": [
+    {
+      "id": "E100-F1",
+      "severity": "blocking",
+      "status": "closed_by_amendment_v3",
+      "description": "Task 0 completed T1-VIS with exit code 0 and a final checkpoint; task 1 initially terminated because the infrared source token was not mapped to the frozen thermal branch role, then passed after rgbt_input_lock repair and Slurm 19760_1.",
+      "evidence": "E100 task-0 receipt; historical task-1 stderr; E100 rgbt_input_lock repair reviews; E100 job 19760 thermal completion review"
+    },
+    {
+      "id": "E100-F2",
+      "severity": "blocking",
+      "status": "closed_by_amendment_v3",
+      "description": "The source-to-branch mapping omission was repaired before E111 by synchronizing data/locked/rgbt_input_lock.json in the amendment v3 root and verifying T1-THERM view construction.",
+      "evidence": "evidence/reviews/E100_rgbt_lock_repair_post_sync_review_20260718T1359.json"
+    },
+    {
+      "id": "E100-F-import-path-v2",
+      "severity": "blocking",
+      "status": "closed_by_amendment_v3",
+      "description": "The isolated amendment-v2 Slurm retry import-path failure was superseded by reviewed amendment v3 dispatch repair and successful thermal completion.",
+      "evidence": "evidence/reviews/blocker_repair_amendment_v3_review.json; evidence/reviews/E100_job19760_thermal_completion_review.json"
+    }
+  ],
+  "advance_allowed": true,
+  "downstream_locked": [
+    "E112",
+    "E129"
+  ],
+  "parallel_branches_unchanged": [
+    "E120",
+    "E200",
+    "E122",
+    "E202"
+  ],
+  "automatic_retry_used": true,
+  "retry_submission": {
+    "slurm_job_id": "19760",
+    "array_tasks": [1],
+    "remote_project_root": "/data/home/xinxi-zhyh/xinxi-zhyh/projects/mining1_amendment_v3",
+    "receipt": "evidence/remote_sync/E100_rgbt_lock_repair_followup_submission.json"
+  },
+  "required_resolution": "none",
+  "source_lock_amendment": {
+    "path": "configs/source_lock_amendment.v3.json",
+    "sha256": "c73c10d6d02f5ed9871874617491223921bf561adfb88b9f5760589c45feee5c",
+    "independent_review": "evidence/reviews/blocker_repair_amendment_v3_review.json"
+  },
+  "performance_claims_authorized": false,
+  "downstream_unlocked": [
+    "E111"
+  ],
+  "notes": "E100 passed after retained T1-VIS evidence and repaired amendment-v3 T1-THERM Slurm 19760_1 completed with synchronized artifacts. Detailed review: evidence/reviews/E100_job19760_thermal_completion_review.json."
+}

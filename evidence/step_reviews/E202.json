@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "step_id": "E202",
+  "attempt": 3,
+  "status": "pass",
+  "reviewed_at": "2026-07-19T20:31:00Z",
+  "command_entry": "sbatch slurm/train_v2_finetune_array.sbatch",
+  "dependency_status": {
+    "E200": "pass"
+  },
+  "slurm_job_id": "19799",
+  "output_artifacts": [
+    {
+      "path": "evidence/reviews/E202_job19799_completion_review.json"
+    },
+    {
+      "path": "evidence/remote_runs/E202/19799/"
+    },
+    {
+      "path": "state/remote_sync/E202_19799_small_artifacts_20260720T0431Z.tgz"
+    }
+  ],
+  "acceptance_checks": [
+    {
+      "id": "tasks_0_8_completed",
+      "status": "pass"
+    },
+    {
+      "id": "run_manifests_status_pass",
+      "status": "pass"
+    },
+    {
+      "id": "validation_selection_pool_only",
+      "status": "pass",
+      "selection_pool": "D_b_sel"
+    },
+    {
+      "id": "receipts_match_logged_hashes",
+      "status": "pass"
+    },
+    {
+      "id": "stderr_empty",
+      "status": "pass"
+    },
+    {
+      "id": "error_scan_clean",
+      "status": "pass",
+      "signals": []
+    },
+    {
+      "id": "tasks_9_11_not_applicable_preserved",
+      "status": "pass"
+    },
+    {
+      "id": "not_applicable_receipts_used_as_training_evidence",
+      "status": "pass",
+      "value": false
+    },
+    {
+      "id": "test_labels_opened",
+      "status": "pass",
+      "value": false
+    },
+    {
+      "id": "large_artifacts_not_synced",
+      "status": "pass",
+      "weights_synced": false
+    }
+  ],
+  "findings": [
+    "E202 Slurm 19799 completed tasks 0-8 with exit code 0 and pass receipts for SCR, GEN, and SINGLE target fine-tuning branches.",
+    "Tasks 9-11 remain accepted only as V2-A-10-MULTI not_applicable receipts from the reviewed C-TRANSFER fallback and are not counted as multi-coal training evidence.",
+    "All inspected stderr files are empty and no failure signal was found in the synced logs; CUDA strings are environment banner lines only.",
+    "Synced artifacts are limited to logs, run manifests, args, and results; weights were not downloaded."
+  ],
+  "advance_allowed": true,
+  "downstream_unlocked": [
+    "E204"
+  ],
+  "performance_claims_authorized": false,
+  "blocked_downstream_reason": "E204 is unlocked for validation-only checkpoint selection. E206 remains locked because E111 is blocked and release dependencies are incomplete."
+}

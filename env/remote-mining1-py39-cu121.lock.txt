@@ -1,0 +1,17 @@
+# Target interpreter: /data/home/xinxi-zhyh/xinxi-zhyh/envs/mining1-py39-cu121/bin/python
+# Base interpreter observed on mu01: /usr/bin/python3, Python 3.9.18.
+# Install only from the immutable wheelhouse staged under cache/mining1.
+torch==2.5.1+cu121
+torchvision==0.20.1+cu121
+ultralytics==8.4.87
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.13.1
+scikit-learn==1.5.2
+PyYAML==6.0.2
+pyarrow==19.0.1
+onnx==1.17.0
+onnxruntime-gpu==1.19.2
+opencv-python-headless==4.10.0.84
+pytest==8.3.5
+psutil==6.1.1

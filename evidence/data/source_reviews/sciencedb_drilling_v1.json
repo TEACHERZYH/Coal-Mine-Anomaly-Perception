@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-07-16T12:20:57.0110979+08:00",
+  "status": "rejected",
+  "dataset_entry": {
+    "dataset_id": "sciencedb_drilling_v1",
+    "dataset_version": "science-data-bank-v1",
+    "source_location": "local_verified_official_download",
+    "source_path_or_url": "G:/datasets/mining1/archives/sciencedb_drilling_v1_parts",
+    "license_id": "CC-BY-4.0",
+    "license_evidence_path": "evidence/data/source_snapshots/sciencedb_drilling_v1/dataset_page.html",
+    "transfer_route": "local_existing_upload",
+    "selection_evidence": "仅依据官方来源、许可、包体与标注结构、类别本体和独立组来源进行 G1 审查；未读取模型预测或性能。"
+  },
+  "official_source": {
+    "dataset_doi": "10.57760/sciencedb.j00001.01020",
+    "article_doi": "10.11922/11-6035.csd.2024.0006.zh",
+    "license_name": "CC BY 4.0",
+    "dataset_page_snapshot_sha256": "53853dc2a647db6a535df462e54afff6831b6391a765fdf37af783dbc1891ef2"
+  },
+  "archive_audit": {
+    "all_parts_integrity_pass": true,
+    "full_local_extractions": 0,
+    "parts": [
+      {
+        "name": "Angle.zip",
+        "byte_size": 83034,
+        "sha256": "fcff5aba5b79b066158475a31688b7d8497ba8cabe75d961b836173d7ac67313"
+      },
+      {
+        "name": "Annotations.zip",
+        "byte_size": 36952507,
+        "sha256": "f60f14599a02ef6dedef67c6da59bfb0570ada2d3af9f21fa098cf82bbc44f99"
+      },
+      {
+        "name": "Brightness.zip",
+        "byte_size": 89552,
+        "sha256": "b95f157749176d936d1c9528204094c942fad686197f36d911993ca9ce292e08"
+      },
+      {
+        "name": "JPEGImages.zip",
+        "byte_size": 9413322212,
+        "sha256": "74c9cd1fb884520d3d53559d16c705de092ba7ae64fff7ecd165269373c8ffc0",
+        "zip_file_count": 70948,
+        "uncompressed_byte_size": 9769913474
+      },
+      {
+        "name": "Object_Fuzzy.zip",
+        "byte_size": 102898,
+        "sha256": "0d1214c27bb33945248f8b45e9b7a19bfdffcb371adc50dd8aee5fe09b3dba5e"
+      },
+      {
+        "name": "Object_Occlusion.zip",
+        "byte_size": 99569,
+        "sha256": "a4ebc7d4cb7038cdfbafa0a3477d4646c4253dd4a88ce38c53e4142192bf82f7"
+      }
+    ]
+  },
+  "annotation_audit": {
+    "format": "Pascal VOC XML",
+    "annotation_file_count": 70948,
+    "object_count": 262345,
+    "coal_miner_object_count": 39482,
+    "coal_miner_positive_image_count": 31396,
+    "nonpositive_bbox_count": 4,
+    "coal_miner_nonpositive_bbox_count": 1,
+    "invalid_bbox_policy": "drop_and_record",
+    "ontology_compatibility": "coal_miner maps to the frozen person concept after documented filtering"
+  },
+  "group_provenance": {
+    "audit_path": "state/source_validation/sciencedb_drilling/group_provenance_audit.json",
+    "audit_sha256": "113c92cb4055f90a3e99559197fdebba9c1ee23e61d3179ccd837ec77342850c",
+    "original_video_clip_count_reported": 976,
+    "released_image_to_video_or_site_mapping": false,
+    "independent_group_provenance": "not_proven"
+  },
+  "eligibility_decision": {
+    "license_access": "pass",
+    "archive_integrity": "pass",
+    "annotation_and_ontology": "pass_with_documented_invalid_box_drops",
+    "independent_group_floor": "fail",
+    "confirmatory_multi_coal_source": "rejected",
+    "reason": "冻结协议禁止随机帧拆分，也禁止把图像编号或图像属性推断为独立原始组；发布包没有保留图像到原视频或钻场的映射。"
+  },
+  "scope_boundary": {
+    "model_predictions_read": 0,
+    "performance_metrics_read": 0,
+    "performance_claims_authorized": false,
+    "large_archive_retained_only_as_source_audit_evidence": true
+  }
+}

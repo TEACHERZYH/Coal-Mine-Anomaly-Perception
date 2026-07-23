@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "step_id": "E409",
+  "status": "pass",
+  "reviewed_at": "2026-07-20T19:28:30Z",
+  "amendment_id": "branch_visual_calibration_amendment_v4",
+  "review": {
+    "path": "evidence/reviews/E409_G6_completion_review.json"
+  },
+  "acceptance_checks": [
+    {
+      "id": "gate_G6_pass",
+      "status": "pass",
+      "gate": "evidence/gates/G6.json"
+    },
+    {
+      "id": "E400_dependency_pass",
+      "status": "pass"
+    },
+    {
+      "id": "E402_dependency_pass",
+      "status": "pass"
+    },
+    {
+      "id": "command_receipt_present",
+      "status": "pass",
+      "receipt": "evidence/command_receipts/E409.json"
+    },
+    {
+      "id": "allowed_next_steps",
+      "status": "pass",
+      "value": [
+        "E500"
+      ]
+    },
+    {
+      "id": "no_performance_claim_authorized",
+      "status": "pass"
+    }
+  ],
+  "findings": [
+    "G6 closed after E400 and E402 step reviews were both pass.",
+    "The gate authorizes continuation to E500 only under amendment v4 narrowed scope.",
+    "Unsupported visual, R1, episode, fusion, graph, and memory formal performance claims remain not_applicable."
+  ],
+  "advance_allowed": true,
+  "downstream_unlocked": [
+    "E500"
+  ],
+  "performance_claims_authorized": false
+}

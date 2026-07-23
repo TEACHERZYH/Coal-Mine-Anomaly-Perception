@@ -1,0 +1,6 @@
+# Evidence receipts bind exact file bytes, so Git must not rewrite line endings.
+# CR at end of line is intentional and must not be reported as trailing whitespace.
+* -text whitespace=cr-at-eol
+
+# Preserve third-party license snapshots byte-for-byte, including source whitespace.
+evidence/data/license_snapshots/** whitespace=-trailing-space,cr-at-eol

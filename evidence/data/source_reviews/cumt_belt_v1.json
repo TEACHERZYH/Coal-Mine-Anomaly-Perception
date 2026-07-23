@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-07-16T13:02:00+08:00",
+  "status": "rejected_pre_download",
+  "dataset_entry": {
+    "dataset_id": "cumt_belt_v1",
+    "dataset_version": "official-profile-commit-182208c4",
+    "source_location": "official_baidu_access_link_not_downloaded",
+    "source_path_or_url": "https://pan.baidu.com/s/1AJsjkPqXjkIJY8KQQdKfcw?pwd=z39g",
+    "license_id": null,
+    "license_evidence_path": null,
+    "transfer_route": null,
+    "selection_evidence": "仅审查官方 README、仓库文件树、访问入口、明确许可与任务本体；未读取模型预测或性能。"
+  },
+  "official_source": {
+    "repository": "https://github.com/CUMT-AIPR-Lab/CUMT-AIPR-Lab",
+    "commit": "182208c4bb9ac3d3cc0c42c8175915341a922b9c",
+    "readme_snapshot_path": "evidence/data/source_snapshots/cumt_helmet_v1/README.commit-182208c4.md",
+    "readme_snapshot_sha256": "e5aa3089c130ca07a10fb615ef029a7a1e7849e42043c72fc31f2c39b936cc0d",
+    "readme_lines": [1, 2, 4, 6, 7],
+    "license_file_count": 0,
+    "explicit_dataset_license_found": false,
+    "official_task_description": "foreign body classification on coal conveyor belt"
+  },
+  "eligibility_decision": {
+    "license_access": "fail",
+    "archive_integrity": "not_audited_after_pre_download_failure",
+    "annotation_and_ontology": "fail_person_detection_boxes_not_established_and_official_task_is_classification",
+    "independent_group_floor": "not_audited_after_pre_download_failure",
+    "confirmatory_multi_coal_source": "rejected",
+    "reason": "许可硬门槛失败；同时官方资料将 CUMT-BelT 定义为运煤皮带异物分类数据，不能充当冻结协议中的人员检测框源。"
+  },
+  "scope_boundary": {
+    "large_archive_downloaded": false,
+    "model_predictions_read": 0,
+    "performance_metrics_read": 0,
+    "performance_claims_authorized": false
+  }
+}

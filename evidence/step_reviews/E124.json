@@ -1,0 +1,77 @@
+{
+  "acceptance_checks": [
+    {
+      "id": "metrics_parquet_exists",
+      "status": "pass"
+    },
+    {
+      "id": "metric_values_finite",
+      "status": "pass"
+    },
+    {
+      "id": "families_cover_rule_hgb_gru",
+      "status": "pass"
+    },
+    {
+      "id": "release_scope_S1_only",
+      "status": "pass"
+    },
+    {
+      "id": "repeat_key_all_null_seed_fix_tested",
+      "status": "pass"
+    },
+    {
+      "id": "test_labels_opened_after_E206_release_only",
+      "status": "pass"
+    }
+  ],
+  "advance_allowed": true,
+  "amendment_id": "branch_visual_calibration_amendment_v4",
+  "command_receipt": {
+    "path": "evidence/command_receipts/E124.json",
+    "sha256": "7e2e656cfbf7d11f98669b095344ca018a60127eb9d47fd121992b10be156ad7"
+  },
+  "downstream_unlocked": [
+    "E129"
+  ],
+  "findings": [
+    "E124 passed under amendment v4 S1-only release scope.",
+    "This review authorizes S1 metric evidence for G2 review but does not by itself authorize final manuscript claims before gate closure and claim adjudication."
+  ],
+  "metric_summary": {
+    "families": [
+      "S1-GRU",
+      "S1-HGB",
+      "S1-RULE"
+    ],
+    "metric_names": [
+      "brier_score",
+      "event_macro_f1",
+      "event_miss_rate",
+      "expected_calibration_error",
+      "false_alarms_per_hour",
+      "median_lead_time_seconds",
+      "pr_auc",
+      "sensor_event_f1"
+    ],
+    "nonfinite_metric_values": 0,
+    "row_count": 50
+  },
+  "output_artifacts": [
+    {
+      "path": "results/S1/metrics.parquet",
+      "sha256": "f33c3e2d105b3a365fbacc9ab081cd01aedf92d33feb3dc61d8d3780ebfa4369"
+    }
+  ],
+  "performance_claims_authorized": false,
+  "preserved_failure_artifacts": [
+    {
+      "path": "evidence/failures/E124/20260720T094651838977Z.failure.json",
+      "sha256": "651d6471d05910d80a75a102b521e0ee8379bd116243ef1dead05eec7c0e5924"
+    }
+  ],
+  "reviewed_at": "2026-07-20T09:49:56.877622+00:00",
+  "schema_version": 1,
+  "status": "pass",
+  "step_id": "E124"
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "gate_id": "TBD",
+  "status": "blocked",
+  "protocol_hash": "TBD",
+  "code_hash": "TBD",
+  "experiment_matrix_hash": "TBD",
+  "artifact_contract_hash": "TBD",
+  "test_seal_hash": null,
+  "prediction_lock_hash": null,
+  "required_steps": [],
+  "input_artifacts": [],
+  "output_artifacts": [],
+  "checks": [],
+  "failures": [],
+  "waivers": [],
+  "allowed_next_steps": [],
+  "slurm_job_ids": [],
+  "remote_closeout_artifact": null,
+  "host": null,
+  "created_at": null
+}

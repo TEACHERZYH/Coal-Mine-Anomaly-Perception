@@ -1,0 +1,26 @@
+family_id,claim_id,execution_mode,execution_steps,evidence_exit_steps,acceptance_scope
+D1-AUDIT,C-DATA,data_governance,E010|E014|E016|E018|E024|E026|E030|E034|E038|E042|E046|E050|E058|E060|E067|E068,E069,provenance ontology grouped split temporal role and seal evidence
+D1-GRAPH,C-GRAPH,eligibility_audit,E054,E319,graph claim only when observed pairing eligibility passes
+V2-PRE-GEN,C-TRANSFER,trained_parent,E200|E202|E204|E205,E207,generic matched-budget source parent and paired target endpoint
+V2-PRE-SINGLE,C-TRANSFER,trained_parent,E200|E202|E204|E205,E207,single-coal matched-budget source parent and paired target endpoint
+V2-PRE-MULTI,C-TRANSFER,trained_parent,E200|E202|E204|E205,E207,multi-coal matched-budget source parent and paired target endpoint
+V2-A-10-SCR,C-TRANSFER,trained_endpoint,E202|E204|E205,E207,paired 10-percent scratch target endpoint
+V2-A-10-GEN,C-TRANSFER,trained_endpoint,E202|E204|E205,E207,paired 10-percent generic target endpoint
+V2-A-10-SINGLE,C-TRANSFER,trained_endpoint,E202|E204|E205,E207,paired 10-percent single-coal target endpoint
+V2-A-10-MULTI,C-TRANSFER,trained_endpoint,E202|E204|E205,E207,paired 10-percent multi-coal target endpoint
+T1-VIS,C-THERMAL,trained_branch,E100|E111,E112,visible-only input-validity and calibration evidence
+T1-THERM,C-THERMAL,trained_branch,E100|E111,E112,thermal-only input-validity and calibration evidence
+S1-RULE,C-METHANE,deterministic_reference,E120|E123,E124,frozen persistence-threshold reference
+S1-HGB,C-METHANE,fitted_reference,E120|E123,E124,frozen strongest non-neural candidate comparison
+S1-GRU,C-METHANE,trained_endpoint,E122|E123,E124,three-seed GRU endpoint
+R1-GEN,C-ROBUST,reused_checkpoint,E220|E221,E223,deterministic low-light and dust-fog degradation of generic endpoint
+R1-MULTI,C-ROBUST,reused_checkpoint,E220|E221,E223,deterministic low-light and dust-fog degradation of multi-coal endpoint
+E1-BUILD,C-FUSION,feature_construction,E300|E301|E302,E319,independent episode pools and sealed truth
+E2-MEAN,C-FUSION,no_train_baseline,E305,E310,conditional on fusion-eligible multibranch population; untrained probability-mean baseline
+E2-LOGIT,C-FUSION,trained_endpoint,E303|E305,E310,conditional on fusion-eligible multibranch population; three-seed calibrated-logit comparator
+E3-SHUFFLE,C-GRAPH,same_checkpoint_control,E305,E310,conditional on observed-pair graph eligibility; pair-edge derangement with full checkpoint reuse
+E3-NOREL,C-FUSION,trained_ablation,E303|E305,E310,conditional on fusion eligibility; three-seed reliability ablation
+E3-NOGRAPH,C-GRAPH,trained_ablation,E303|E305,E310,conditional on observed-pair graph eligibility; three-seed graph ablation
+E3-NOMEM,C-MEMORY,same_checkpoint_control,E305,E310,conditional on fusion eligibility; no-memory inference with identical full checkpoint hash
+E3-FULL,C-FUSION,trained_endpoint,E303|E305,E310,conditional on fusion eligibility; three-seed full fusion endpoint
+C1-EFF,C-EFFICIENCY,measurement_only,E400,E409,four preregistered candidate modules; measure every eligible module and issue gate-bound not_applicable receipts for the rest

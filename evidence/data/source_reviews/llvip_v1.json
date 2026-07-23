@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-07-16T12:20:57.0110979+08:00",
+  "status": "pass",
+  "dataset_entry": {
+    "dataset_id": "llvip_v1",
+    "dataset_version": "official-google-drive-1VTlT3Y7e1h-Zsne4zahjx5q0TK2ClMVv",
+    "source_location": "local_verified_official_download",
+    "source_path_or_url": "G:/datasets/mining1/archives/llvip_v1.zip",
+    "archive_sha256": "b3b55475c093ac54663c467859eb31a82b840b53a7196ad1887cb547e4518b45",
+    "license_id": "LLVIP-NONCOMMERCIAL-RESEARCH-TERMS",
+    "license_evidence_path": "evidence/data/source_snapshots/llvip_v1/term_of_use_and_license.md",
+    "transfer_route": "local_existing_upload",
+    "selection_evidence": "仅依据官方许可、完整配对结构、person 本体、26 个采集前缀、跨官方划分无组重叠和真实最小适配测试选择；未读取模型预测或性能。",
+    "adapter_contract": {
+      "schema_version": 1,
+      "kind": "voc_detection",
+      "archive_subdir": ".",
+      "record_id_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "LLVIP/(?P<modality>visible|infrared)/(?P<split>train|test)/(?P<record>[0-9]{6})[.]jpg",
+          "template": "{modality}-{record}"
+        }
+      },
+      "raw_group_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "LLVIP/(?:visible|infrared)/(?:train|test)/(?P<group>[0-9]{2})[0-9]{4}[.]jpg",
+          "template": "capture-{group}"
+        }
+      },
+      "modality_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "LLVIP/(?P<modality>visible|infrared)/(?:train|test)/[0-9]{6}[.]jpg",
+          "template": "{modality}"
+        }
+      },
+      "pair_id_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "LLVIP/(?:visible|infrared)/(?:train|test)/(?P<record>[0-9]{6})[.]jpg",
+          "template": "pair-{record}"
+        }
+      },
+      "sequence_id_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "LLVIP/(?:visible|infrared)/(?:train|test)/(?P<group>[0-9]{2})[0-9]{4}[.]jpg",
+          "template": "capture-{group}"
+        }
+      },
+      "timestamp_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "LLVIP/(?:visible|infrared)/(?:train|test)/[0-9]{2}(?P<order>[0-9]{4})[.]jpg",
+          "template": "{order}"
+        }
+      },
+      "voc": {
+        "image_globs": [
+          "LLVIP/visible/**/*.jpg",
+          "LLVIP/infrared/**/*.jpg"
+        ],
+        "image_root": "LLVIP",
+        "annotation_root": "LLVIP/Annotations",
+        "annotation_path_rule": "image_stem",
+        "class_names": [
+          "person"
+        ],
+        "missing_annotation_policy": "error",
+        "invalid_bbox_policy": "drop",
+        "difficult_policy": "drop",
+        "image_selection": "all",
+        "coordinate_convention": "voc_xyxy"
+      }
+    },
+    "minimal_sample_records": [
+      {
+        "record_id": "visible-010001",
+        "raw_group_id": "capture-01",
+        "member_path": "LLVIP/visible/train/010001.jpg",
+        "modality": "visible"
+      },
+      {
+        "record_id": "infrared-010001",
+        "raw_group_id": "capture-01",
+        "member_path": "LLVIP/infrared/train/010001.jpg",
+        "modality": "infrared"
+      },
+      {
+        "record_id": "visible-190001",
+        "raw_group_id": "capture-19",
+        "member_path": "LLVIP/visible/test/190001.jpg",
+        "modality": "visible"
+      },
+      {
+        "record_id": "infrared-190001",
+        "raw_group_id": "capture-19",
+        "member_path": "LLVIP/infrared/test/190001.jpg",
+        "modality": "infrared"
+      }
+    ]
+  },
+  "official_source": {
+    "homepage": "https://bupt-ai-cz.github.io/LLVIP/",
+    "repository": "https://github.com/bupt-ai-cz/LLVIP",
+    "paper": "https://arxiv.org/abs/2108.10831",
+    "download_file_id": "1VTlT3Y7e1h-Zsne4zahjx5q0TK2ClMVv",
+    "license_snapshot_sha256": "5b622efe8e1dacf6aeccf298045a159dff269cdd05ec941d6b4a49871beddc50",
+    "paper_snapshot_sha256": "2ff81deed38e2cb76d10aeb1b4d5ddbe5f23fb90ffb0c618a3739e6d80b18550"
+  },
+  "archive_audit": {
+    "safe_zip": true,
+    "byte_size": 4003858172,
+    "zip_integrity": "pass",
+    "file_count": 46465,
+    "visible_image_count": 15488,
+    "infrared_image_count": 15488,
+    "annotation_count": 15488,
+    "visible_infrared_pair_ids_equal": true,
+    "annotation_ids_equal_pair_ids": true,
+    "person_object_count": 42437,
+    "person_positive_image_count": 15486,
+    "invalid_person_bbox_count": 5,
+    "invalid_bbox_policy": "drop_and_record",
+    "audit_path": "state/source_validation/llvip_v1/archive_audit.json",
+    "audit_sha256": "57458cb59b3f1b07c2e928d5d6be8f7e447e746b3fe781343816ab0d3f957a28"
+  },
+  "group_provenance": {
+    "paper_reported_capture_location_count": 26,
+    "paper_reported_sampling": "one frame per second",
+    "reviewed_group_rule": "first two digits of the six-digit record ID",
+    "group_prefix_count": 26,
+    "person_positive_group_count": 26,
+    "official_train_group_prefix_count": 19,
+    "official_test_group_prefix_count": 7,
+    "cross_split_group_overlap_count": 0,
+    "boundary": "合格于 T1 分支有效性和 observed-pair 审计；不得把 7 个官方测试组扩写成满足 20 个独立测试组的确认性优势证据。"
+  },
+  "minimal_adapter_test": {
+    "status": "pass",
+    "evidence_path": "state/source_validation/llvip_v1/minimal_adapter_test.json",
+    "evidence_sha256": "f6b88456eaeabae2b76ccee6da172a48d3d81d5a83307d3939fafcadb9d58307",
+    "record_count": 4,
+    "raw_group_count": 2,
+    "pair_count": 2,
+    "modalities": [
+      "visible",
+      "infrared"
+    ]
+  },
+  "eligibility_decision": {
+    "license_access": "pass_noncommercial_research_only",
+    "archive_integrity": "pass",
+    "annotation_and_ontology": "pass_with_five_documented_invalid_box_drops",
+    "pair_provenance": "pass",
+    "group_floor_for_branch_role": "pass",
+    "primary_rgbt_dataset": "eligible",
+    "fusion_superiority_claim": "not_authorized",
+    "coal_mine_thermal_anomaly_claim": "not_authorized"
+  },
+  "scope_boundary": {
+    "full_local_extractions": 0,
+    "model_predictions_read": 0,
+    "performance_metrics_read": 0,
+    "performance_claims_authorized": false
+  }
+}

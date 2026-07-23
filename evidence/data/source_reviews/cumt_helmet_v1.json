@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-07-16T12:20:57.0110979+08:00",
+  "status": "rejected_pre_download",
+  "dataset_entry": {
+    "dataset_id": "cumt_helmet_v1",
+    "dataset_version": "official-profile-commit-182208c4",
+    "source_location": "official_baidu_access_link_not_downloaded",
+    "source_path_or_url": "https://pan.baidu.com/s/1yELcc8DpuiG4HNV-eWFeTw?pwd=d2x2",
+    "license_id": null,
+    "license_evidence_path": null,
+    "transfer_route": null,
+    "selection_evidence": "仅审查官方 README、仓库文件树、访问入口、明确许可、本体描述与独立组可证明性；未读取模型预测或性能。"
+  },
+  "official_source": {
+    "repository": "https://github.com/CUMT-AIPR-Lab/CUMT-AIPR-Lab",
+    "commit": "182208c4bb9ac3d3cc0c42c8175915341a922b9c",
+    "readme_snapshot_path": "evidence/data/source_snapshots/cumt_helmet_v1/README.commit-182208c4.md",
+    "readme_snapshot_sha256": "e5aa3089c130ca07a10fb615ef029a7a1e7849e42043c72fc31f2c39b936cc0d",
+    "license_file_count": 0,
+    "explicit_dataset_license_found": false
+  },
+  "eligibility_decision": {
+    "license_access": "fail",
+    "archive_integrity": "not_audited_after_license_failure",
+    "annotation_and_ontology": "not_proven",
+    "independent_group_floor": "not_audited_after_license_failure",
+    "confirmatory_multi_coal_source": "rejected",
+    "reason": "官方仓库和 README 未提供明确数据许可；G1 许可硬门槛失败后不下载大包，也不继续把未知本体或分组信息解释为合格。"
+  },
+  "scope_boundary": {
+    "large_archive_downloaded": false,
+    "model_predictions_read": 0,
+    "performance_metrics_read": 0,
+    "performance_claims_authorized": false
+  }
+}

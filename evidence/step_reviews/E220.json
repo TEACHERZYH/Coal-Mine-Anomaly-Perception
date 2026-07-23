@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "step_id": "E220",
+  "status": "pass",
+  "reviewed_at": "2026-07-20T08:45:10Z",
+  "output_artifacts": [
+    {
+      "path": "evidence/reviews/E220_job19821_completion_review_20260720T0839Z.json",
+      "sha256": "f533cad63ea6f3556c2bc840b05c5f67e81bf966a742cc0355707bbd318ca8b0"
+    }
+  ],
+  "findings": [
+    "E220 Slurm 19821 completed with exit code 0 and generated the locked corruption manifest.",
+    "The manifest has 3966 rows over 661 records, two corruption types, and severities 1-3.",
+    "The corruption build receipt reports label_inputs_used=false and no stderr content was observed.",
+    "E220 pass does not authorize robustness performance claims; R1 prediction/evaluation gates remain incomplete."
+  ],
+  "advance_allowed": true,
+  "performance_claims_authorized": false,
+  "downstream_unlocked": [
+    "E221"
+  ],
+  "blocked_downstream_reason": "E221 still blocked by hidden E205 V2 calibrator dependency"
+}

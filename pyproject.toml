@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coal-mine-anomaly-perception"
+version = "0.1.0"
+description = "Reproducible public-data workflows for coal-mine anomaly perception."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "numpy>=1.26,<3",
+  "pandas>=2.2,<3",
+  "scipy>=1.13,<2",
+  "scikit-learn>=1.5,<2",
+  "PyYAML>=6,<7",
+  "pyarrow>=19,<21",
+  "psutil>=6,<8",
+]
+
+[project.optional-dependencies]
+vision = [
+  "ultralytics>=8.4,<9",
+  "opencv-python-headless>=4.10,<5",
+  "onnx>=1.17,<2",
+  "onnxruntime>=1.19,<2",
+]
+test = [
+  "pytest>=8.3,<9",
+]
+
+[project.scripts]
+mining1-exp = "mining1_exp.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["mining1_exp*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

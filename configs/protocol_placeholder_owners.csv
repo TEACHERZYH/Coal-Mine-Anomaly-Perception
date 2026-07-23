@@ -1,0 +1,6 @@
+placeholder_token,producer_steps,allowed_inputs,freeze_by_step,failure_action
+TBD_ENV,P015|P020|P030,immutable local and remote environment snapshots plus validated environment decision and remote-ready receipt,E067,block PRETEST and repair environment decision or remote readiness
+TBD_G1,E010|E014|E016|E018|E024|E026|E030|E034|E038|E042|E046|E050|E054|E058|E060,licensed manifests ontology grouped splits temporal roles graph eligibility episode skeleton and candidate branch seal without model outcomes,E067,block PRETEST and repair the owning G1 artifact
+TBD_PILOT,E066,resource-only memory throughput wall-time numerical-finiteness repeat-hash and environment-limit receipt,E067,block PRETEST and rerun the bounded resource pilot
+TBD_G1_PRETEST,E067,G1 structural evidence plus E066 resource receipt and non-test precision simulation under locked rules,E067,leave PRETEST unsigned until a deterministic value and provenance are recorded
+TBD_PRETEST,E067,canonical source artifact matrix step implementation and runtime hashes plus deterministic protocol constants,E067,leave PRETEST unsigned until every hash and constant is resolved

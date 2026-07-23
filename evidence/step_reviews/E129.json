@@ -1,0 +1,47 @@
+{
+  "acceptance_checks": [
+    {
+      "id": "required_dependency_reviews_advance_allowed",
+      "status": "pass"
+    },
+    {
+      "id": "not_applicable_boundaries_preserved",
+      "status": "pass"
+    },
+    {
+      "id": "no_remote_job_submitted",
+      "status": "pass",
+      "value": true
+    }
+  ],
+  "advance_allowed": true,
+  "amendment_id": "branch_visual_calibration_amendment_v4",
+  "command_receipt": {
+    "path": "evidence/command_receipts/E129.json",
+    "sha256": "7d7ac70da70c11e17681c23fe8b4b167984bd37fe90aff727b18b20e8b947877"
+  },
+  "downstream_unlocked": [
+    "E300 after G3 closure"
+  ],
+  "findings": [
+    "G2 closes under amendment v4 with E112 not_applicable and E124 pass.",
+    "Only S1 methane evaluation evidence may advance; T1 branch-test performance remains unsupported."
+  ],
+  "output_artifacts": [
+    {
+      "path": "evidence/gates/G2.json",
+      "sha256": "dedcdc9c1cb67916ba918a250db9c30ef079494a8d70d2c053a475dc4222cb4c"
+    }
+  ],
+  "performance_claims_authorized": false,
+  "preserved_failure_artifacts": [
+    {
+      "path": "evidence/failures/E129/20260720T095014505862Z.failure.json",
+      "sha256": "10e865305c4dfa29ec4ec6b9215033541c0c5b1504fd03264ad7b201261c723e"
+    }
+  ],
+  "reviewed_at": "2026-07-20T09:51:34.062149+00:00",
+  "schema_version": 1,
+  "status": "pass",
+  "step_id": "E129"
+}

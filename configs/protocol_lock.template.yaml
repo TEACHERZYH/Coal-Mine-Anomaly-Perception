@@ -1,0 +1,736 @@
+schema_version: 3
+protocol_id: mining1_cleanroom_minimal_v2
+status: template_not_locked
+created_at: null
+locked_at: null
+
+project:
+  local_root: 'F:\2026\mining1'
+  local_archive_root: 'G:\datasets\mining1\archives'
+  local_evidence_root: 'F:\2026\mining1\evidence_sync'
+  remote_host: 'xinxi-zhyh@211.87.115.228'
+  remote_project_root: /data/home/xinxi-zhyh/xinxi-zhyh/projects/mining1
+  remote_data_root: /data/home/xinxi-zhyh/xinxi-zhyh/datasets/mining1
+  remote_run_root: /data/home/xinxi-zhyh/xinxi-zhyh/runs/mining1
+  remote_cache_root: /data/home/xinxi-zhyh/xinxi-zhyh/cache/mining1
+
+clean_room:
+  old_code_allowed: false
+  old_config_allowed: false
+  old_environment_allowed: false
+  old_weights_allowed: false
+  old_logs_allowed: false
+  old_predictions_allowed: false
+  old_results_allowed: false
+  dataset_reuse_requires_new_manifest_and_hash: true
+  forbidden_host: zhangl@180.209.128.66
+
+data:
+  artifact_contract: configs/artifact_contract.template.yaml
+  archive_manifest: TBD_G1
+  file_manifest: TBD_G1
+  ontology_lock: TBD_G1
+  event_semantics_lock: TBD_G1
+  split_manifest: TBD_G1
+  fewshot_manifest: TBD_G1
+  graph_eligibility_lock: TBD_G1
+  fusion_eligibility_lock: TBD_G1
+  episode_template_lock: TBD_G1
+  episode_skeleton_manifest: TBD_G1
+  episode_test_skeleton_candidate: TBD_G1
+  branch_test_seal_candidate: TBD_G1
+  branch_test_seal_finalized_by: E068
+  episode_test_seal_candidate: null
+  episode_test_seal_candidate_required_at: E301
+  episode_test_seal: null
+  episode_test_seal_required_at: E302
+  branch_test_release_required_at: E206
+  episode_test_release_required_at: E306
+  test_release_requires_closed_prediction_lock: true
+  primary_visual_target: TBD_G1
+  primary_visual_sources: TBD_G1
+  replication_visual_target: null
+  primary_rgbt_dataset: TBD_G1
+  methane_dataset: TBD_G1
+  role_selection:
+    forbidden_inputs: [model_predictions,test_metrics,pilot_performance]
+    hard_filters: [license_access,group_floor,positive_group_floor,ontology_intersection,annotation_compatibility,cross_source_dedup]
+    visual_direction_rank_desc: [minimum_class_positive_groups,shared_concept_count,proven_group_fraction,target_independent_groups]
+    final_tie_break_asc: direction_id
+    single_coal_source_rank_desc: [shared_concept_count,minimum_class_positive_groups,proven_group_fraction,eligible_unique_image_count]
+    single_coal_source_tie_break_asc: dataset_id
+    multi_coal_source_rule: all_eligible_non_target_coal_sources_with_at_least_two_dataset_ids
+    source_role_selection_forbidden_inputs: [pilot_model_performance,validation_model_performance,test_metrics]
+    replication_requires_distinct_target_dataset: false
+    rgbt_fallback_order: [LLVIP,KAIST,FLIR_if_pair_and_annotation_audit_pass]
+  independent_group_floor_hard_min: 20
+  positive_group_floor_per_claimed_class_hard_min: 10
+  independent_group_floor: TBD_G1_PRETEST
+  positive_group_floor_per_claimed_class: TBD_G1_PRETEST
+  precision_feasibility:
+    use_test_outcomes: false
+    use_model_predictions_or_validation_performance: false
+    variance_source: endpoint_specific_preregistered_conservative_variance_envelope
+    variance_envelope_hash: TBD_PRETEST
+    minimum_meaningful_effects_frozen_before_simulation: true
+    simulation_order: freeze_effect_targets_then_simulate_once_then_reduce_or_remove_underpowered_claims
+    relaxing_effect_target_after_simulation: forbidden
+    simulation_repetitions: 10000
+    minimum_success_probability: 0.80
+    ci_half_width_target_fraction_of_minimum_meaningful_effect: 1.0
+    confirmatory_floor_rule: max(hard_min,precision_simulation_requirement)
+  exact_duplicate_rule: sha256
+  near_duplicate_rule:
+    method: phash_plus_group_metadata
+    hamming_threshold: TBD_G1
+    audit_sample_size: TBD_G1
+  pool_names:
+    branch_train: D_b_tr
+    branch_select: D_b_sel
+    branch_probability: D_b_prob
+    branch_test: D_b_te
+    episode_train: D_e_tr
+    episode_select: D_e_sel
+    episode_policy: D_e_pol
+    episode_test: D_e_te
+  target_role_family_weights:
+    branch: 0.50
+    episode: 0.50
+  branch_pool_weights:
+    D_b_tr: 0.60
+    D_b_sel: 0.15
+    D_b_prob: 0.10
+    D_b_te: 0.15
+  episode_pool_weights:
+    D_e_tr: 0.50
+    D_e_sel: 0.15
+    D_e_pol: 0.15
+    D_e_te: 0.20
+  fewshot_ratios_percent: [10]
+  rgbt:
+    pair_unit: sequence_or_scene_group
+    require_public_pair_index: true
+    require_compatible_boxes: true
+    observed_pair_edge_requires_same_pair_id: true
+    unpaired_cross_source_edge_role: secondary_virtual_compatibility_only
+    physical_temperature_claim_enabled: false
+  methane:
+    target_sensor_ids: [MM263, MM264, MM256]
+    history_seconds: 300
+    horizon_seconds: 300
+    stride_seconds: 30
+    purge_gap_seconds: 600
+    risk_concentration_threshold: 1.0
+    risk_unit: TBD_G1
+    event_merge_gap_seconds: TBD_G1_PRETEST
+    sensor_variants: [all_sensor]
+    imputation_fit_pool: D_b_tr
+    missingness_mask_in_model: true
+    normalization_fit_pool: D_b_tr
+
+seeds:
+  split: 13007
+  training: [1701, 2903, 4219]
+  fewshot_subset: [5171, 6197, 7331]
+  paired_transfer_repeats:
+    - [1701, 5171]
+    - [2903, 6197]
+    - [4219, 7331]
+  corruption: []
+  episode: [9103, 9137, 9161]
+  statistics: 12011
+
+environment:
+  decision_schema_version: 2
+  preimplementation_decision_lock: configs/environment_decision.lock.json
+  preimplementation_decision_sha256: TBD_ENV
+  local_ready_receipt: evidence/preimplementation/local_environment_ready.json
+  local_ready_receipt_sha256: TBD_ENV
+  remote_ready_receipt: evidence/preimplementation/remote_environment_ready.json
+  remote_ready_receipt_sha256: TBD_ENV
+  reuse_existing_if_compatible: true
+  local_strategy: TBD_ENV
+  remote_strategy: TBD_ENV
+  selected_local_python: TBD_ENV
+  selected_remote_python: TBD_ENV
+  local_python_version: TBD_ENV
+  remote_python_version: TBD_ENV
+  local_pytorch_version: TBD_ENV
+  remote_pytorch_version: TBD_ENV
+  remote_cuda_runtime: TBD_ENV
+  remote_cuda_driver: TBD_ENV
+  remote_compiler: TBD_ENV
+  ultralytics_version: TBD_ENV
+  transformers_or_detector_version: TBD_ENV
+  numpy_version: TBD_ENV
+  scipy_version: TBD_ENV
+  pandas_version: TBD_ENV
+  pyarrow_version: TBD_ENV
+  local_environment_lock_file: TBD_ENV
+  remote_environment_lock_file: TBD_ENV
+  package_source_policy: domestic_mirror_first_then_local_download_upload
+
+models:
+  visible:
+    primary_backbone: yolov8n
+    external_baselines: []
+    input_size: 640
+    common_base_initialization: yolov8n_yaml_random_seeded_by_paired_training_seed
+    transferred_components: backbone_and_neck_only
+    target_head_reinitialized_for_transfer: true
+    target_head_initialization: identical_random_state_within_paired_repeat
+  rgbt:
+    single_modalities: [visible_only, thermal_only]
+    training_seed: 1701
+    result_role: calibrated_episode_feature_generators_only
+    trainable_fusion_models: []
+    paired_fusion_superiority_claim_enabled: false
+  methane:
+    deterministic_baselines: [persistence_or_threshold_rule]
+    classical_baselines: [hist_gradient_boosting]
+    neural_models: [gru]
+    primary: gru
+    hidden_size: 64
+    layers: 1
+    dropout: 0.20
+  episode:
+    skeleton_generation_step: E058
+    skeleton_frozen_before_branch_test_release: true
+    skeleton_generation_forbidden_inputs: [model_predictions,validation_metrics,test_metrics,model_saliency,reliability_scores]
+    skeleton_required_locked_fields: [skeleton_item_id,episode_id,step_index,record_id,raw_group_id,concept_id,node_id,pool,episode_seed,generator_family_id,template_instance_id,event_position_role]
+    skeleton_item_id_rule: sha256_of_sealed_random_nonce_plus_record_concept_node_identity_and_independent_opaque_repeat_row_salt_without_event_template_pool_step_or_truth_fields
+    skeleton_item_id_model_role: join_only_never_tensor_or_policy_feature
+    test_skeleton_write_rule: atomic_write_full_D_e_te_partition_to_denied_acl_candidate_seal_at_E058
+    test_skeleton_denied_roles: [trainer,selector,policy_fitter,test_predictor,human_reviewer]
+    test_skeleton_candidate_receipt_exposes_only: [schema_hash,full_manifest_hash,inference_projection_hash,row_count,raw_group_count,acl_hash]
+    test_skeleton_candidate_forbidden_outputs: [event_counts,event_rates,event_positions,template_counts,per_concept_rates,label_samples]
+    test_inference_projection_columns: [skeleton_item_id,record_id,concept_id,node_id,generator_family_id]
+    test_inference_projection_forbidden_columns: [episode_id,step_index,raw_group_id,pool,episode_seed,template_instance_id,event_position_role,event_truth,state_truth]
+    branch_feature_generators:
+      coal_visible:
+        family_id: V2-A-10-MULTI
+        checkpoint_selection: median_validation_rank_then_smallest_seed
+      rgbt_visible:
+        family_id: T1-VIS
+        checkpoint_selection: locked_single_seed
+      thermal:
+        family_id: T1-THERM
+        checkpoint_selection: locked_single_seed
+      methane:
+        family_id: S1-GRU
+        checkpoint_selection: median_validation_rank_then_smallest_seed
+    branch_feature_prediction_step: E300
+    branch_feature_pools: [D_e_tr, D_e_sel, D_e_pol, D_e_te]
+    branch_feature_predictions_exclude_truth_and_audit_fields: true
+    same_frozen_branch_generators_for_all_episode_methods: true
+    episode_test_label_write_rule: atomic_write_to_denied_acl_candidate_seal_at_E301
+    episode_test_candidate_receipt_exposes_only: [schema_hash,label_manifest_hash,row_count,group_count,acl_hash]
+    episode_test_candidate_forbidden_outputs: [class_counts,event_rates,per_concept_rates,metric_summaries,label_samples]
+    episode_test_final_seal_step: E302
+    no_train_baselines: [mean]
+    trainable_baselines: [calibrated_logit]
+    mechanism_controls: [pair_alignment_shuffle_inference]
+    ablations: [no_reliability, no_graph, no_memory]
+    trainable_structural_ablations: [no_reliability, no_graph]
+    frozen_full_inference_policy_controls: [no_memory]
+    inference_policy_controls_require_same_checkpoint_hash_as_full: true
+    primary: reliability_graph_memory_hysteresis
+    graph_layers: 2
+    probability_clip_epsilon: 1.0e-6
+    graph_claim_scope: graph_eligible_observed_pair_concepts_only
+    single_node_concept_role: branch_temporal_only
+    fallback_if_no_graph_eligible_concept: reliability_weighted_late_fusion_memory
+    primary_trainable_reference: calibrated_logit
+    primary_trainable_reference_frozen_before_policy_calibration: true
+
+pilot:
+  result_role: diagnostic_only
+  training_seed: 1701
+  subset_seed: 5171
+  deterministic_group_cap_per_dataset: 8
+  minimum_groups_per_family: 2
+  max_updates_per_family: 300
+  initial_workers: 2
+  initial_precision: fp32
+  initial_batch_size:
+    visible: 4
+    rgbt: 2
+    methane: 32
+    episode: 64
+  technical_oom_fallback: halve_batch_once_then_block
+  scaling_trial:
+    family: matched_source_pretraining
+    warmup_updates: 100
+    timed_updates: 300
+    compare_gpu_counts: [1, 2]
+    enable_multi_gpu_only_if_speedup_and_reproducibility_pass: true
+  allowed_decisions: [precision,micro_batch_size,gradient_accumulation,workers,checkpoint_interval,max_array_concurrency,slurm_time_limit,fixed_cpu_affinity]
+  decision_inputs_only: [peak_memory,throughput,wall_time,numerical_finiteness,deterministic_repeat_hash,environment_limits]
+  forbidden_decisions: [architecture,hidden_size,layers,dropout,optimizer,learning_rate,augmentation_family,endpoint,dataset_role,source_role,model_family]
+  forbidden_outputs: [test_metrics,test_predictions,condition_ranking,claim_direction]
+
+training:
+  common:
+    precision: TBD_PILOT
+    workers: TBD_PILOT
+    checkpoint_interval_updates: TBD_PILOT
+    resume_requires_exact_hash_match: true
+    maximum_automatic_retries_per_run: 1
+  visible:
+    optimizer: sgd
+    learning_rate: 0.01
+    effective_batch_size: 64
+    max_epochs: derived_ceiling_to_reach_locked_max_updates
+    max_updates: TBD_G1_PRETEST
+    early_stopping_patience: disabled_for_confirmatory_matched_budget
+    selection_metric: map50_95
+  rgbt:
+    optimizer: sgd
+    learning_rate: 0.01
+    effective_batch_size: 64
+    max_updates: TBD_G1_PRETEST
+    selection_metric: map50_95
+  methane:
+    optimizer: adamw
+    learning_rate: 0.001
+    effective_batch_size: 128
+    max_updates: TBD_G1_PRETEST
+    selection_metric: event_macro_f1_with_false_alarm_constraint
+    classical_feature_contract:
+      causal_subwindows_seconds: [60, 180, 300]
+      per_sensor_statistics: [last, mean, std, min, max, linear_slope, q25, median, q75, missing_fraction]
+      imputation_fit_pool: D_b_tr
+      standardization_fit_pool: D_b_tr
+      forbidden_inputs: [future_values, test_labels, post_window_samples, event_outcomes]
+    strongest_non_neural_candidate_families: [S1-RULE, S1-HGB]
+    strongest_non_neural_selection_pool: D_b_sel
+    strongest_non_neural_selection_metric: event_macro_f1_subject_to_locked_false_alarm_constraint
+    event_score_threshold_start: 0.10
+    event_score_threshold_stop: 0.90
+    event_score_threshold_step: 0.05
+    max_false_alarms_per_hour: TBD_G1_PRETEST
+    per_family_threshold_selection_order: [feasible_false_alarm_constraint, higher_event_macro_f1, lower_event_miss_rate, higher_threshold]
+    gru_uses_same_threshold_grid_and_selection_rule: true
+    strongest_non_neural_tie_break: simpler_model_then_lexical_family_id
+    strongest_non_neural_freeze_before_test_prediction: true
+    no_feasible_non_neural_candidate: block_confirmatory_endpoint_and_report_lowest_false_alarm_candidate_diagnostic_only
+    gru_no_feasible_threshold: reject_GRU_support_claim_and_report_lowest_false_alarm_candidate_diagnostic_only
+  episode:
+    optimizer: adamw
+    learning_rate: 0.001
+    effective_batch_size: 64
+    max_updates: TBD_G1_PRETEST
+    selection_metric: event_macro_f1_with_constraints
+  matched_pretraining:
+    conditions: [scratch, generic_matched, single_coal, multi_coal]
+    source_pools: [source_train, source_validation]
+    source_pool_role: pretraining_only_not_part_of_the_eight_locked_target_role_pools
+    source_split_unit: locked_source_raw_group
+    source_validation_fraction: TBD_G1_PRETEST
+    source_train_and_validation_group_disjoint: true
+    source_validation_use: checkpoint_selection_only
+    common_base_initialization: yolov8n_yaml_random_seeded_by_paired_training_seed
+    transfer_scope: backbone_and_neck_only_with_target_head_reinitialized_identically_within_repeat
+    unique_source_images: TBD_G1_PRETEST
+    unique_source_image_budget_rule: minimum_eligible_unique_capacity_across_generic_single_and_multi_conditions
+    duplicate_oversampling_to_meet_budget_forbidden: true
+    optimizer_updates: TBD_G1_PRETEST
+    effective_batch_size: 64
+    augmentation_family_hash: TBD_PRETEST
+    generic_source: coco_2017_train_budget_matched_hash_order_subset
+    generic_subset_selection_forbidden_inputs: [target_labels,target_validation_metrics,target_test_metrics]
+    single_coal_source_selection: data_only_rank_from_data_role_selection
+    multi_coal_source_selection: all_eligible_non_target_sources_with_source_stratified_sampling
+    multi_source_sampling: source_stratified
+    exclude_current_target_all_pools: true
+    current_target_group_hash_absent_from_both_source_pools: true
+    exclude_cross_source_exact_and_near_duplicates: true
+    separate_source_manifest_per_direction: true
+    equal_target_finetune_updates: true
+
+evaluation:
+  calibration_candidates: [temperature, platt, isotonic]
+  calibration_selection_metric: brier_score
+  calibration_group_cv_folds: TBD_G1_PRETEST
+  calibration_fallback: shared_branch_temperature
+  detection_primary_metrics: [class_ap, map50, map50_95]
+  detection_conditional_metrics: [precision, recall, f1]
+  detection_conditional_metrics_require: exhaustive_or_explicitly_complete_box_annotations
+  detection_concept_probability_unit: one_row_per_record_concept_modality_after_frozen_max_aggregation
+  detection_concept_raw_score_rule: max_post_nms_compatible_box_score_else_zero
+  detection_calibration_metrics: [concept_brier_score, concept_expected_calibration_error]
+  detection_calibration_truth_requires: exhaustive_verified_absence_or_explicit_negative_label
+  methane_metrics:
+    - pr_auc
+    - event_macro_f1
+    - per_class_recall
+    - false_alarms_per_hour
+    - event_miss_rate
+    - median_lead_time_seconds
+    - expected_calibration_error
+    - brier_score
+  episode_metrics:
+    - event_macro_f1
+    - event_precision
+    - event_recall
+    - false_alarms_per_100_episodes
+    - event_miss_rate
+    - detection_delay_steps
+    - state_flips
+    - expected_calibration_error
+    - answer_coverage
+    - abstention_rate
+    - selective_risk
+  event_metric_contracts:
+    common:
+      event_interval_endpoints: closed
+      matching_cardinality: one_prediction_event_to_at_most_one_truth_event_and_vice_versa
+      matching_algorithm: sort_prediction_onsets_then_match_the_eligible_unmatched_truth_window_with_earliest_end_then_truth_id
+      unmatched_truth_event: miss
+      unmatched_prediction_event: false_alarm
+      duplicate_prediction_for_already_matched_truth: false_alarm
+      threshold_and_policy_source: frozen_non_test_pool_only
+      test_time_threshold_search: forbidden
+    methane_future_risk:
+      unit: locked_target_sensor
+      truth_event_rule: maximal_contiguous_raw_threshold_exceedance_intervals_merged_when_gap_le_event_merge_gap_seconds
+      prediction_event_rule: maximal_contiguous_threshold_positive_window_endpoints_merged_when_gap_le_event_merge_gap_seconds
+      prediction_event_time: first_positive_window_endpoint
+      match_window: truth_start_minus_horizon_seconds_through_truth_end
+      ongoing_alarm_started_before_match_window: false_alarm_and_not_a_detection
+      event_macro_f1: equal_weight_mean_of_sensor_level_event_f1_over_G1_eligible_locked_sensors
+      no_predicted_event_with_existing_truth: sensor_event_f1_zero
+      false_alarm_denominator: valid_observed_sensor_hours_excluding_purge_and_invalid_gaps
+      lead_time_formula: truth_start_minus_matched_prediction_onset_seconds
+      lead_time_summary: median_and_iqr_over_matched_truth_events
+      positive_lead_means_early_warning: true
+    episode_detection:
+      unit: episode_concept
+      truth_event_rule: maximal_contiguous_steps_with_event_truth_equal_1
+      prediction_event_rule: maximal_contiguous_steps_with_effective_state_in_prewarning_or_alarm
+      effective_state_rule: abstained_rows_use_abstain_state_and_break_prediction_events
+      prediction_event_time: first_prewarning_or_alarm_step
+      match_window: truth_start_through_truth_end
+      prediction_started_before_truth_and_continuing_into_truth: false_alarm_and_truth_miss_unless_a_new_prediction_event_starts_in_truth_window
+      event_macro_f1: equal_weight_mean_of_concept_level_event_f1_over_G1_eligible_concepts
+      no_predicted_event_with_existing_truth: concept_event_f1_zero
+      false_alarm_denominator: evaluated_episode_count_times_100
+      detection_delay_formula: matched_prediction_onset_step_minus_truth_start_step
+      detection_delay_summary: arithmetic_mean_over_matched_truth_events_with_miss_rate_reported_alongside
+      answer_coverage_formula: nonabstained_eligible_step_rows_divided_by_all_eligible_step_rows
+      abstention_rate_formula: one_minus_answer_coverage
+      selective_metrics_role: secondary_answered_rows_only
+      state_flip_rule: adjacent_changes_in_effective_state_per_episode_then_arithmetic_mean
+  robustness:
+    corruption_types: [low_light, dust_fog_proxy]
+    severity_levels: [1, 2, 3]
+    primary_model_conditions: [generic_matched, multi_coal]
+    model_repeat_selection: diagonal_train_subset_pairs
+    generation_inputs_only: [sealed_test_image, record_id, corruption_type, severity, operator_version]
+    forbidden_generation_inputs: [box_coordinates, class_labels, test_truth, model_predictions, model_saliency]
+    output_clipping: unit_interval_then_original_dtype
+    operators:
+      low_light:
+        formula: output_equals_input_power_gamma
+        gamma_by_severity: [1.3, 1.7, 2.1]
+      dust_fog_proxy:
+        formula: deterministic_atmospheric_blend_with_record_hash_low_frequency_transmission
+        mean_transmission_by_severity: [0.80, 0.65, 0.50]
+        airlight: 0.90
+        transmission_noise_sd: 0.04
+        smoothing_sigma_fraction_of_min_dimension: 0.08
+    required_pretest_checks:
+      - byte_identical_regeneration
+      - identical_output_under_arbitrary_label_permutation
+      - no_truth_field_or_label_path_opened
+      - same_corruption_instance_for_all_compared_models
+  test_release:
+    branch_prediction_steps: [E111, E123, E205, E221]
+    branch_release_step: E206
+    branch_evaluation_steps: [E112, E124, E207, E223]
+    episode_prediction_steps: [E305]
+    episode_release_step: E306
+    episode_evaluation_steps: [E310]
+    forbid_truth_columns_before_release: true
+    invalidate_on_prediction_hash_drift: true
+    seals_and_prediction_locks_are_append_only: true
+    release_and_invalidation_are_separate_signed_records: true
+    release_does_not_modify_seal_or_prediction_lock: true
+
+episodes:
+  main_length_steps: 32
+  main_event_prevalence: 0.50
+  stress_event_prevalence: [0.05, 0.20]
+  template_families: [abrupt, gradual, intermittent, evidence_delay, evidence_conflict, modality_missingness]
+  top_level_families_are_reporting_strata: true
+  concrete_generator_families_disjoint_across_pools: true
+  template_ids_and_parameter_instances_disjoint_across_pools: true
+  artifact_separation:
+    partitioning: separate_directory_per_executable_episode_pool
+    model_feature_artifact: episode_features
+    model_graph_artifact: episode_graph_edges
+    provenance_sidecar: episode_feature_audit
+    truth_artifact: episode_labels
+    trainer_read_acl: [D_e_tr_episode_features, D_e_tr_episode_graph_edges, D_e_tr_episode_labels]
+    selector_read_acl: [D_e_sel_episode_features, D_e_sel_episode_graph_edges, D_e_sel_episode_labels]
+    policy_fitter_read_acl: [D_e_pol_episode_features, D_e_pol_episode_graph_edges, D_e_pol_episode_labels]
+    test_predictor_read_acl: [D_e_te_episode_features, D_e_te_episode_graph_edges, frozen_model, frozen_policy]
+    evaluator_read_acl: [episode_predictions, episode_labels, episode_feature_audit, release_record]
+    test_predictor_forbidden_artifacts: [D_e_te_episode_labels, D_e_te_episode_feature_audit]
+    tensor_builder_drops: [episode_id, step_index, record_id]
+    graph_input_forbids: [pair_id, raw_group_id, source_component_id, dataset_id, pool, generator_family_id, template_instance_id]
+  independence:
+    raw_group_reuse_within_pool_and_episode_seed: false
+    cross_episode_seed_reuse_role: repeated_design_not_independent_sample
+    source_component_definition: connected_component_of_episode_raw_group_bipartite_graph_across_episode_seeds
+    bootstrap_unit: source_component_id
+  truth_construction:
+    allowed_semantics: [observable_presence,annotated_anomaly,threshold_risk]
+    raw_step_truth_source: retained_raw_annotation_or_locked_threshold_rule
+    template_can_select_and_order_only: true
+    template_cannot_relabel_presence_as_operational_risk: true
+    confirmatory_negative_requires: exhaustive_verified_absence_or_explicit_negative_label
+    operational_risk_wording_requires: annotated_anomaly_or_threshold_risk
+    observable_presence_role: mechanism_evaluation_only
+  shortcut_audits:
+    no_additional_training: true
+    structural_forbidden_feature_checks: [step_index,record_id,template_instance_id,generator_family_id,pool]
+    full_checkpoint_inference_controls:
+      modality_mask_only: replace_all_branch_scores_with_D_e_tr_concept_priors_and_keep_masks
+      temporal_order_shuffle: derange_steps_within_episode_concept_and_keep_node_rows
+      branch_score_shuffle: derange_scores_within_pool_concept_modality_and_availability_stratum
+    prediction_step: E305
+    evaluation_step: E310
+    require_same_full_checkpoint_hash: true
+  shortcut_max_metric: TBD_G1_PRETEST
+  fusion_primary:
+    population: fusion_eligible_multibranch_concept_events_in_locked_main_episode_test
+    required_distinct_eligible_branch_types_per_concept: 2
+    event_eligibility_rule: at_least_one_truth_or_forecast_window_step_has_two_available_valid_branch_types
+    independent_multibranch_positive_group_floor: data.positive_group_floor_per_claimed_class
+    eligibility_uses_model_scores_or_test_metrics: false
+    single_branch_concepts_role: branch_or_diagnostic_only
+    claim_blocked_if_population_empty: true
+    blocked_claims_if_empty: [C-FUSION,C-MEMORY,C-GRAPH]
+    conditional_trained_families: [E2-LOGIT,E3-NOREL,E3-FULL]
+    conditional_no_train_families: [E2-MEAN,E3-NOMEM]
+  graph_primary:
+    allowed_edge_provenance: [observed_pair]
+    require_non_self_edge: true
+    require_two_available_modalities_per_scored_step: true
+    report_separately_from_fusion_primary: true
+    eligibility_lock: TBD_G1
+    pair_alignment_shuffle:
+      permutation_unit: within_pool_concept_modality_and_availability_stratum
+      require_derangement: true
+      preserve_node_marginals: true
+      reuse_frozen_full_model: true
+      permutation_seeds: [9103, 9137, 9161]
+    claim_support_requires: [holm_adjusted_full_vs_no_graph_pass,pair_shuffle_direction_consistent,nonzero_edge_trace]
+    pair_shuffle_role: supporting_falsification_control_not_separate_confirmatory_endpoint
+    edge_trace_minimum_nonzero_scored_step_fraction: TBD_G1_PRETEST
+    conditional_trained_family: E3-NOGRAPH
+    conditional_no_train_family: E3-SHUFFLE
+    ineligible_family_status: not_applicable_by_PRETEST_gate
+  secondary_virtual_edges:
+    allowed_edge_provenance: [virtual_compatibility]
+    can_support_graph_claim: false
+  target_answer_coverage: 0.90
+  policy_calibration:
+    pool: D_e_pol
+    selection_only_not_sensitivity_experiment: true
+    beta_candidates: [0.70, 0.85]
+    memory_k_candidates: [2, 3]
+    hysteresis_threshold_pairs: [[0.30, 0.60], [0.40, 0.70]]
+    alarm_threshold_candidates: [0.80]
+    abstention_threshold_start: 0.10
+    abstention_threshold_stop: 0.90
+    abstention_threshold_step: 0.05
+    max_target_answer_coverage_absolute_deviation: 0.02
+    max_pairwise_answer_coverage_difference: 0.02
+    coverage_tie_break: higher_answer_coverage_then_lower_abstention_threshold
+    freeze_before_episode_test_prediction: true
+  policy_constraints:
+    max_false_alarms_per_100_episodes: TBD_G1_PRETEST
+    max_event_miss_rate: TBD_G1_PRETEST
+    tie_break_order: [constraints, macro_f1, lower_delay, lower_state_flips, simpler_model]
+    no_feasible_candidate: mark_policy_infeasible_block_confirmatory_endpoint_and_report_lowest_miss_then_lowest_false_alarm_candidate_diagnostic_only
+
+confirmatory_endpoints:
+  V2:
+    population: primary_direction_10_percent_target_groups
+    estimand: map50_95_multi_coal_minus_generic_matched
+    repeat_design: three_locked_train_subset_pairs
+    minimum_meaningful_effect_pp: TBD_G1_PRETEST
+  T1:
+    population: locked_primary_rgbt_test_groups
+    estimand: branch_input_validity_only
+    repeat_design: single_locked_seed
+    superiority_claim_enabled: false
+  S1:
+    population: purged_future_risk_test_blocks
+    estimand: gru_event_macro_f1_at_frozen_threshold
+    key_contrast: gru_minus_frozen_strongest_non_neural
+    repeat_design: three_training_seeds
+    minimum_meaningful_effect_pp: TBD_G1_PRETEST
+  E2_E3:
+    population: fusion_eligible_multibranch_concept_events_in_locked_main_episode_test
+    estimand: full_minus_calibrated_logit_event_macro_f1
+    answer_coverage: 0.90
+    repeat_design: three_episode_seeds
+    minimum_meaningful_effect_pp: TBD_G1_PRETEST
+  E3_RELIABILITY:
+    population: fusion_eligible_multibranch_concept_events_in_locked_main_episode_test
+    estimand: full_minus_no_reliability_event_macro_f1
+    repeat_design: three_episode_seeds
+    minimum_meaningful_effect_pp: TBD_G1_PRETEST
+  E3_GRAPH:
+    population: graph_eligible_observed_pair_concept_events
+    estimand: full_minus_no_graph_event_macro_f1
+    repeat_design: three_episode_seeds
+    minimum_meaningful_effect_pp: TBD_G1_PRETEST
+    claim_blocked_if_population_empty: true
+  E3_MEMORY:
+    population: fusion_eligible_multibranch_concept_events_in_locked_main_episode_test
+    estimand: full_minus_no_memory_event_macro_f1
+    repeat_design: three_episode_seeds
+    minimum_meaningful_effect_pp: TBD_G1_PRETEST
+  R1:
+    population: locked_corrupted_visual_test_pairs
+    cell_relative_drop_percent_formula: 100_times_clean_map_minus_corrupted_map_divided_by_clean_map
+    clean_map50_95_validity_floor: TBD_G1_PRETEST
+    primary_cell_set: cartesian_product_of_2_locked_corruption_types_and_3_locked_severity_levels
+    cell_aggregation: equal_weight_macro_mean_across_6_deterministic_type_by_severity_cells_within_each_diagonal_model_repeat
+    estimand: paired_macro_relative_drop_percent
+    key_contrast: multi_coal_macro_relative_drop_minus_generic_matched_macro_relative_drop
+    repeat_design: three_diagonal_model_repeats
+    secondary_reports: [per_type_severity_curve, absolute_drop, clean_performance]
+    invalid_if_clean_map_below_floor: true
+    minimum_meaningful_effect_pp: TBD_G1_PRETEST
+
+statistics:
+  confidence_level: 0.95
+  bootstrap_draws: 10000
+  bootstrap_unit: smallest_independent_raw_group
+  episode_bootstrap_unit: source_component_id
+  paired_bootstrap_for_primary_contrasts: true
+  repeat_layer_aggregation:
+    branch_pairing_keys: [training_seed, fewshot_subset_seed_when_applicable]
+    episode_pairing_keys: [episode_seed]
+    deterministic_S1_reference_rule: pair_the_same_frozen_non_neural_prediction_with_each_gru_training_seed_for_effect_calculation_without_creating_reference_replicates
+    within_each_bootstrap_draw: recompute_metric_per_complete_repeat_cell_then_equal_weight_mean_of_paired_effects
+    absolute_endpoint_rule: recompute_metric_per_repeat_cell_then_equal_weight_mean
+    repeat_variability_report: per_repeat_values_mean_and_standard_deviation
+    missing_confirmatory_repeat_cell: block_endpoint
+    no_seed_or_subset_row_is_an_independent_bootstrap_cluster: true
+  secondary_multiplicity: holm
+  secondary_alpha: 0.05
+  mechanism_claim_family: [E3_RELIABILITY, E3_GRAPH, E3_MEMORY]
+  multiplicity_reporting: unadjusted_95_percent_ci_plus_holm_adjusted_p_value_and_decision
+  superiority_rule:
+    require_favorable_direction: true
+    require_ci_excludes_zero: true
+    require_minimum_meaningful_effect: true
+  inconclusive_if_ci_crosses_zero: true
+  retain_negative_results: true
+
+efficiency:
+  partition: '3090'
+  batch_size: 1
+  candidate_modules:
+    visible_inference:
+      family_id: V2-A-10-MULTI
+      eligibility: family_pass_and_checkpoint_available
+    thermal_inference:
+      family_id: T1-THERM
+      eligibility: family_pass_and_checkpoint_available
+    sensor_inference:
+      family_id: S1-GRU
+      eligibility: family_pass_and_checkpoint_available
+    graph_fusion:
+      family_id: E3-FULL
+      eligibility: fusion_primary_population_nonempty_and_G5_pass_and_checkpoint_available
+  scope_manifest: results/C1/efficiency_scope.csv
+  scope_completion_rule: every_candidate_is_measured_or_not_applicable_with_gate_hash_and_reason
+  ineligible_candidate_status: not_applicable
+  no_eligible_candidate_action: do_not_submit_Slurm_write_complete_scope_manifest_and_remove_C_EFFICIENCY
+  checkpoint_substitution_for_ineligible_candidate: forbidden
+  module_input_contracts:
+    visible_inference: [1, 3, 640, 640]
+    thermal_inference: [1, 3, 640, 640]
+    sensor_inference: TBD_PRETEST
+    graph_fusion: episode_length_32_with_locked_node_and_edge_schema
+  runtime_backend: TBD_PRETEST
+  model_format: TBD_PRETEST
+  precision: TBD_PRETEST
+  warmup_iterations: 50
+  timed_iterations: 200
+  independent_repeats: 1
+  cuda_synchronize: true
+  fixed_cpu_affinity: TBD_PILOT
+  same_allocation_per_comparison: true
+  concurrent_gpu_jobs_allowed: false
+  record_gpu_uuid_clock_and_driver: true
+  software_stack_hash_required: true
+  raw_trace_artifact: evidence/g6/efficiency_trace.parquet
+  summary_artifact: evidence/g6/efficiency_summary.parquet
+  representative_seed_rule: median_validation_rank_then_smallest_seed
+  report_modules_separately: true
+
+resources:
+  default_partition: '3090'
+  allowed_partitions: [cu, fat, '3090', A100]
+  max_array_concurrency: TBD_PILOT
+  gpu_hour_caps:
+    pilot: TBD_PILOT
+    G2: TBD_PILOT
+    G3: TBD_PILOT
+    G4: TBD_PILOT
+    G5: TBD_PILOT
+    G6_G7: TBD_PILOT
+  resource_budget_artifact: evidence/pretest/resource_budget.lock.json
+  resource_budget_required_fields: [family_id,run_count,pilot_seconds_per_update,projected_gpu_hours,projected_storage_gib,priority,cap_decision]
+  priority_order: [V2_primary, S1_primary, E2_E3_primary, T1_input_validity, R1_secondary, efficiency]
+  post_pretest_budget_change_rule: invalidate_pretest_and_relock_whole_secondary_family_and_claim_before_any_test_release
+  selective_run_deletion_forbidden: true
+
+remote_execution:
+  submit_prechecks: [sinfo, squeue_for_user, input_hashes, synchronized_code_hash]
+  heavy_login_node_work_forbidden: true
+  batch_submission_required: true
+  monitor_interval_minutes_while_running: 30
+  monitor_fields: [slurm_state, compute_node_gpu_telemetry, relevant_processes, recent_logs, checkpoints, results, synchronization_state]
+  connection_failure_rule: record_once_and_do_not_repeat_immediately
+  completion_rule: continue_evaluation_synchronization_and_document_steps_automatically
+  per_remote_action_closeout_required: true
+  final_account_wide_closeout_steps: [E900, E910]
+
+evidence:
+  run_bundle_schema_version: 2
+  artifact_contract: configs/artifact_contract.template.yaml
+  require_per_item_predictions: true
+  require_artifact_sha256: true
+  require_remote_closeout_for_remote_steps: true
+  gate_template: configs/evidence_gate.template.json
+  manuscript_value_source: evidence_sync/aggregate/manuscript_values.json
+
+locks:
+  source_code_hash_manifest: evidence/pretest/source_code_hashes.json
+  source_code_hash_scope: [mining1_exp, tests, tools/preflight, tools/remote, tools/validate_minimal_plan.py, slurm, pyproject.toml, lockfiles]
+  source_code_hash_rule: sha256_of_canonical_sorted_relative_path_and_file_sha256_manifest
+  source_code_sha256: TBD_PRETEST
+  artifact_contract_sha256: TBD_PRETEST
+  experiment_matrix_sha256: TBD_PRETEST
+  experiment_steps_hash_rule: canonical_json_sha256_of_ordered_rows_excluding_mutable_status
+  experiment_steps_sha256: TBD_PRETEST
+  implementation_pass_sha256: TBD_PRETEST
+  protocol_hash_sidecar: evidence/pretest/protocol_lock.sha256
+  protocol_hash_rule: sha256_of_exact_frozen_protocol_lock_bytes_no_embedded_self_hash
+  branch_test_candidate_sealed: true
+  branch_test_final_seal_external_to_protocol: true
+  branch_test_released: false
+  branch_prediction_lock: null
+  episode_test_sealed: false
+  episode_test_released: false
+  episode_prediction_lock: null
+  forbid_tbd_on_pretest_lock: true

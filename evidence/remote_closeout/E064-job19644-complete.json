@@ -1,0 +1,37 @@
+﻿{
+    "trigger_step_id":  "E064",
+    "remote_action_id":  "job19644-complete",
+    "remote_action_at":  "2026-07-17T01:57:23.0000000+00:00",
+    "trigger_kind":  "remote_action_end",
+    "closed_at":  "2026-07-17T02:01:07.8226195+00:00",
+    "host":  "xinxi-zhyh@211.87.115.228",
+    "account_scope":  "all_user_owned_work",
+    "current_project_job_pattern":  "(?i)mining1",
+    "slurm_jobs_and_allocations":  [
+
+                                   ],
+    "interactive_sessions":  [
+
+                             ],
+    "tmux_and_screen_sessions":  [
+
+                                 ],
+    "relevant_processes":  [
+
+                           ],
+    "transfers_and_monitors":  [
+
+                               ],
+    "unsynchronized_artifacts":  [
+
+                                 ],
+    "retained_resources_with_reason":  [
+
+                                       ],
+    "cancellation_or_release_actions":  [
+
+                                        ],
+    "provider_stop_action":  "not_applicable_shared_slurm_host_no_active_allocation",
+    "final_billing_state":  "verified_nonbilling",
+    "verification_note":  "Logging out or closing SSH is not billing-stop evidence; final state comes from the second account-wide Slurm audit."
+}

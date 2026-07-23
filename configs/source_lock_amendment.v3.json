@@ -1,0 +1,61 @@
+{
+  "amended_source_code_sha256": "0c76664f52706561f7d78dfa1a784fe6adaf50049b938ed476e622702e12cc7a",
+  "amendment_id": "E100-E120-E200-dispatch-fallback-amendment-v3",
+  "authorized_at": "2026-07-18T01:10:00Z",
+  "base_protocol_path": "configs/protocol_lock.pretest.yaml",
+  "base_protocol_sha256": "a5c460a64750d56678053a7eb7d743daf1594466dc2483ffbab94d69ef360180",
+  "base_source_code_sha256": "51a55dc7b1220be518bdb545076bac3fc1446e93cb081bb716dbeaa12e4cf0ac",
+  "base_source_manifest_path": "evidence/pretest/source_code_hashes.json",
+  "base_source_manifest_sha256": "ffc6c6ffa9b30a4af494e0265ba0ed1a5e4daf63f993d183c679d0a7442068cc",
+  "branch_test_artifacts": {
+    "candidate_seal": "data/seals/branch_test_seal_candidate.amendment_v2.json",
+    "concept_truth": "data/sealed/branch_concept_truth.amendment_v2.parquet",
+    "detection_truth": "data/sealed/branch_detection_truth.amendment_v2.parquet",
+    "feature_manifest": "data/locked/branch_test_feature_manifest.amendment_v2.json",
+    "feature_store": "data/locked/branch_test_features.amendment_v2.parquet",
+    "final_seal": "data/seals/branch_test_seal.amendment_v2.json",
+    "truth_manifest": "data/sealed/branch_test_truth_manifest.amendment_v2.json"
+  },
+  "change_scope": [
+    "add Slurm runner project-root cwd and PYTHONPATH binding before python -m mining1_exp.cli",
+    "preserve E100/E120 amendment v2 branch-test artifact bindings while routing new retries through amendment v3 source hashes",
+    "turn reviewed C-TRANSFER fewer-than-two-source fallback into explicit E200/E202 multi-coal not_applicable Slurm receipts instead of failed training attempts",
+    "extend local Slurm and remote dispatcher tests for the import-path repair and reviewed not_applicable branch"
+  ],
+  "lineage_policy": {
+    "duplicate_runs_forbidden": true,
+    "historical_evidence_preserved": true,
+    "retain_v1": [
+      "E100 T1-VIS task 0 from Slurm job 19701_0",
+      "all E200 tasks from Slurm array job 19702"
+    ],
+    "retain_v2_failures": [
+      "E100 thermal Slurm 19710_1 import failure",
+      "E120 Slurm 19711 import failure"
+    ],
+    "use_v2": [
+      "single E100 T1-TH retry",
+      "single E120 retry",
+      "future tasks not already started under v1"
+    ],
+    "use_v3": [
+      "single E100 T1-TH retry after import-path repair",
+      "single E120 retry after import-path repair",
+      "E200/E202 multi-coal not_applicable retry receipts when C-TRANSFER fallback is reviewed"
+    ]
+  },
+  "schema_version": 1,
+  "source_manifest_path": "evidence/pretest/source_code_hashes.amendment_v3.json",
+  "source_manifest_sha256": "a46f96eabbe9555a013e6369561ef40c492365b8f47e18ef20fe10d37f32e5ad",
+  "status": "locked",
+  "unchanged_contract": [
+    "claims",
+    "experiment plan",
+    "datasets and splits",
+    "model definitions",
+    "metrics and thresholds",
+    "statistical analysis",
+    "completion criteria"
+  ],
+  "user_authorization": "处理阻塞并继续"
+}

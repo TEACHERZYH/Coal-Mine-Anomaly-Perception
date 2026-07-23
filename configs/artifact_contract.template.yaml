@@ -1,0 +1,1201 @@
+schema_version: 2
+status: template_not_locked
+
+common:
+  null_tokens_forbidden: ["", "NA_AS_VALUE", "unknown_without_reason"]
+  timestamp_format: iso8601_with_timezone
+  hash_algorithm: sha256
+  path_style_in_artifacts: posix_relative_to_artifact_root
+  stable_id_encoding: utf8_nfc
+  formal_write_mode: atomic_then_hash
+
+artifacts:
+  source_registry:
+    format: csv
+    primary_key: [dataset_id, source_version]
+    required_columns:
+      dataset_id: string
+      source_version: string
+      official_url_or_doi: string
+      access_date: date
+      license_id: string
+      license_evidence_path: string
+      access_mode: enum(open,application_required,restricted,reject)
+      expected_modality: string
+      expected_annotation: string
+      planned_role: string
+      verification_status: enum(pending,pass,reject,blocked)
+
+  archive_manifest:
+    format: csv
+    primary_key: [dataset_id, archive_id]
+    required_columns:
+      dataset_id: string
+      archive_id: string
+      source_url_or_doi: string
+      access_date: date
+      license_id: string
+      version: string
+      local_or_remote_path: string
+      byte_size: int64_nonnegative
+      sha256: sha256
+      acquisition_route: enum(local_existing,remote_existing,domestic_remote_download,local_download_upload)
+      verification_status: enum(pass,reject,blocked)
+
+  smoke_sample_manifest:
+    format: csv
+    primary_key: [dataset_id, smoke_record_id]
+    required_columns:
+      dataset_id: string
+      smoke_record_id: string
+      archive_id: string
+      archive_sha256: sha256
+      archive_member_path: string
+      selection_rank: int64_positive
+      selection_rule: string
+      extraction_site: enum(local,remote_cu)
+      local_minimal_path: string
+      minimal_file_sha256: sha256
+    constraints:
+      - deterministic_bounded_sample_per_dataset
+      - remote_only_archive_returns_minimal_members_not_full_archive_or_tree
+      - no_full_local_extraction
+
+  file_manifest:
+    format: parquet
+    primary_key: [dataset_id, record_id]
+    required_columns:
+      dataset_id: string
+      record_id: string
+      archive_id: string
+      relative_path: string
+      modality: string
+      raw_group_id: string
+      pair_id: nullable_string
+      sequence_id: nullable_string
+      timestamp_or_order: nullable_string
+      label_summary_json: json_string
+      byte_size: int64_nonnegative
+      sha256: sha256
+    foreign_keys:
+      archive_id: archive_manifest.archive_id
+    constraints:
+      - relative_path_is_unique_within_dataset
+      - raw_group_id_is_never_null
+      - pair_id_is_required_only_for_declared_paired_roles
+
+  ontology_lock:
+    format: yaml
+    primary_key: [ontology_version, dataset_id, source_label]
+    required_fields:
+      ontology_version: string
+      dataset_id: string
+      source_label: string
+      canonical_concept_id: nullable_string
+      mapping_status: enum(compatible,ignored,unmapped,reject)
+      annotation_policy: string
+      event_semantics: enum(observable_presence,annotated_anomaly,threshold_risk,not_event_eligible)
+      negative_semantics: enum(exhaustive_verified_absence,unverified_missing_annotation,not_applicable)
+      allowed_tasks: list
+      evidence_reference: string
+      reviewer_decision: string
+    constraints:
+      - no_name_only_mapping_without_annotation_evidence
+      - incompatible_annotation_policies_not_merged
+      - confirmatory_f1_requires_exhaustive_verified_absence_or_explicit_negative_label
+
+  split_manifest:
+    format: parquet
+    primary_key: [dataset_id, record_id]
+    required_columns:
+      dataset_id: string
+      record_id: string
+      raw_group_id: string
+      pool: enum(D_b_tr,D_b_sel,D_b_prob,D_b_te,D_e_tr,D_e_sel,D_e_pol,D_e_te)
+      split_seed: int64
+      split_version: string
+      ontology_hash: sha256
+      dedup_report_hash: sha256
+    constraints:
+      - one_raw_group_one_top_level_pool
+      - no_exact_or_near_duplicate_cross_pool
+
+  branch_detection_feature_view:
+    format: parquet
+    generated_at: E060
+    primary_key: [dataset_id, record_id]
+    required_columns:
+      dataset_id: string
+      record_id: string
+      archive_id: string
+      relative_path: string
+      modality: enum(visible,thermal)
+      raw_group_id: string
+      pair_id: nullable_string
+      sequence_id: nullable_string
+      timestamp_or_order: nullable_string
+      byte_size: int64_nonnegative
+      sha256: sha256
+    forbidden_columns: [label_summary_json,boxes,concept_truth,test_label]
+    constraints:
+      - contains_only_D_b_te_detection_records
+      - predictor_reads_this_feature_only_view_instead_of_the_labeled_file_manifest
+
+  branch_methane_feature_view:
+    format: parquet
+    generated_at: E050
+    primary_key: [window_id]
+    forbidden_columns: [event_truth,future_max,test_label]
+    constraints:
+      - contains_only_D_b_te_methane_windows
+      - history_json_contains_only_causal_history_and_missingness_masks
+
+  branch_test_feature_manifest:
+    format: json
+    generated_at: E060
+    required_fields:
+      schema_version: int32_positive
+      scope: const(branch)
+      pool: const(D_b_te)
+      detection_features: object_path_hash_count
+      methane_features: object_path_hash_count
+    constraints:
+      - hash_is_bound_as_test_seal_feature_manifest_hash
+      - each_component_hash_and_row_count_is_reverified_at_E068_and_E206
+
+  branch_detection_truth:
+    format: parquet
+    generated_at: E060
+    primary_key: [dataset_id, record_id, box_id]
+    required_columns:
+      dataset_id: string
+      record_id: string
+      raw_group_id: string
+      concept_id: string
+      box_id: int64_nonnegative
+      x1: float32
+      y1: float32
+      x2: float32
+      y2: float32
+    constraints:
+      - stored_under_data_sealed
+      - denied_to_training_selection_calibration_prediction_and_human_review_roles
+      - released_only_after_all_branch_prediction_locks_close
+
+  branch_concept_truth:
+    format: parquet
+    generated_at: E060
+    primary_key: [dataset_id, record_id, concept_id]
+    required_columns:
+      dataset_id: string
+      record_id: string
+      raw_group_id: string
+      concept_id: string
+      concept_truth: int32_binary
+    constraints:
+      - complete_record_by_frozen_concept_cross_product
+      - absent_concept_is_negative_only_when_annotation_absence_is_verified
+      - stored_and_released_with_branch_detection_truth
+
+  branch_methane_truth:
+    format: parquet
+    generated_at: E050
+    primary_key: [window_id]
+    required_columns:
+      window_id: string
+      raw_group_id: string
+      sensor_group_id: string
+      pool: const(D_b_te)
+      timestamp_seconds: int64
+      raw_value: float64
+      event_truth: int32_binary
+    constraints:
+      - physically_separate_from_methane_non_test_truth
+      - denied_to_training_selection_calibration_prediction_and_human_review_roles
+      - hash_is_bound_into_branch_test_truth_manifest_at_E060
+
+  branch_test_truth_manifest:
+    format: json
+    generated_at: E060
+    required_fields:
+      schema_version: int32_positive
+      scope: const(branch)
+      pool: const(D_b_te)
+      detection_truth: object_path_hash_count
+      concept_truth: object_path_hash_count
+      methane_truth: object_path_hash_count
+      record_count: int64_positive
+      raw_group_count: int64_positive
+    constraints:
+      - hash_is_bound_as_test_seal_label_manifest_hash
+      - each_sealed_truth_hash_and_row_count_is_reverified_at_E061_and_E206
+
+  fewshot_manifest:
+    format: parquet
+    primary_key: [dataset_id, direction_id, ratio_percent, subset_seed, raw_group_id]
+    required_columns:
+      dataset_id: string
+      direction_id: string
+      ratio_percent: const(10)
+      subset_seed: int64
+      raw_group_id: string
+      included: bool
+      class_group_counts_json: json_string
+      parent_manifest_hash: sha256
+    constraints:
+      - exactly_one_preregistered_10_percent_subset_per_direction_and_subset_seed
+      - groups_only_from_D_b_tr
+
+  rgbt_pair_manifest:
+    format: parquet
+    primary_key: [dataset_id, pair_id]
+    required_columns:
+      dataset_id: string
+      pair_id: string
+      raw_group_id: string
+      visible_record_id: string
+      thermal_record_id: string
+      pair_provenance: enum(official_index,verified_filename_mapping,verified_timestamp_mapping)
+      annotation_compatibility: enum(pass,reject)
+      pool: string
+    constraints:
+      - visible_and_thermal_records_exist
+      - both_records_share_raw_group_and_pool
+
+  graph_eligibility:
+    format: yaml
+    primary_key: [concept_id, modality_a, modality_b, edge_provenance]
+    required_fields:
+      ontology_hash: sha256
+      pair_manifest_hash: sha256
+      concept_id: string
+      modality_a: string
+      modality_b: string
+      edge_provenance: enum(observed_pair,virtual_compatibility)
+      non_self_edge: bool
+      pool_group_counts: mapping
+      eligibility: enum(graph_primary,secondary_virtual_edge,branch_temporal_only,reject)
+      reason: string
+    constraints:
+      - graph_primary_requires_observed_pair
+      - graph_primary_requires_two_available_modalities
+      - graph_primary_requires_group_floor_in_all_episode_pools
+
+  fusion_eligibility:
+    format: parquet
+    generated_at: E058
+    primary_key: [concept_id]
+    required_columns:
+      concept_id: string
+      eligible_branch_types: list
+      eligible_branch_type_count: int64_nonnegative
+      independent_multibranch_positive_group_count: int64_nonnegative
+      multibranch_event_count_by_pool: mapping
+      fusion_primary_eligible: bool
+      exclusion_reason: nullable_string
+      ontology_lock_hash: sha256
+      split_manifest_hash: sha256
+      episode_skeleton_candidate_hash: sha256
+    forbidden_columns: [model_score,validation_metric,test_metric,claim_direction]
+    constraints:
+      - primary_eligibility_requires_at_least_two_distinct_valid_branch_types
+      - primary_eligibility_requires_the_locked_positive_group_floor
+      - eligibility_is_computed_without_model_scores_or_test_metrics
+      - empty_primary_population_blocks_fusion_memory_and_graph_claims
+
+  dataset_roles:
+    format: yaml
+    primary_key: [role_id]
+    required_fields:
+      role_id: string
+      dataset_ids: list
+      direction_id: nullable_string
+      allowed_claim_ids: list
+      source_manifest_hash: nullable_sha256
+      ontology_hash: sha256
+      split_hash: sha256
+      decision: enum(confirmatory,replication,exploratory_only,diagnostic_only,reject)
+      decision_reason: string
+    constraints:
+      - selected_without_model_test_results
+      - target_all_pools_excluded_from_direction_source_manifest
+
+  methane_window_manifest:
+    format: parquet
+    primary_key: [dataset_id, window_id]
+    required_columns:
+      dataset_id: string
+      window_id: string
+      raw_group_id: string
+      sensor_group_id: string
+      history_start: timestamp
+      history_end: timestamp
+      forecast_end: timestamp
+      pool: string
+      target_sensor_variant: string
+      feature_manifest_hash: sha256
+      label_manifest_hash: sha256
+    constraints:
+      - history_precedes_forecast
+      - purge_gap_covers_history_plus_horizon
+      - normalization_fit_only_D_b_tr
+
+  detection_predictions:
+    format: parquet
+    primary_key: [run_id, record_id, detection_id]
+    required_columns:
+      run_id: string
+      record_id: string
+      raw_group_id: string
+      prediction_role: enum(branch_test,episode_pool)
+      pool_role: enum(D_b_te,D_e_tr,D_e_sel,D_e_pol,D_e_te)
+      detection_id: int64_nonnegative
+      concept_id: string
+      x1: float32
+      y1: float32
+      x2: float32
+      y2: float32
+      score_raw: float32_0_1
+      score_calibrated: float32_0_1
+      modality: string
+      available: bool
+      model_hash: sha256
+      calibrator_hash: sha256
+    forbidden_columns: [label,labels,ground_truth,truth_box,truth_class,test_label,dataset_id_as_feature]
+    constraints:
+      - branch_test_role_requires_D_b_te
+      - episode_pool_role_requires_one_of_D_e_tr_D_e_sel_D_e_pol_D_e_te
+      - episode_pool_predictions_use_the_E300_frozen_branch_generator_lock
+
+  detection_concept_predictions:
+    format: parquet
+    primary_key: [run_id, record_id, concept_id, modality]
+    required_columns:
+      run_id: string
+      record_id: string
+      raw_group_id: string
+      prediction_role: enum(branch_test,episode_pool)
+      pool_role: enum(D_b_te,D_e_tr,D_e_sel,D_e_pol,D_e_te)
+      concept_id: string
+      modality: string
+      step_score_raw: float32_0_1
+      concept_probability_calibrated: float32_0_1
+      available: bool
+      detector_hash: sha256
+      ontology_hash: sha256
+      aggregation_rule_hash: sha256
+      calibrator_hash: sha256
+    forbidden_columns: [label,labels,ground_truth,truth_box,truth_class,concept_truth,test_label,dataset_id_as_feature]
+    constraints:
+      - exactly_one_row_per_record_retained_concept_and_modality
+      - step_score_is_max_post_nms_compatible_box_score_else_zero
+      - calibrator_is_selected_and_refit_only_on_D_b_prob
+      - calibrated_probability_is_the_detection_feature_consumed_by_episode_builder
+      - branch_test_role_requires_D_b_te
+      - episode_pool_role_requires_one_of_D_e_tr_D_e_sel_D_e_pol_D_e_te
+      - episode_pool_predictions_use_the_E300_frozen_branch_generator_lock
+      - absence_truth_for_calibration_requires_exhaustive_verified_absence_or_explicit_negative_label
+
+  temporal_predictions:
+    format: parquet
+    primary_key: [run_id, window_id, concept_id]
+    required_columns:
+      run_id: string
+      window_id: string
+      raw_group_id: string
+      prediction_role: enum(branch_test,episode_pool)
+      pool_role: enum(D_b_te,D_e_tr,D_e_sel,D_e_pol,D_e_te)
+      concept_id: string
+      score_raw: float32_0_1
+      score_calibrated: float32_0_1
+      abstained: bool
+      model_hash: sha256
+      policy_hash: sha256
+    forbidden_columns: [future_value,event_truth,test_label,forecast_label]
+    constraints:
+      - branch_test_role_requires_D_b_te
+      - episode_pool_role_requires_one_of_D_e_tr_D_e_sel_D_e_pol_D_e_te
+      - episode_pool_predictions_use_the_E300_frozen_branch_generator_lock
+
+  corruption_manifest:
+    format: parquet
+    primary_key: [record_id, corruption_type, severity]
+    required_columns:
+      record_id: string
+      raw_group_id: string
+      corruption_type: enum(low_light,dust_fog_proxy)
+      severity: int32_1_3
+      operator_version: string
+      generator_hash: sha256
+      parameter_json: json_string
+      source_feature_hash: sha256
+      corrupted_feature_hash: sha256
+      label_independent: const_true
+    constraints:
+      - parameterization_frozen_before_PRETEST_LOCK
+      - generation_inputs_exclude_boxes_labels_truth_predictions_and_saliency
+      - same_record_type_and_severity_produces_identical_bytes
+      - compared_models_share_exact_corrupted_feature_hash
+
+  test_seal:
+    format: json
+    required_fields:
+      scope: enum(branch,episode)
+      stage: enum(candidate,final)
+      split_hash: sha256
+      feature_manifest_hash: sha256
+      label_manifest_hash: sha256
+      feature_acl: list
+      label_acl: list
+      artifact_contract_hash: sha256
+      sealed_at: timestamp
+      status: const(sealed)
+    conditional_fields:
+      candidate_seal_hash: required_for_final
+      episode_skeleton_candidate_seal_hash: required_for_episode_final
+      protocol_hash: required_for_final
+      source_hash: required_for_final
+      matrix_hash: required_for_final
+    constraints:
+      - training_selection_calibration_and_prediction_roles_denied_label_acl
+      - evaluator_denied_until_matching_prediction_lock
+      - protocol_embeds_candidate_hash_not_final_seal_hash_to_avoid_hash_cycle
+      - episode_final_seal_binds_both_skeleton_and_label_candidate_seal_hashes
+      - seal_is_append_only_and_never_mutated_on_release_or_invalidation
+      - release_or_invalidation_is_a_separate_signed_artifact_referencing_the_seal_hash
+
+  episode_test_seal_candidate:
+    format: json
+    generated_at: E301
+    required_fields:
+      scope: const(episode)
+      stage: const(candidate)
+      skeleton_manifest_hash: sha256
+      skeleton_candidate_seal_hash: sha256
+      feature_manifest_hash: sha256
+      label_manifest_hash: sha256
+      label_row_count: int64_nonnegative
+      raw_group_count: int64_nonnegative
+      label_acl: list
+      acl_hash: sha256
+      artifact_contract_hash: sha256
+      created_at: timestamp
+    forbidden_fields: [class_counts,event_rates,per_concept_rates,metric_summaries,label_samples]
+    constraints:
+      - E301_writes_test_labels_atomically_into_denied_acl_storage
+      - training_selection_calibration_prediction_and_human_review_roles_are_denied
+      - receipt_exposes_only_hashes_counts_and_acl_state
+      - E302_final_seal_references_candidate_seal_hash_without_mutating_candidate
+      - E302_final_seal_also_references_the_E058_skeleton_candidate_seal_hash
+
+  episode_skeleton_manifest:
+    format: parquet
+    primary_key: [episode_id, step_index, concept_id, node_id]
+    required_columns:
+      skeleton_item_id: sha256
+      episode_id: string
+      step_index: int64_nonnegative
+      record_id: string
+      raw_group_id: string
+      concept_id: string
+      node_id: string
+      pool: enum(D_e_tr,D_e_sel,D_e_pol,D_e_te)
+      episode_seed: int64_positive
+      generator_family_id: string
+      template_instance_id: string
+      template_family: enum(abrupt,gradual,intermittent,evidence_delay,evidence_conflict,modality_missingness)
+      event_position_role: string
+      source_split_hash: sha256
+      template_lock_hash: sha256
+    forbidden_columns: [model_score,model_prediction,validation_metric,test_metric,model_saliency,reliability_score]
+    constraints:
+      - skeleton_item_id_is_unique_opaque_and_uses_a_sealed_random_nonce
+      - skeleton_item_id_hash_preimage_uses_an_independent_sealed_repeat_row_salt_and_excludes_episode_step_pool_template_event_and_truth_fields
+      - skeleton_item_id_is_join_only_and_never_a_model_or_policy_feature
+      - generated_and_hashed_at_E058_before_branch_test_release
+      - every_record_belongs_to_its_locked_episode_pool
+      - raw_group_assigned_to_one_episode_within_pool_and_episode_seed
+      - test_skeleton_hash_is_bound_into_episode_test_seal
+      - full_D_e_te_partition_is_atomically_written_to_denied_acl_candidate_storage_at_E058
+      - trainer_selector_policy_predictor_and_human_review_roles_cannot_read_full_D_e_te_rows
+      - E300_predictor_receives_only_the_truth_free_inference_projection
+
+  episode_test_skeleton_candidate:
+    format: json
+    generated_at: E058
+    required_fields:
+      scope: const(episode_test_skeleton)
+      schema_hash: sha256
+      full_manifest_hash: sha256
+      inference_projection_hash: sha256
+      row_count: int64_nonnegative
+      raw_group_count: int64_nonnegative
+      acl_hash: sha256
+      created_at: timestamp
+    forbidden_fields: [event_counts,event_rates,event_positions,template_counts,per_concept_rates,label_samples]
+    constraints:
+      - full_test_skeleton_is_written_and_acl_verified_before_receipt_is_exposed
+      - receipt_exposes_no_event_template_or_label_distribution
+      - PRETEST_protocol_binds_candidate_hash_without_opening_full_rows
+
+  episode_skeleton_inference_projection:
+    format: parquet
+    generated_at: E058
+    primary_key: [skeleton_item_id]
+    required_columns:
+      skeleton_item_id: sha256
+      record_id: string
+      concept_id: string
+      node_id: string
+      generator_family_id: string
+    forbidden_columns: [episode_id,step_index,raw_group_id,source_component_id,pair_id,pool,episode_seed,dataset_id,template_instance_id,event_position_role,event_truth,state_truth,test_label]
+    constraints:
+      - exactly_one_projection_row_per_full_skeleton_row
+      - projection_hash_is_bound_into_episode_test_skeleton_candidate
+      - E300_predictor_can_read_projection_but_not_full_D_e_te_skeleton
+      - skeleton_item_id_is_used_only_for_join_and_output_keying
+
+  episode_branch_feature_manifest:
+    format: parquet
+    generated_at: E058
+    primary_key: [record_id]
+    required_columns:
+      dataset_id: string
+      record_id: string
+      raw_group_id: string
+      pair_id: nullable_string
+      modality: enum(visible,thermal,methane)
+      feature_kind: enum(image_path,causal_history_json)
+      relative_path: nullable_string
+      history_json: nullable_json_string
+      source_feature_sha256: sha256
+    forbidden_columns: [pool,event_position_role,event_truth,state_truth,test_label,label,truth]
+    constraints:
+      - every_projection_record_resolves_to_exactly_one_truth_free_source_feature
+      - image_and_methane_payloads_are_physically_separate_from_all_episode_truth
+      - E300_may_read_this_manifest_but_not_the_full_skeleton_or_feature_audit
+
+  episode_branch_predictions:
+    format: parquet
+    generated_at: E300
+    primary_key: [skeleton_item_id]
+    required_columns:
+      skeleton_item_id: sha256
+      record_id: string
+      concept_id: string
+      node_id: string
+      modality: string
+      step_score_raw: float32_0_1
+      calibrated_probability: float32_0_1
+      available: bool
+      generator_family_id: string
+      model_hash: sha256
+      calibrator_or_policy_hash: sha256
+      skeleton_manifest_hash: sha256
+      skeleton_inference_projection_hash: sha256
+    forbidden_columns: [episode_id,step_index,raw_group_id,source_component_id,pair_id,pool,dataset_id,template_instance_id,event_position_role,event_truth,state_truth,test_label]
+    constraints:
+      - exactly_one_prediction_row_for_every_E058_truth_free_inference_row
+      - generator_family_and_model_hash_match_the_PRETEST_branch_generator_lock
+      - detection_nodes_use_the_record_concept_calibrated_probability_contract
+      - methane_nodes_use_the_locked_temporal_probability_contract
+      - no_truth_audit_or_template_field_is_opened_or_written
+      - all_four_episode_pool_partitions_close_before_E301
+
+  episode_features:
+    format: parquet
+    primary_key: [episode_id, step_index, concept_id, node_id]
+    required_columns:
+      episode_id: string
+      step_index: int64_nonnegative
+      record_id: string
+      concept_id: string
+      node_id: string
+      modality: string
+      calibrated_probability: float32_0_1
+      quality_vector_json: json_string
+      available: bool
+    forbidden_tensor_columns: [episode_id,step_index,record_id,raw_group_id,source_component_id,pair_id,pool,dataset_id,generator_family_id,template_instance_id,event_truth,state_truth]
+    constraints:
+      - predictor_acl_excludes_episode_feature_audit_and_episode_labels
+      - tensor_builder_drops_join_and_sort_keys_before_model_forward
+      - source_group_pair_pool_template_and_truth_columns_are_physically_absent
+      - artifact_is_partitioned_into_separate_executable_pool_directory
+
+  episode_feature_audit:
+    format: parquet
+    primary_key: [episode_id, step_index, concept_id, node_id]
+    required_columns:
+      episode_id: string
+      step_index: int64_nonnegative
+      record_id: string
+      episode_seed: int64_positive
+      raw_group_id: string
+      source_component_id: string
+      concept_id: string
+      node_id: string
+      pair_id: nullable_string
+      edge_provenance: enum(observed_pair,virtual_compatibility,no_edge)
+      pool: string
+      dataset_id: string
+      generator_family_id: string
+      template_instance_id: string
+      feature_source_hash: sha256
+      audit_source_hash: sha256
+    constraints:
+      - raw_group_assigned_to_one_episode_within_pool_and_episode_seed
+      - source_component_id_from_episode_raw_group_bipartite_connected_components_across_episode_seeds
+      - every_episode_has_exactly_one_source_component_id
+      - key_and_record_id_match_episode_features
+      - predictor_process_cannot_read_this_artifact
+      - artifact_is_partitioned_into_separate_executable_pool_directory
+
+  episode_graph_edges:
+    format: parquet
+    primary_key: [episode_id, step_index, concept_id, source_node_id, target_node_id]
+    required_columns:
+      episode_id: string
+      step_index: int64_nonnegative
+      concept_id: string
+      source_node_id: string
+      target_node_id: string
+      modality_pair_embedding_id: string
+      edge_contract_hash: sha256
+      graph_eligibility_lock_hash: sha256
+    forbidden_columns: [pair_id,raw_group_id,source_component_id,dataset_id,pool,generator_family_id,template_instance_id,event_truth,state_truth]
+    constraints:
+      - source_and_target_nodes_exist_in_episode_features
+      - no_self_edges
+      - each_undirected_eligible_pair_is_two_opposite_directed_edges
+      - enabled_edges_join_to_graph_primary_observed_pair_rows_only_in_external_audit
+      - predictor_receives_no_pair_identifier_or_provenance_metadata
+      - artifact_is_partitioned_into_separate_executable_pool_directory
+
+  episode_labels:
+    format: parquet
+    primary_key: [episode_id, step_index, concept_id]
+    required_columns:
+      episode_id: string
+      step_index: int64_nonnegative
+      source_component_id: string
+      concept_id: string
+      event_truth: int32
+      state_truth: string
+      evaluation_attributes_json: json_string
+      event_semantics: enum(observable_presence,annotated_anomaly,threshold_risk)
+      raw_annotation_hash: sha256
+      generator_family_id: string
+      template_instance_id: string
+      label_rule_hash: sha256
+      pool: string
+    constraints:
+      - stored_separately_from_episode_features
+      - no_model_score_used_by_label_generator
+      - template_may_select_or_order_records_but_may_not_change_raw_event_semantics
+      - source_component_matches_episode_feature_audit
+      - artifact_is_partitioned_into_separate_executable_pool_directory
+      - sealed_test_pool_label_directory_is_unreadable_to_predictor_before_release
+
+  episode_predictions:
+    format: parquet
+    primary_key: [run_id, episode_id, step_index, concept_id]
+    required_columns:
+      run_id: string
+      episode_id: string
+      step_index: int64_nonnegative
+      concept_id: string
+      score_calibrated: float32_0_1
+      state_prediction: string
+      abstained: bool
+      reliability_json: json_string
+      edge_trace_json: json_string
+      memory_state_json: json_string
+      model_hash: sha256
+      policy_hash: sha256
+    forbidden_columns: [event_truth,state_truth,generator_family_id,template_instance_id,test_label]
+    constraints:
+      - no_memory_model_hash_matches_full_for_same_episode_seed
+      - inference_policy_controls_change_only_protocol_allowed_policy_fields
+
+  run_bundle:
+    format: directory_bundle
+    required_files:
+      - run_manifest.json
+      - config_resolved.yaml
+      - environment.json
+      - data_hashes.json
+      - metrics_per_epoch.csv
+      - execution.log
+      - last_checkpoint
+      - artifact_sha256.txt
+    conditional_files:
+      best_checkpoint: required_for_selected_trainable_run
+      calibrator.json: required_when_probability_calibration_applies
+      predictions.parquet: required_before_prediction_lock_for_scheduled_family
+      metrics.json: required_only_after_label_release_evaluation
+      failure.json: required_only_for_failed_run_and_forbidden_for_passing_run
+    run_manifest_required_fields:
+      - run_id
+      - family_id
+      - protocol_hash
+      - artifact_contract_hash
+      - code_hash
+      - environment_ready_sha256
+      - package_inventory_sha256
+      - command_receipt_sha256
+      - parent_checkpoint_hashes
+      - data_and_split_hashes
+      - seeds
+      - host_and_slurm_job_id
+      - started_at_and_finished_at
+      - exit_code
+      - status
+      - remote_closeout_reference
+    constraints:
+      - run_id_is_canonical_hash_of_locked_inputs
+      - environment_and_package_hashes_match_protocol_locked_remote_ready_receipt
+      - selected_remote_python_and_environment_fingerprint_match_the_remote_ready_receipt
+      - slurm_job_allocation_and_compute_node_match_environment_json
+      - failed_run_requires_nonzero_exit_and_structured_failure_json
+      - every_regular_file_in_the_bundle_is_listed_in_artifact_sha256
+      - success_directory_never_overwritten
+
+  step_review:
+    format: json
+    path_pattern: evidence/step_reviews/{step_id}.json
+    required_fields:
+      schema_version: const(1)
+      step_id: string
+      attempt: int64_positive
+      status: enum(pass,fail,blocked,not_applicable)
+      reviewed_at: timestamp
+      command_entry: string
+      dependency_status: mapping
+      output_artifacts: list_of_path_sha256
+      acceptance_checks: list
+      findings: list
+      advance_allowed: bool
+    constraints:
+      - every_non_not_run_step_has_exactly_one_current_review_receipt
+      - review_status_matches_step_ledger
+      - pass_requires_all_acceptance_checks_pass
+      - pass_or_not_applicable_requires_advance_allowed_true
+      - fail_or_blocked_requires_advance_allowed_false
+      - downstream_step_cannot_pass_before_dependencies_pass_or_are_accepted_not_applicable
+
+  local_environment_snapshot:
+    format: json
+    generated_at: P000
+    required_fields:
+      schema_version: const(1)
+      captured_at: timestamp
+      host: string
+      cwd: string
+      powershell_version: string
+      python_version: string
+      python: mapping
+      package_inventory_shape: const(flat_list)
+      package_count: int64_positive
+      packages: list
+      commands: list
+      cuda_path: nullable_string
+    constraints:
+      - python_executable_is_the_bundled_absolute_path
+      - package_count_equals_flat_package_list_length
+      - each_package_has_name_and_version
+      - each_command_has_availability_source_and_probe_result
+
+  local_environment_hash_receipt:
+    format: json
+    generated_at: P000
+    required_fields:
+      schema_version: const(1)
+      artifact_path: string
+      artifact_sha256: sha256
+      artifact_bytes: int64_positive
+      hash_algorithm: const(sha256)
+      created_at: timestamp
+    constraints:
+      - artifact_path_resolves_to_the_P000_snapshot
+      - artifact_sha256_matches_snapshot_bytes
+
+  implementation_pass:
+    format: json
+    required_fields:
+      schema_version: const(1)
+      status: const(pass)
+      created_at: timestamp
+      selected_local_python: string
+      local_environment_ready_sha256: sha256
+      source_code_candidate_manifest: string
+      source_code_candidate_manifest_sha256: sha256
+      test_command: string
+      tests_collected: int64_positive
+      tests_passed: int64_positive
+      tests_failed: const(0)
+      test_report_sha256: sha256
+      forbidden_old_import_count: const(0)
+      forbidden_old_path_count: const(0)
+      remote_actions_performed: const_false
+      full_dataset_actions_performed: const_false
+    constraints:
+      - tests_passed_must_equal_tests_collected
+      - E067_recomputed_source_manifest_must_match_I090_candidate_before_freeze
+      - any_source_change_after_I090_requires_I090_rerun
+
+  precision_feasibility:
+    format: json
+    generated_at: E067
+    required_fields:
+      protocol_candidate_hash: sha256
+      minimum_meaningful_effects_hash: sha256
+      variance_envelope_hash: sha256
+      non_test_group_structure_hash: sha256
+      simulation_seed: int64_positive
+      simulation_repetitions: const(10000)
+      endpoint_required_group_counts: mapping
+      endpoint_success_probabilities: mapping
+      retained_or_downgraded_claims: mapping
+      model_predictions_used: const_false
+      validation_performance_used: const_false
+      test_outcomes_used: const_false
+      created_at: timestamp
+    constraints:
+      - minimum_meaningful_effects_are_hashed_before_simulation_starts
+      - simulation_uses_only_preregistered_variance_envelopes_and_non_test_group_structure
+      - failed_precision_may_reduce_or_remove_a_claim_but_never_relax_its_effect_target
+      - PRETEST_signature_requires_this_receipt_hash
+
+  environment_ready:
+    format: json
+    required_fields:
+      schema_version: const(2)
+      scope: enum(local,remote)
+      status: const(pass)
+      ready_at: timestamp
+      host: string
+      decision_sha256: sha256
+      strategy: enum(reuse_existing,install_compatible_missing,new_isolated)
+      selected_python: string
+      environment_specification: string
+      specification_hash_mode: enum(file_content,canonical_text)
+      environment_specification_sha256: sha256
+      activation_command_sha256: sha256
+      setup_command_sha256: sha256
+      verification_command_sha256: sha256
+      package_inventory_sha256: sha256
+      setup_command_executed: bool
+      verification_output_excerpt: list
+      python_probe: list
+      slurm_job_id: nullable_string
+      compute_node: nullable_string
+      remote_closeout_reference: nullable_string
+    constraints:
+      - local_receipt_requires_existing_absolute_selected_python
+      - remote_setup_or_verification_runs_in_slurm_compute_job_not_login_node
+      - remote_receipt_requires_slurm_job_compute_node_and_closeout_reference
+      - receipt_decision_hash_matches_P020_validation
+      - package_inventory_is_generated_by_selected_python_after_setup_and_verification
+
+  remote_monitor_receipt:
+    format: json
+    required_fields:
+      step_id: string
+      monitored_at: timestamp
+      host: const(xinxi-zhyh@211.87.115.228)
+      slurm_job_ids: list
+      gpu_expected: bool
+      squeue_state: mapping
+      sacct_state: mapping
+      relevant_processes: list
+      tmux_and_screen_sessions: list
+      gpu_telemetry_artifacts: list
+      gpu_telemetry_excerpt: list
+      recent_log_artifacts: list_of_path_sha256
+      checkpoint_artifacts: list_of_path_sha256
+      result_artifacts: list_of_path_sha256
+      workflow_state: enum(pending,running,completed,failed,blocked,connection_failed)
+      remote_error: nullable_string
+      next_check_due_at: nullable_timestamp
+    constraints:
+      - running_jobs_require_next_check_at_30_minutes
+      - gpu_state_comes_from_compute_job_telemetry_not_login_node_probe
+      - running_gpu_job_requires_a_hashed_telemetry_artifact_and_recent_excerpt
+      - connection_failure_forbids_immediate_repeated_remote_check
+
+  remote_closeout:
+    format: json
+    required_fields:
+      trigger_step_id: string
+      remote_action_id: string
+      remote_action_at: timestamp
+      trigger_kind: enum(remote_action_end,connection_check_end,final_reconcile)
+      closed_at: timestamp
+      host: const(xinxi-zhyh@211.87.115.228)
+      account_scope: const(all_user_owned_work)
+      slurm_jobs_and_allocations: list
+      interactive_sessions: list
+      tmux_and_screen_sessions: list
+      relevant_processes: list
+      transfers_and_monitors: list
+      unsynchronized_artifacts: list
+      retained_resources_with_reason: list
+      cancellation_or_release_actions: list
+      provider_stop_action: nullable_string
+      final_billing_state: enum(verified_nonbilling,verified_other_work_only,unverified)
+    constraints:
+      - remote_step_pass_forbids_unverified_final_billing_state
+      - logout_is_not_evidence_of_nonbilling
+      - critical_artifacts_must_be_synchronized_before_release
+
+  remote_closeout_index:
+    format: json
+    required_fields:
+      reconciled_at: timestamp
+      remote_command_ledger_sha256: sha256
+      remote_action_ids: list
+      remote_action_timestamps: mapping
+      closeout_receipts: list_of_path_sha256
+      action_to_receipt: mapping
+      latest_remote_activity_at: timestamp
+      latest_closeout_at: timestamp
+      uncovered_remote_actions: list
+      final_billing_state: enum(verified_nonbilling,verified_other_work_only,unverified)
+    constraints:
+      - every_remote_action_has_exactly_one_or_more_later_closeout_receipts
+      - every_closeout_receipt_explicitly_names_its_remote_action
+      - latest_closeout_postdates_latest_remote_activity
+      - pass_requires_empty_uncovered_remote_actions
+      - pass_forbids_unverified_final_billing_state
+
+  prediction_lock:
+    format: json
+    required_fields:
+      scope: enum(branch,episode)
+      seal_hash: sha256
+      protocol_hash: sha256
+      source_hash: sha256
+      matrix_hash: sha256
+      required_prediction_families: list
+      prediction_store_hashes: mapping
+      model_hashes: mapping
+      calibrator_and_policy_hashes: mapping
+      closed_at: timestamp
+      truth_fields_scan_pass: bool
+    constraints:
+      - all_scheduled_families_present
+      - no_hash_change_after_close
+
+  test_release:
+    format: json
+    required_fields:
+      scope: enum(branch,episode)
+      seal_hash: sha256
+      prediction_lock_hash: sha256
+      protocol_hash: sha256
+      source_hash: sha256
+      matrix_hash: sha256
+      evaluator_identity: string
+      evaluator_label_acl: list
+      signer_identity: string
+      attestation_scheme: const(canonical_json_sha256_v1)
+      attestation_sha256: sha256
+      authorized_at: timestamp
+      authorization_status: const(released)
+    constraints:
+      - append_only_release_record_does_not_modify_test_seal_or_prediction_lock
+      - only_independent_evaluator_receives_matching_label_acl
+      - attestation_hash_binds_the_complete_release_payload_and_signer_identity
+      - evaluation_may_join_labels_but_may_not_rerun_or_modify_inference
+
+  metrics_bundle:
+    format: json
+    required_fields:
+      endpoint_id: string
+      metric_name: string
+      metric_version: string
+      metric_definition_hash: sha256
+      aggregation_unit: string
+      population_hash: sha256
+      prediction_lock_hash: sha256
+      label_manifest_hash: sha256
+      evaluator_hash: sha256
+      point_estimate: float64
+      confidence_interval: list_two_float64
+      repeat_cell_keys: list
+      repeat_cell_values_hash: sha256
+      repeat_cell_mean: float64
+      repeat_cell_standard_deviation: float64_nonnegative
+      raw_p_value: nullable_float64_0_1
+      multiplicity_family: nullable_string
+      adjusted_p_value: nullable_float64_0_1
+      independent_group_count: int64_nonnegative
+      positive_group_count: int64_nonnegative
+      bootstrap_unit: string
+      bootstrap_draws_hash: sha256
+      diagnostic_counts: mapping
+      decision_status: enum(support,inconclusive,negative,blocked,exploratory_only)
+    constraints:
+      - metric_definition_hash_matches_the_PRETEST_protocol_event_metric_contract_when_event_based
+      - event_diagnostic_counts_include_truth_prediction_matched_missed_and_false_alarm_counts
+      - methane_false_alarm_diagnostics_include_valid_observed_sensor_hours
+      - episode_diagnostics_include_evaluated_episode_count_eligible_step_rows_abstained_step_rows_and_answer_coverage
+      - selective_metrics_are_marked_secondary_and_never_replace_the_all_eligible_row_primary_metric
+
+  gate:
+    format: json
+    required_fields:
+      gate_id: string
+      status: enum(pass,fail,blocked)
+      protocol_hash: sha256
+      code_hash: sha256
+      experiment_matrix_hash: sha256
+      artifact_contract_hash: sha256
+      required_steps: list
+      input_artifacts: list_of_path_sha256
+      output_artifacts: list_of_path_sha256
+      checks: list
+      failures: list
+      waivers: list
+      allowed_next_steps: list
+      slurm_job_ids: list
+      remote_closeout_artifact: nullable_string
+      host: nullable_string
+      created_at: timestamp
+    constraints:
+      - confirmatory_pass_forbids_waivers
+      - remote_step_pass_requires_closeout_artifact
+
+  efficiency_trace:
+    format: parquet
+    primary_key: [measurement_id, module_id, variant_id, repeat_id, phase, iteration_index]
+    required_columns:
+      measurement_id: string
+      module_id: enum(visible_inference,thermal_inference,sensor_inference,graph_fusion)
+      variant_id: string
+      model_family_id: string
+      representative_seed: int64_positive
+      checkpoint_sha256: nullable_sha256
+      policy_sha256: nullable_sha256
+      environment_ready_sha256: sha256
+      protocol_sha256: sha256
+      slurm_job_id: string
+      allocation_id: string
+      compute_node: string
+      repeat_id: int64_positive
+      phase: enum(warmup,timed)
+      iteration_index: int64_positive
+      duration_ns: int64_positive
+      device_kind: enum(cpu,cuda)
+      device_identifier: string
+      gpu_uuid: nullable_string
+      gpu_clock_mhz: nullable_float64_nonnegative
+      cuda_driver: nullable_string
+      cpu_affinity: string
+      precision: string
+      batch_size: const(1)
+      input_shape: string
+      cuda_synchronized_before_and_after: bool
+      concurrent_user_gpu_job_count: int64_nonnegative
+      interference_audit_status: enum(pass,fail)
+      captured_at: timestamp
+    constraints:
+      - each_module_variant_repeat_has_exactly_50_warmup_and_200_timed_rows
+      - each_module_variant_has_exactly_1_preregistered_repeat
+      - cuda_rows_require_gpu_uuid_driver_and_synchronization_true
+      - timed_rows_require_zero_concurrent_user_gpu_jobs_and_interference_pass
+      - compared_modules_share_allocation_environment_precision_batch_and_input_contract
+
+  efficiency_scope:
+    format: csv
+    generated_at: E400
+    primary_key: [module_id]
+    required_columns:
+      module_id: enum(visible_inference,thermal_inference,sensor_inference,graph_fusion)
+      family_id: string
+      eligibility_status: enum(measured,not_applicable)
+      source_gate_id: string
+      source_gate_sha256: sha256
+      checkpoint_sha256: nullable_sha256
+      exclusion_reason: nullable_string
+      protocol_sha256: sha256
+    constraints:
+      - exactly_one_row_per_preregistered_candidate_module
+      - measured_requires_family_pass_and_checkpoint_sha256
+      - not_applicable_requires_nonempty_exclusion_reason
+      - graph_fusion_measured_requires_nonempty_fusion_primary_population_and_G5_pass
+      - ineligible_candidate_checkpoint_substitution_is_forbidden
+      - every_measured_module_has_efficiency_trace_and_summary_rows
+
+  efficiency_summary:
+    format: parquet
+    primary_key: [measurement_id, module_id, variant_id]
+    required_columns:
+      measurement_id: string
+      module_id: string
+      variant_id: string
+      trace_sha256: sha256
+      repeat_count: const(1)
+      timed_iteration_count_per_repeat: const(200)
+      latency_p50_ns: int64_positive
+      latency_p95_ns: int64_positive
+      throughput_per_second: float64_positive
+      peak_memory_bytes: int64_nonnegative
+      parameter_count: int64_nonnegative
+      checkpoint_bytes: int64_nonnegative
+      environment_ready_sha256: sha256
+      derivation_code_sha256: sha256
+    constraints:
+      - latency_and_throughput_are_derived_only_from_timed_trace_rows
+      - parameter_and_checkpoint_bytes_are_measured_not_estimated
+      - p50_p95_and_peak_memory_are_reported_per_module_not_summed_as_field_latency
+
+  evidence_package:
+    format: directory_bundle
+    manuscript_role: artifact_qa_only
+    required_fields:
+      episode_id: string
+      episode_length: int64_positive
+      episode_manifest_hash: sha256
+      underlying_record_ids_hash: sha256
+      representation: enum(raw_reference,keyframe,structured)
+      payload_scope: enum(reference_only,selected_visual_content,derived_structured_content)
+      schema_version: string
+      representation_schema_hash: sha256
+      serializer_hash: sha256
+      required_field_presence: mapping
+      required_field_count: int64_positive
+      present_required_field_count: int64_nonnegative
+      serialized_bytes: int64_nonnegative
+      generation_time_ns: int64_nonnegative
+    constraints:
+      - comparison_requires_same_episode_manifest_and_underlying_record_ids_hash
+      - present_required_field_count_must_equal_required_field_count
+      - payload_scope_must_be_reported_and_not_called_equivalent_fidelity
+
+  evidence_package_summary:
+    format: parquet
+    manuscript_role: artifact_qa_only
+    primary_key: [episode_id, representation]
+    required_columns:
+      episode_id: string
+      episode_manifest_hash: sha256
+      underlying_record_ids_hash: sha256
+      representation: enum(raw_reference,keyframe,structured)
+      payload_scope: enum(reference_only,selected_visual_content,derived_structured_content)
+      package_sha256: sha256
+      serializer_hash: sha256
+      generation_trace_sha256: sha256
+      serialized_bytes: int64_nonnegative
+      generation_repeat_count: const(1)
+      timed_generation_count_per_repeat: const(200)
+      generation_p95_ns: int64_nonnegative
+      required_field_count: int64_positive
+      present_required_field_count: int64_nonnegative
+      required_field_completeness: float64_0_1
+    constraints:
+      - all_three_representations_share_episode_manifest_and_underlying_record_ids_hash
+      - required_field_completeness_must_equal_1
+      - generation_p95_is_derived_from_the_artifact_qa_generation_trace
+      - trace_serializer_and_representation_schema_hashes_match_built_package
+      - payload_scope_differences_forbid_equivalent_fidelity_claim

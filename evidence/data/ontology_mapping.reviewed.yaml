@@ -1,0 +1,183 @@
+ontology_version: mining1-public-v1-20260717
+entries:
+  - dataset_id: coco2017_person
+    source_label: person
+    canonical_concept_id: worker_presence
+    mapping_status: compatible
+    annotation_policy: >-
+      Use only frozen person boxes from licensed COCO images; drop invalid and
+      iscrowd boxes exactly as declared by the E016 adapter contract.
+    event_semantics: observable_presence
+    negative_semantics: exhaustive_verified_absence
+    allowed_tasks:
+      - visual_pretraining
+      - worker_presence_detection
+      - concept_presence_calibration
+      - episode_mechanism_evaluation
+      - confirmatory_f1
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83;
+      evidence/data/source_reviews/coco2017_person.json@sha256:e2a5af6be2dfd8edf88a54c9d6e234cf5a4a7c35dbdbd94e0a3c4a1a2b2fb1e8
+    reviewer_decision: >-
+      Accept person as worker_presence for the frozen selected-class detection
+      contract; do not infer any unselected COCO category.
+
+  - dataset_id: coco2017_person
+    source_label: __unknown_or_unreviewed_label__
+    canonical_concept_id: null
+    mapping_status: reject
+    annotation_policy: >-
+      Any label outside the frozen person adapter contract is excluded; missing
+      or unselected labels are never converted to verified negative evidence.
+    event_semantics: not_event_eligible
+    negative_semantics: unverified_missing_annotation
+    allowed_tasks: []
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83
+    reviewer_decision: Reject from all confirmatory and exploratory model inputs.
+
+  - dataset_id: dsdpm66_coal_miner_v1
+    source_label: coal_miner
+    canonical_concept_id: worker_presence
+    mapping_status: compatible
+    annotation_policy: >-
+      Use the official one-class YOLO coal_miner boxes from the selected archive;
+      preserve raw drilling-view groups and the frozen invalid-label policy.
+    event_semantics: observable_presence
+    negative_semantics: exhaustive_verified_absence
+    allowed_tasks:
+      - target_detection
+      - grouped_fewshot_transfer
+      - worker_presence_detection
+      - concept_presence_calibration
+      - episode_mechanism_evaluation
+      - confirmatory_f1
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83;
+      evidence/data/source_reviews/dsdpm66_coal_miner_v1.json@sha256:675a6e30ee4cdc27757612783fd7ecddaccabf0f111d58fa1c21af00b76682f2
+    reviewer_decision: >-
+      Accept coal_miner as the same observable worker_presence concept used by
+      person-labelled sources; retain the source label in all audit tables.
+
+  - dataset_id: dsdpm66_coal_miner_v1
+    source_label: __unknown_or_unreviewed_label__
+    canonical_concept_id: null
+    mapping_status: reject
+    annotation_policy: >-
+      Labels outside the selected coal_miner archive and adapter are excluded;
+      absent or missing labels do not become verified negatives.
+    event_semantics: not_event_eligible
+    negative_semantics: unverified_missing_annotation
+    allowed_tasks: []
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83
+    reviewer_decision: Reject from all project tasks.
+
+  - dataset_id: dslmfplus_coal_miner_v1
+    source_label: coal_miner
+    canonical_concept_id: worker_presence
+    mapping_status: compatible
+    annotation_policy: >-
+      Use the frozen one-class YOLO labels after the five predeclared exclusions;
+      explicit empty label files remain verified worker-absence records.
+    event_semantics: observable_presence
+    negative_semantics: exhaustive_verified_absence
+    allowed_tasks:
+      - visual_pretraining
+      - worker_presence_detection
+      - concept_presence_calibration
+      - episode_mechanism_evaluation
+      - confirmatory_f1
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83;
+      evidence/data/source_reviews/dslmfplus_coal_miner_v1.json@sha256:4364e6631d6e66463cb4e1177c0cb13256d30df14f1c80451e034228036e787d
+    reviewer_decision: >-
+      Accept coal_miner as worker_presence while preserving the source-specific
+      label and scenario groups; no additional DsLMF+ class is inferred.
+
+  - dataset_id: dslmfplus_coal_miner_v1
+    source_label: __unknown_or_unreviewed_label__
+    canonical_concept_id: null
+    mapping_status: reject
+    annotation_policy: >-
+      Labels not present in the frozen one-class adapter are excluded, and an
+      unverified missing annotation is never treated as worker absence.
+    event_semantics: not_event_eligible
+    negative_semantics: unverified_missing_annotation
+    allowed_tasks: []
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83
+    reviewer_decision: Reject from all project tasks.
+
+  - dataset_id: llvip_v1
+    source_label: person
+    canonical_concept_id: worker_presence
+    mapping_status: compatible
+    annotation_policy: >-
+      Use person boxes shared by the official visible/infrared pairs; drop
+      difficult and invalid boxes under the frozen VOC adapter and retain paired
+      empty annotations as verified absence.
+    event_semantics: observable_presence
+    negative_semantics: exhaustive_verified_absence
+    allowed_tasks:
+      - visible_branch_detection
+      - thermal_branch_detection
+      - worker_presence_detection
+      - concept_presence_calibration
+      - paired_graph_eligibility_audit
+      - episode_mechanism_evaluation
+      - confirmatory_f1
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83;
+      evidence/data/source_reviews/llvip_v1.json@sha256:6cbd8cdeb78f4303764c5d690a53e23b0be5094f80a21a2244a589167e54cd45
+    reviewer_decision: >-
+      Accept person as worker_presence for both paired branches; this supports
+      low-light person evidence only, not coal-mine thermal or temperature claims.
+
+  - dataset_id: llvip_v1
+    source_label: __unknown_or_unreviewed_label__
+    canonical_concept_id: null
+    mapping_status: reject
+    annotation_policy: >-
+      Any non-person or unreviewed VOC label is excluded; missing labels outside
+      the reviewed person contract are not verified negatives.
+    event_semantics: not_event_eligible
+    negative_semantics: unverified_missing_annotation
+    allowed_tasks: []
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83
+    reviewer_decision: Reject from all project tasks.
+
+  - dataset_id: mendeley_methane_v1
+    source_label: target_value
+    canonical_concept_id: null
+    mapping_status: ignored
+    annotation_policy: >-
+      Retain continuous measurements and causal history only. E050, not this
+      detection ontology, must derive methane_future_risk from a frozen threshold,
+      history, horizon, purge gap, and event-merging contract.
+    event_semantics: threshold_risk
+    negative_semantics: not_applicable
+    allowed_tasks:
+      - methane_role_lock_input
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83;
+      evidence/data/source_reviews/mendeley_methane_v1.json@sha256:bd9bc13be8fb6f831a02ba03316658bfde0743669ed46355509d3100ddb3f30e;
+      manuscript/paper.md@sha256:adaa2ae2f81acf77e1bc7d4923ccd2433fdd41e3f60119baf04be96f554a2191
+    reviewer_decision: >-
+      Exclude target_value from box-level cross-dataset mapping and defer the
+      derived methane_future_risk concept and all negatives to E050.
+
+  - dataset_id: mendeley_methane_v1
+    source_label: __unknown_sensor_or_derived_label__
+    canonical_concept_id: null
+    mapping_status: reject
+    annotation_policy: >-
+      Any undeclared sensor target or derived risk label is excluded unless E050
+      binds it to the frozen sensor, threshold, horizon, and temporal-role policy.
+    event_semantics: not_event_eligible
+    negative_semantics: unverified_missing_annotation
+    allowed_tasks: []
+    evidence_reference: >-
+      evidence/data/E030_ontology_label_inventory.json@sha256:05826b2c8035991cf0be75c018b42ff741ca58ea5b5ac0f7526a67c8df6a8d83
+    reviewer_decision: Reject from all project tasks before an explicit E050 lock.

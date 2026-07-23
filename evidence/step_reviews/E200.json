@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "step_id": "E200",
+  "attempt": 1,
+  "status": "pass",
+  "reviewed_at": "2026-07-18T12:46:00Z",
+  "command_entry": "sbatch slurm/train_v2_pretrain_array.sbatch",
+  "dependency_status": {
+    "E069": "pass"
+  },
+  "output_artifacts": [
+    {
+      "path": "evidence/reviews/E200_tasks6_8_not_applicable_review.json",
+      "sha256": "16fc3421333a01dc8cf54b51637e28cebc176e5ced7def5ed44f8caf5c77a1c6"
+    },
+    {
+      "path": "evidence/reviews/E200_overall_review.json",
+      "sha256": "23562797e92286f8e631b0ef36d914917ba72c0e79ef84f59e3aa217b9623f81"
+    },
+    {
+      "path": "evidence/remote_runs/E200/19741_6_8/19748/V2-PRE-MULTI_not_applicable.json",
+      "sha256": "1c0e6166e2985ebaee9db29164c358aff590f273a1c8de3c792ece5896d5d8bc"
+    },
+    {
+      "path": "evidence/remote_runs/E200/19741_6_8/19749/V2-PRE-MULTI_not_applicable.json",
+      "sha256": "afc1bd3387649f9e4506fc8e6f6d013d0481938d19f38bc479bd7b38ad50b761"
+    },
+    {
+      "path": "evidence/remote_runs/E200/19741_6_8/19741/V2-PRE-MULTI_not_applicable.json",
+      "sha256": "b654fb82a63747cf252663b11fc4682141cd21a499682a2f1623f67ec502ce04"
+    }
+  ],
+  "acceptance_checks": [
+    {
+      "id": "dependency_E069_pass",
+      "status": "pass"
+    },
+    {
+      "id": "tasks_0_to_5_terminal_pass_or_reviewed",
+      "status": "pass"
+    },
+    {
+      "id": "tasks_6_to_8_accepted_as_not_applicable",
+      "status": "pass"
+    },
+    {
+      "id": "historical_tasks6_8_failure_preserved",
+      "status": "pass"
+    },
+    {
+      "id": "no_multi_coal_training_claim_authorized",
+      "status": "pass"
+    },
+    {
+      "id": "small_artifacts_synchronized_and_reviewed",
+      "status": "pass"
+    }
+  ],
+  "findings": [],
+  "advance_allowed": true,
+  "downstream_locked": [
+    "E201",
+    "E210",
+    "E220",
+    "E300"
+  ],
+  "parallel_branches_unchanged": [
+    "E100",
+    "E120"
+  ],
+  "required_resolution": "none",
+  "performance_claims_authorized": false,
+  "notes": "E200 passed for dependency purposes with C-TRANSFER multi-coal tasks 6-8 accepted only as reviewed not_applicable receipts. This does not authorize a multi-coal training performance claim.",
+  "downstream_unlocked": [
+    "E202"
+  ]
+}

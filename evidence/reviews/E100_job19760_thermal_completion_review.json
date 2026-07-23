@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "review_id": "E100_job19760_thermal_completion_review",
+  "reviewed_at": "2026-07-18T16:08:00Z",
+  "step_id": "E100",
+  "status": "pass",
+  "advance_allowed": true,
+  "performance_claims_authorized": false,
+  "slurm_job_id": "19760_1",
+  "remote_check": {
+    "path": "state/remote_checks/20260718T1559Z_jobs19760_dependency_repair_and_retry.txt",
+    "sha256": "e71afc4f60cde19af640a510b385dc9d1eef7a62e39991e42dc47f53474b2179"
+  },
+  "retained_visible_evidence": {
+    "run_manifest": {
+      "path": "evidence/remote_runs/E100_task0_job19701_task0/run_manifest.json",
+      "sha256": "36bb3be5630c7c38afd2139ca136a8c1853c1cb54d4e71fafa3655344ac158f4"
+    },
+    "step_execution_receipt": {
+      "path": "evidence/remote_runs/E100_task0_job19701_task0/step_execution_receipt.json",
+      "sha256": "4d2d7368ce499bda8bff4d2fc9c6b1283e0e148d574320d4a2848247395c0d64"
+    },
+    "results_csv": {
+      "path": "evidence/remote_runs/E100_task0_job19701_task0/results.csv",
+      "sha256": "450ef277dd14fc5af5dc69c4b49aa844c19d2e3face1b3b942f736ec235c425f",
+      "rows": 295,
+      "best_epoch": 149,
+      "best_map50": 0.70459,
+      "best_map50_95": 0.30821
+    },
+    "family_id": "T1-VIS",
+    "modality": "visible",
+    "train_seed": 1701
+  },
+  "thermal_evidence": {
+    "run_root": "evidence/remote_runs/E100/19760/runs/T1-THERM/seed-1701/",
+    "run_manifest": {
+      "path": "evidence/remote_runs/E100/19760/runs/T1-THERM/seed-1701/run_manifest.json",
+      "sha256": "9bbbc43092c288e60b5bb88544d2032b9169adf1724fac0909718484b4edb3aa"
+    },
+    "run_contract": {
+      "path": "evidence/remote_runs/E100/19760/runs/T1-THERM/seed-1701/run_contract.json",
+      "sha256": "83ff65e6fe9169f9f0a6cee670774a637d3d29fee352a22a23f107536100d28a"
+    },
+    "results_csv": {
+      "path": "evidence/remote_runs/E100/19760/runs/T1-THERM/seed-1701/results.csv",
+      "sha256": "4cdb9f7e9af41ab0fc35a45ef3de4b230ce0bc53b8e579bd7da6096c232bdbc8",
+      "rows": 295,
+      "best_epoch": 165,
+      "best_map50": 0.90359,
+      "best_map50_95": 0.52588,
+      "last_epoch": 295,
+      "last_map50": 0.88173,
+      "last_map50_95": 0.49348
+    },
+    "best_checkpoint": {
+      "path": "evidence/remote_runs/E100/19760/runs/T1-THERM/seed-1701/weights/best.pt",
+      "sha256": "6c51794452648a53cb82b80709d989ef7c60f5d956e2e76d709555accec4916e"
+    },
+    "slurm_stdout": {
+      "path": "evidence/remote_runs/E100/19760/logs/mining1_E100_19760_1.out",
+      "sha256": "99d58ca34c8ae0247455adefa7657f8cbd8f38c12f5689924fb38bb6825b9094"
+    },
+    "slurm_stderr": {
+      "path": "evidence/remote_runs/E100/19760/logs/mining1_E100_19760_1.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "family_id": "T1-THERM",
+    "modality": "thermal",
+    "train_seed": 1701,
+    "source_lock_amendment_sha256": "c73c10d6d02f5ed9871874617491223921bf561adfb88b9f5760589c45feee5c"
+  },
+  "slurm_status": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "01:44:25",
+    "partition": "A100",
+    "node": "gpu01"
+  },
+  "acceptance_checks": [
+    {"id": "dependency_E069_pass", "status": "pass"},
+    {"id": "retained_visible_locked_seed_checkpoint_complete", "status": "pass"},
+    {"id": "repaired_thermal_locked_seed_checkpoint_complete", "status": "pass"},
+    {"id": "thermal_slurm_completed_zero", "status": "pass"},
+    {"id": "thermal_results_have_295_epochs", "status": "pass"},
+    {"id": "thermal_best_checkpoint_synchronized", "status": "pass"},
+    {"id": "source_lock_amendment_v3_bound", "status": "pass"},
+    {"id": "test_label_isolation_preserved", "status": "pass", "evidence": "E100 uses D_b_sel validation; no sealed test labels were opened for this review"},
+    {"id": "small_artifacts_synchronized_locally", "status": "pass"},
+    {"id": "error_signal_scan_clean", "status": "pass"}
+  ],
+  "actual_runtime_cost_estimate_cny": 8.84,
+  "cost_basis": "1 A100 * 1.7403 h * 5.00 + 8 CPU * 1.7403 h * 0.01; storage and billing rounding not included",
+  "plan_effect": {
+    "E100": "pass",
+    "E111": "unlocked"
+  },
+  "notes": "This review authorizes E100 as a completed upstream dependency. It does not authorize final performance claims until the downstream prediction/evaluation gates are complete."
+}

@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-07-16T05:51:11.4339309+08:00",
+  "status": "pass",
+  "dataset_entry": {
+    "dataset_id": "mendeley_methane_v1",
+    "dataset_version": "10.17632/yd7vw4c5mk.1",
+    "source_location": "local_existing_verified_official_download",
+    "source_path_or_url": "G:/datasets/mining1/archives/mendeley_methane_v1.zip",
+    "archive_sha256": "405a8b27004a2e318bf213cf209398d3d58b45bb3c7a78f159e69003ff459311",
+    "license_id": "CC-BY-4.0",
+    "license_evidence_path": "evidence/data/source_snapshots/mendeley_methane_v1/dataset_page.html",
+    "transfer_route": "local_existing_upload",
+    "selection_evidence": "仅依据 CC BY 4.0、逐秒煤矿传感器原始记录、官方指定的 MM263/MM264/MM256 目标传感器及与预注册未来风险定义的直接兼容性选择；未读取模型预测或性能。",
+    "adapter_contract": {
+      "schema_version": 1,
+      "kind": "methane_csv",
+      "archive_subdir": ".",
+      "methane": {
+        "input_layout": "wide",
+        "csv_globs": [
+          "methane_data.csv"
+        ],
+        "timestamp_column": "timestamp",
+        "timestamp_components": {
+          "year": "year",
+          "month": "month",
+          "day": "day",
+          "hour": "hour",
+          "minute": "minute",
+          "second": "second"
+        },
+        "value_column": "target_value",
+        "sensor_group_column": "sensor_group_id",
+        "target_sensor_columns": [
+          "MM263",
+          "MM264",
+          "MM256"
+        ],
+        "feature_columns": [
+          "AN311",
+          "AN422",
+          "AN423",
+          "TP1721",
+          "RH1722",
+          "BA1723",
+          "TP1711",
+          "RH1712",
+          "BA1713",
+          "MM252",
+          "MM261",
+          "MM262",
+          "MM263",
+          "MM264",
+          "MM256",
+          "MM211",
+          "CM861",
+          "CR863",
+          "P_864",
+          "TC862",
+          "WM868",
+          "AMP1_IR",
+          "AMP2_IR",
+          "DMP3_IR",
+          "DMP4_IR",
+          "AMP5_IR",
+          "F_SIDE",
+          "V"
+        ],
+        "group_duration_seconds": 86400,
+        "timezone": "UTC",
+        "chunk_rows": 100000,
+        "target_missing_policy": "drop"
+      }
+    },
+    "minimal_sample_records": [
+      {
+        "record_id": "preview-2014-03-02-wide",
+        "raw_group_id": "preview-day-2014-03-02",
+        "member_path": "methane_data.csv",
+        "modality": "methane",
+        "sample_row_limit": 1200
+      }
+    ]
+  },
+  "official_source": {
+    "doi": "10.17632/yd7vw4c5mk.1",
+    "file_id": "d049ad25-53cc-4ead-bde0-4c9c6a181528",
+    "file_name": "methane_data.zip",
+    "file_bytes": 58631456,
+    "download_url": "https://data.mendeley.com/public-files/datasets/yd7vw4c5mk/files/d049ad25-53cc-4ead-bde0-4c9c6a181528/file_downloaded",
+    "license_name": "Creative Commons Attribution 4.0 International",
+    "files_snapshot_sha256": "ae359def61357077a7ac8c1e821d7224af510d5705f495d857044fa8b56abf48",
+    "dataset_page_snapshot_sha256": "8801c70845b0b7c998775fc0ac70ba117f87b30e04f5f0c54279fc3c2e4741f9",
+    "attribute_snapshot_sha256": "0eed822b03816dee2e437fc3fde7eb12a25b6b236c3d107cedddcb747404ee05"
+  },
+  "archive_audit": {
+    "safe_zip": true,
+    "member_count": 1,
+    "member_name": "methane_data.csv",
+    "member_uncompressed_bytes": 1100913052,
+    "zip_integrity_bad_member": null,
+    "header_column_count": 34,
+    "feature_column_count": 28,
+    "target_sensor_ids": [
+      "MM263",
+      "MM264",
+      "MM256"
+    ],
+    "risk_unit": "%CH4",
+    "source_sampling_interval_seconds": 1
+  },
+  "time_semantics": {
+    "source_timezone_declared": false,
+    "normalization_timezone": "UTC",
+    "interpretation": "UTC 仅作为保留原始顺序和时间差的计算归一化标签，不作实际民用时区声明；确认性任务只使用相对时间窗。"
+  },
+  "minimal_adapter_test": {
+    "status": "pass",
+    "bounded_csv_path": "state/source_validation/mendeley_methane_1200_rows.csv",
+    "bounded_csv_sha256": "e8dcb7212c3f5608a61abebf812d65613a46778c7562259d3813a250af06df29",
+    "bounded_zip_path": "state/source_validation/mendeley_methane_1200_rows.zip",
+    "bounded_zip_sha256": "2aa0c1ea0e0b9e4cecce29fa690d7ea3c5a179d19341835ddb020d5563bc1a75",
+    "bounded_source_bytes": 131420,
+    "bounded_data_rows": 1200,
+    "canonical_record_count": 3,
+    "canonical_sensor_ids": [
+      "MM256",
+      "MM263",
+      "MM264"
+    ]
+  },
+  "scope_boundary": {
+    "full_local_extractions": 0,
+    "model_predictions_read": 0,
+    "performance_metrics_read": 0,
+    "performance_claims_authorized": false
+  }
+}

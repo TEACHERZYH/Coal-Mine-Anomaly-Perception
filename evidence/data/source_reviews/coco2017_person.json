@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-07-16T12:20:57.0110979+08:00",
+  "status": "pass",
+  "dataset_entry": {
+    "dataset_id": "coco2017_person",
+    "dataset_version": "COCO-2017-train-images-and-trainval-annotations",
+    "source_location": "local_verified_official_download",
+    "source_path_or_url": "G:/datasets/mining1/archives/coco2017_train.zip",
+    "archive_sha256": "69a8bb58ea5f8f99d24875f21416de2e9ded3178e903f1f7603e283b9e06d929",
+    "license_id": "COCO-ANNOTATIONS-CC-BY-4.0_AND_REVIEWED-IMAGE-LICENSES",
+    "license_evidence_path": "evidence/data/source_snapshots/coco2017_person/termsofuse.htm",
+    "transfer_route": "local_existing_upload",
+    "selection_evidence": "仅依据官方来源、分层许可、person 本体、独立源图像组、完整包体和真实最小适配测试选择；未读取模型预测或性能。",
+    "pretraining_conditions": [
+      "generic_matched"
+    ],
+    "companion_archives": [
+      {
+        "archive_part_id": "annotations",
+        "source_path_or_url": "G:/datasets/mining1/archives/coco2017_annotations_trainval.zip",
+        "archive_sha256": "113a836d90195ee1f884e704da6304dfaaecff1f023f49b6ca93c4aaae470268",
+        "transfer_route": "local_existing_upload"
+      }
+    ],
+    "adapter_contract": {
+      "schema_version": 1,
+      "kind": "coco_detection",
+      "archive_subdir": ".",
+      "record_id_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "train2017/(?P<record>[0-9]{12})[.]jpg",
+          "template": "{record}"
+        }
+      },
+      "raw_group_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "train2017/(?P<record>[0-9]{12})[.]jpg",
+          "template": "image-{record}"
+        }
+      },
+      "modality_rule": {
+        "constant": "visible"
+      },
+      "pair_id_rule": {
+        "null": true
+      },
+      "sequence_id_rule": {
+        "null": true
+      },
+      "timestamp_rule": {
+        "null": true
+      },
+      "coco": {
+        "annotation_file": "annotations/instances_train2017.json",
+        "image_root": "train2017",
+        "class_names": [
+          "person"
+        ],
+        "invalid_bbox_policy": "drop",
+        "iscrowd_policy": "drop",
+        "image_selection": "selected_category_presence",
+        "allowed_license_ids": [
+          1,
+          2,
+          4,
+          5,
+          7
+        ]
+      }
+    },
+    "minimal_sample_records": [
+      {
+        "record_id": "000000158440",
+        "raw_group_id": "image-000000158440",
+        "member_path": "train2017/000000158440.jpg",
+        "modality": "visible"
+      },
+      {
+        "record_id": "000000172439",
+        "raw_group_id": "image-000000172439",
+        "member_path": "train2017/000000172439.jpg",
+        "modality": "visible"
+      }
+    ]
+  },
+  "official_source": {
+    "homepage": "https://cocodataset.org/",
+    "train_image_url": "https://images.cocodataset.org/zips/train2017.zip",
+    "annotation_url": "https://images.cocodataset.org/annotations/annotations_trainval2017.zip",
+    "annotation_and_website_license": "CC BY 4.0",
+    "image_license_boundary": "Each image retains its Flickr license; this project excludes NoDerivatives license IDs 3 and 6 and does not redistribute images."
+  },
+  "archive_audit": {
+    "image_archive_integrity": "pass",
+    "image_archive_byte_size": 19336861798,
+    "image_archive_file_count": 118287,
+    "image_archive_uncompressed_byte_size": 19314466396,
+    "annotation_archive_integrity": "pass",
+    "annotation_archive_byte_size": 252907541,
+    "annotation_archive_file_count": 6,
+    "full_local_extractions": 0
+  },
+  "annotation_and_license_audit": {
+    "annotation_audit_path": "state/source_validation/coco2017_person/annotation_audit.json",
+    "annotation_audit_sha256": "4b77077ad8cc935871eb3a86827dd312622fa39b07f12efdd7659d7ca46be072",
+    "bbox_and_license_audit_path": "state/source_validation/coco2017_person/bbox_boundary_audit.json",
+    "bbox_and_license_audit_sha256": "c825d0ccef65f4cd874796c8dcd2fc937e00cfff9bd0d8083f207858efc027dc",
+    "person_annotation_count": 262465,
+    "person_image_count_before_license_filter": 64115,
+    "usable_person_image_count_after_license_and_box_filters": 43376,
+    "excluded_person_image_count_by_license": 20739,
+    "person_iscrowd_annotation_count": 5212,
+    "nonpositive_person_bbox_count": 1,
+    "allowed_image_license_ids": [
+      1,
+      2,
+      4,
+      5,
+      7
+    ],
+    "excluded_no_derivatives_license_ids": [
+      3,
+      6
+    ]
+  },
+  "group_provenance": {
+    "raw_group_rule": "one original COCO source image equals one independent image group",
+    "eligible_unique_image_group_count": 43376,
+    "person_positive_group_count": 43376,
+    "maximum_matched_unique_image_budget": 43376,
+    "boundary": "Generic and coal-domain source conditions must be downsampled to a common unique-image and optimizer-update budget no larger than this reviewed ceiling."
+  },
+  "minimal_adapter_test": {
+    "status": "pass",
+    "evidence_path": "state/source_validation/coco2017_person/minimal_adapter_test.json",
+    "evidence_sha256": "f07a56756059b098b9b327cdd80b250144031aa44e6f6b55d875e586581097a1",
+    "record_count": 2,
+    "raw_group_count": 2,
+    "dropped_iscrowd_count": 1,
+    "image_license_ids_exercised": [
+      1,
+      4
+    ]
+  },
+  "eligibility_decision": {
+    "license_access": "pass_with_image_level_allowlist_and_no_redistribution",
+    "archive_integrity": "pass",
+    "annotation_and_ontology": "pass_with_crowd_and_invalid_box_drops",
+    "group_floor": "pass",
+    "generic_matched_source": "eligible",
+    "matched_budget_ceiling_unique_images": 43376
+  },
+  "scope_boundary": {
+    "model_predictions_read": 0,
+    "performance_metrics_read": 0,
+    "performance_claims_authorized": false
+  }
+}

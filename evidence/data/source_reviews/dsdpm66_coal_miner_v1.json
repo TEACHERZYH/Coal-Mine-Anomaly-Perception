@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-07-16T05:48:35.0558303+08:00",
+  "status": "pass",
+  "dataset_entry": {
+    "dataset_id": "dsdpm66_coal_miner_v1",
+    "dataset_version": "figshare-26135107-v1-file-47348143",
+    "source_location": "local_existing_verified_official_download",
+    "source_path_or_url": "G:/datasets/mining1/archives/dsdpm66_coal_miner_v1.zip",
+    "archive_sha256": "e3556499ee27ec134360608a02116fe699ae931ac713ca316db4dd280c46ccf9",
+    "archive_md5": "c019449d9fe16e4e6592f0861af43a3c",
+    "license_id": "CC-BY-4.0",
+    "license_evidence_path": "evidence/data/source_snapshots/dsdpm66_coal_miner_v1/article_v1.json",
+    "transfer_route": "local_existing_upload",
+    "selection_evidence": "仅依据 CC BY 4.0、官方 YOLO 标注、15606 个图像-标签对、可恢复的 66 个视角组及与预注册 person 概念的本体兼容性选择；未读取模型预测或性能。",
+    "adapter_contract": {
+      "schema_version": 1,
+      "kind": "yolo_detection",
+      "archive_subdir": "coal_miner",
+      "record_id_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "images/(?P<split>train|val)/(?P<record>[0-9]{3}_[0-9]{5})[.]jpg",
+          "template": "{split}-{record}"
+        }
+      },
+      "raw_group_rule": {
+        "regex": {
+          "source": "relative_path",
+          "pattern": "images/(?:train|val)/(?P<view>[0-9]{3})_[0-9]{5}[.]jpg",
+          "template": "view-{view}"
+        }
+      },
+      "modality_rule": {
+        "constant": "visible"
+      },
+      "pair_id_rule": {
+        "null": true
+      },
+      "sequence_id_rule": {
+        "null": true
+      },
+      "timestamp_rule": {
+        "null": true
+      },
+      "yolo": {
+        "image_globs": [
+          "images/**/*.jpg"
+        ],
+        "image_root": "images",
+        "label_root": "YOLO_labels",
+        "class_names": [
+          "coal_miner"
+        ],
+        "missing_label_policy": "error"
+      }
+    },
+    "minimal_sample_records": [
+      {
+        "record_id": "train-001_00001",
+        "raw_group_id": "view-001",
+        "member_path": "coal_miner/images/train/001_00001.jpg",
+        "modality": "visible"
+      },
+      {
+        "record_id": "train-002_00001",
+        "raw_group_id": "view-002",
+        "member_path": "coal_miner/images/train/002_00001.jpg",
+        "modality": "visible"
+      }
+    ]
+  },
+  "official_source": {
+    "article_id": 26135107,
+    "doi": "10.6084/m9.figshare.26135107.v1",
+    "file_id": 47348143,
+    "file_name": "coal_miner.zip",
+    "file_bytes": 5446428265,
+    "download_url": "https://ndownloader.figshare.com/files/47348143",
+    "license_name": "CC BY 4.0",
+    "article_snapshot_sha256": "39a61b815f5de171ef5efb4307e1ab0717cc003ffe4c34eeb94b38e7a849c23d",
+    "version_snapshot_sha256": "8510a4bf5d9331f980755f244389690711d10ac467e6c51f184a7e168f72dc1f",
+    "http_headers_snapshot_sha256": "dee283864bec4d67e38a6953c9a94df505bfa6a25019831faf2e47af3af5b263"
+  },
+  "archive_audit": {
+    "safe_zip": true,
+    "file_count": 31214,
+    "image_count": 15606,
+    "label_count": 15606,
+    "paired_image_label_count": 15606,
+    "missing_label_count": 0,
+    "train_image_count": 12461,
+    "validation_image_count": 3145,
+    "independent_view_group_count": 66,
+    "view_id_range": [
+      "001",
+      "066"
+    ],
+    "unsafe_path_count": 0,
+    "casefold_duplicate_count": 0
+  },
+  "minimal_adapter_test": {
+    "status": "pass",
+    "sample_archive_path": "state/source_validation/dsdpm66_two_group_sample.zip",
+    "sample_archive_sha256": "6d38a97223e3aac078cc1f359fa4b01270337d6068bb4c6d39441bb54127152d",
+    "record_count": 2,
+    "raw_group_ids": [
+      "view-001",
+      "view-002"
+    ],
+    "source_class_ids": [
+      0
+    ]
+  },
+  "scope_boundary": {
+    "full_local_extractions": 0,
+    "model_predictions_read": 0,
+    "performance_metrics_read": 0,
+    "performance_claims_authorized": false
+  }
+}

@@ -1,0 +1,1055 @@
+{
+  "schema_version": 1,
+  "status": "reviewed",
+  "reviewed_at": "2026-07-16T23:35:04.594398+08:00",
+  "visual_direction_id": "dsdpm66_from_public_pretraining_v1",
+  "roles": {
+    "primary_visual_target": {
+      "dataset_id": "dsdpm66_coal_miner_v1",
+      "dataset_version": "figshare-26135107-v1-file-47348143",
+      "source_location": "local_existing_verified_official_download",
+      "source_path_or_url": "G:/datasets/mining1/archives/dsdpm66_coal_miner_v1.zip",
+      "archive_sha256": "e3556499ee27ec134360608a02116fe699ae931ac713ca316db4dd280c46ccf9",
+      "archive_md5": "c019449d9fe16e4e6592f0861af43a3c",
+      "license_id": "CC-BY-4.0",
+      "license_evidence_path": "evidence/data/source_snapshots/dsdpm66_coal_miner_v1/article_v1.json",
+      "transfer_route": "local_existing_upload",
+      "selection_evidence": "仅依据 CC BY 4.0、官方 YOLO 标注、15606 个图像-标签对、可恢复的 66 个视角组及与预注册 person 概念的本体兼容性选择；未读取模型预测或性能。",
+      "adapter_contract": {
+        "schema_version": 1,
+        "kind": "yolo_detection",
+        "archive_subdir": "coal_miner",
+        "record_id_rule": {
+          "regex": {
+            "source": "relative_path",
+            "pattern": "images/(?P<split>train|val)/(?P<record>[0-9]{3}_[0-9]{5})[.]jpg",
+            "template": "{split}-{record}"
+          }
+        },
+        "raw_group_rule": {
+          "regex": {
+            "source": "relative_path",
+            "pattern": "images/(?:train|val)/(?P<view>[0-9]{3})_[0-9]{5}[.]jpg",
+            "template": "view-{view}"
+          }
+        },
+        "modality_rule": {
+          "constant": "visible"
+        },
+        "pair_id_rule": {
+          "null": true
+        },
+        "sequence_id_rule": {
+          "null": true
+        },
+        "timestamp_rule": {
+          "null": true
+        },
+        "yolo": {
+          "image_globs": [
+            "images/**/*.jpg"
+          ],
+          "image_root": "images",
+          "label_root": "YOLO_labels",
+          "class_names": [
+            "coal_miner"
+          ],
+          "missing_label_policy": "error"
+        }
+      },
+      "minimal_sample_records": [
+        {
+          "record_id": "train-001_00001",
+          "raw_group_id": "view-001",
+          "member_path": "coal_miner/images/train/001_00001.jpg",
+          "modality": "visible"
+        },
+        {
+          "record_id": "train-002_00001",
+          "raw_group_id": "view-002",
+          "member_path": "coal_miner/images/train/002_00001.jpg",
+          "modality": "visible"
+        }
+      ]
+    },
+    "primary_visual_sources": [
+      {
+        "dataset_id": "coco2017_person",
+        "dataset_version": "COCO-2017-train-images-and-trainval-annotations",
+        "source_location": "local_verified_official_download",
+        "source_path_or_url": "G:/datasets/mining1/archives/coco2017_train.zip",
+        "archive_sha256": "69a8bb58ea5f8f99d24875f21416de2e9ded3178e903f1f7603e283b9e06d929",
+        "license_id": "COCO-ANNOTATIONS-CC-BY-4.0_AND_REVIEWED-IMAGE-LICENSES",
+        "license_evidence_path": "evidence/data/source_snapshots/coco2017_person/termsofuse.htm",
+        "transfer_route": "local_existing_upload",
+        "selection_evidence": "仅依据官方来源、分层许可、person 本体、独立源图像组、完整包体和真实最小适配测试选择；未读取模型预测或性能。",
+        "pretraining_conditions": [
+          "generic_matched"
+        ],
+        "companion_archives": [
+          {
+            "archive_part_id": "annotations",
+            "source_path_or_url": "G:/datasets/mining1/archives/coco2017_annotations_trainval.zip",
+            "archive_sha256": "113a836d90195ee1f884e704da6304dfaaecff1f023f49b6ca93c4aaae470268",
+            "transfer_route": "local_existing_upload"
+          }
+        ],
+        "adapter_contract": {
+          "schema_version": 1,
+          "kind": "coco_detection",
+          "archive_subdir": ".",
+          "record_id_rule": {
+            "regex": {
+              "source": "relative_path",
+              "pattern": "train2017/(?P<record>[0-9]{12})[.]jpg",
+              "template": "{record}"
+            }
+          },
+          "raw_group_rule": {
+            "regex": {
+              "source": "relative_path",
+              "pattern": "train2017/(?P<record>[0-9]{12})[.]jpg",
+              "template": "image-{record}"
+            }
+          },
+          "modality_rule": {
+            "constant": "visible"
+          },
+          "pair_id_rule": {
+            "null": true
+          },
+          "sequence_id_rule": {
+            "null": true
+          },
+          "timestamp_rule": {
+            "null": true
+          },
+          "coco": {
+            "annotation_file": "annotations/instances_train2017.json",
+            "image_root": "train2017",
+            "class_names": [
+              "person"
+            ],
+            "invalid_bbox_policy": "drop",
+            "iscrowd_policy": "drop",
+            "image_selection": "selected_category_presence",
+            "allowed_license_ids": [
+              1,
+              2,
+              4,
+              5,
+              7
+            ]
+          }
+        },
+        "minimal_sample_records": [
+          {
+            "record_id": "000000158440",
+            "raw_group_id": "image-000000158440",
+            "member_path": "train2017/000000158440.jpg",
+            "modality": "visible"
+          },
+          {
+            "record_id": "000000172439",
+            "raw_group_id": "image-000000172439",
+            "member_path": "train2017/000000172439.jpg",
+            "modality": "visible"
+          }
+        ]
+      },
+      {
+        "dataset_id": "dslmfplus_coal_miner_v1",
+        "dataset_version": "figshare-22654945-v1-file-40215118",
+        "source_location": "local_existing_verified_official_download",
+        "source_path_or_url": "G:/datasets/mining1/archives/dslmfplus_v1.7z",
+        "archive_sha256": "685453ff0409c9dd241bcce716901948e441fd122b38262b5dc60c19ab199fa0",
+        "archive_md5": "71b41987bbc0a95a877fdff7c3fe9840",
+        "license_id": "CC0-1.0",
+        "license_evidence_path": "evidence/data/source_snapshots/dslmfplus_coal_miner_v1/article_v1.json",
+        "transfer_route": "local_existing_upload",
+        "selection_evidence": "Selected only from official CC0 identity, full archive integrity, verified coal-miner ontology, 58 official scene groups, and a real minimal adapter run; no model predictions or performance were read.",
+        "pretraining_conditions": [
+          "single_coal",
+          "multi_coal"
+        ],
+        "adapter_contract": {
+          "schema_version": 1,
+          "kind": "yolo_detection",
+          "archive_subdir": "DsLMF/data2023_yolo/coal_miner_data2023_yolo",
+          "record_id_rule": {
+            "regex": {
+              "source": "relative_path",
+              "pattern": "images/(?P<split>train|val)/(?P<record>(?:[0-9]+|[pP][0-9]+-[0-9]+))[.]jpg",
+              "template": "{split}-{record}"
+            }
+          },
+          "raw_group_rule": {
+            "filename_range_lookup": {
+              "source": "relative_path",
+              "pattern": "images/(?P<split>train|val)/(?P<record>(?:[0-9]+|[pP][0-9]+-[0-9]+))[.]jpg",
+              "record_group": "record",
+              "ranges": [
+                {
+                  "value": "scenario-01",
+                  "start": "0000001",
+                  "end": "0000852"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "0000958",
+                  "end": "0001379"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "0002570",
+                  "end": "0002931"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "0004389",
+                  "end": "0004679"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "0005087",
+                  "end": "0005712"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "0006265",
+                  "end": "0006576"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "0006752",
+                  "end": "0007469"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "0007945",
+                  "end": "0010143"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "0010509",
+                  "end": "0010556"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "p12-3",
+                  "end": "p12-22"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "p14-1",
+                  "end": "p15-24"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "p19-1",
+                  "end": "p24-38"
+                },
+                {
+                  "value": "scenario-01",
+                  "start": "p27-1097",
+                  "end": "p27-1164"
+                },
+                {
+                  "value": "scenario-02",
+                  "start": "0000853",
+                  "end": "0000957"
+                },
+                {
+                  "value": "scenario-02",
+                  "start": "0003254",
+                  "end": "0004386"
+                },
+                {
+                  "value": "scenario-02",
+                  "start": "0007856",
+                  "end": "0007944"
+                },
+                {
+                  "value": "scenario-02",
+                  "start": "0010736",
+                  "end": "0010817"
+                },
+                {
+                  "value": "scenario-02",
+                  "start": "p29-125",
+                  "end": "p29-377"
+                },
+                {
+                  "value": "scenario-02",
+                  "start": "p29-1696",
+                  "end": "p30-912"
+                },
+                {
+                  "value": "scenario-02",
+                  "start": "p30-945",
+                  "end": "p30-975"
+                },
+                {
+                  "value": "scenario-03",
+                  "start": "0001380",
+                  "end": "0002450"
+                },
+                {
+                  "value": "scenario-03",
+                  "start": "0004680",
+                  "end": "0005086"
+                },
+                {
+                  "value": "scenario-03",
+                  "start": "0005834",
+                  "end": "0006179"
+                },
+                {
+                  "value": "scenario-03",
+                  "start": "0010173",
+                  "end": "0010508"
+                },
+                {
+                  "value": "scenario-03",
+                  "start": "p1-1",
+                  "end": "p6-902"
+                },
+                {
+                  "value": "scenario-03",
+                  "start": "p11-1",
+                  "end": "p11-662"
+                },
+                {
+                  "value": "scenario-03",
+                  "start": "p27-1",
+                  "end": "p27-475"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "0002451",
+                  "end": "0002569"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "0002932",
+                  "end": "0003253"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "0006180",
+                  "end": "0006264"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "0007470",
+                  "end": "0007855"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "0010144",
+                  "end": "0010170"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "p7-1",
+                  "end": "p9-228"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "p10-1",
+                  "end": "p10-617"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "p16-30",
+                  "end": "p18-55"
+                },
+                {
+                  "value": "scenario-04",
+                  "start": "p27-482",
+                  "end": "p27-1085"
+                },
+                {
+                  "value": "scenario-05",
+                  "start": "0004387",
+                  "end": "0004388"
+                },
+                {
+                  "value": "scenario-06",
+                  "start": "0005713",
+                  "end": "0005833"
+                },
+                {
+                  "value": "scenario-07",
+                  "start": "0006577",
+                  "end": "0006751"
+                },
+                {
+                  "value": "scenario-08",
+                  "start": "0010557",
+                  "end": "0010735"
+                },
+                {
+                  "value": "scenario-09",
+                  "start": "p9-255",
+                  "end": "p9-264"
+                },
+                {
+                  "value": "scenario-10",
+                  "start": "p13-1",
+                  "end": "p13-32"
+                },
+                {
+                  "value": "scenario-11",
+                  "start": "p25-1",
+                  "end": "p25-4"
+                },
+                {
+                  "value": "scenario-12",
+                  "start": "p26-1",
+                  "end": "p26-102"
+                },
+                {
+                  "value": "scenario-13",
+                  "start": "p28-82",
+                  "end": "p28-924"
+                },
+                {
+                  "value": "scenario-13",
+                  "start": "p31-10",
+                  "end": "p31-719"
+                },
+                {
+                  "value": "scenario-13",
+                  "start": "p33-39",
+                  "end": "p33-165"
+                },
+                {
+                  "value": "scenario-13",
+                  "start": "p35-1",
+                  "end": "p36-74"
+                },
+                {
+                  "value": "scenario-14",
+                  "start": "p29-498",
+                  "end": "p29-1695"
+                },
+                {
+                  "value": "scenario-15",
+                  "start": "p30-924",
+                  "end": "p30-934"
+                },
+                {
+                  "value": "scenario-16",
+                  "start": "p31-720",
+                  "end": "p31-907"
+                },
+                {
+                  "value": "scenario-16",
+                  "start": "p31-932",
+                  "end": "p31-1039"
+                },
+                {
+                  "value": "scenario-17",
+                  "start": "p31-908",
+                  "end": "p31-931"
+                },
+                {
+                  "value": "scenario-18",
+                  "start": "p32-1",
+                  "end": "p32-217"
+                },
+                {
+                  "value": "scenario-19",
+                  "start": "p34-1",
+                  "end": "p34-89"
+                },
+                {
+                  "value": "scenario-20",
+                  "start": "p37-1",
+                  "end": "p37-42"
+                },
+                {
+                  "value": "scenario-21",
+                  "start": "p38-4",
+                  "end": "p39-16"
+                },
+                {
+                  "value": "scenario-21",
+                  "start": "p49-3",
+                  "end": "p51-73"
+                },
+                {
+                  "value": "scenario-21",
+                  "start": "p55-1",
+                  "end": "p55-21"
+                },
+                {
+                  "value": "scenario-22",
+                  "start": "p40-1",
+                  "end": "p42-30"
+                },
+                {
+                  "value": "scenario-23",
+                  "start": "p43-7",
+                  "end": "p43-123"
+                },
+                {
+                  "value": "scenario-24",
+                  "start": "p44-1",
+                  "end": "p44-117"
+                },
+                {
+                  "value": "scenario-24",
+                  "start": "p46-1",
+                  "end": "p46-110"
+                },
+                {
+                  "value": "scenario-25",
+                  "start": "p45-1",
+                  "end": "p45-123"
+                },
+                {
+                  "value": "scenario-26",
+                  "start": "p47-1",
+                  "end": "p47-34"
+                },
+                {
+                  "value": "scenario-27",
+                  "start": "p48-1",
+                  "end": "p48-70"
+                },
+                {
+                  "value": "scenario-27",
+                  "start": "p52-1",
+                  "end": "p52-123"
+                },
+                {
+                  "value": "scenario-27",
+                  "start": "p56-31",
+                  "end": "p56-123"
+                },
+                {
+                  "value": "scenario-28",
+                  "start": "p53-14",
+                  "end": "p54-8"
+                },
+                {
+                  "value": "scenario-29",
+                  "start": "p57-1",
+                  "end": "p57-188"
+                },
+                {
+                  "value": "scenario-30",
+                  "start": "p58-1",
+                  "end": "p58-404"
+                },
+                {
+                  "value": "scenario-31",
+                  "start": "p59-1",
+                  "end": "p59-206"
+                },
+                {
+                  "value": "scenario-31",
+                  "start": "p64-39",
+                  "end": "p64-552"
+                },
+                {
+                  "value": "scenario-31",
+                  "start": "p67-1",
+                  "end": "p67-32"
+                },
+                {
+                  "value": "scenario-31",
+                  "start": "p71-1",
+                  "end": "p71-171"
+                },
+                {
+                  "value": "scenario-32",
+                  "start": "p60-1",
+                  "end": "p60-28"
+                },
+                {
+                  "value": "scenario-32",
+                  "start": "p63-2",
+                  "end": "p63-292"
+                },
+                {
+                  "value": "scenario-32",
+                  "start": "p74-1",
+                  "end": "p76-224"
+                },
+                {
+                  "value": "scenario-32",
+                  "start": "p78-1",
+                  "end": "p78-107"
+                },
+                {
+                  "value": "scenario-33",
+                  "start": "p61-1",
+                  "end": "p61-6328"
+                },
+                {
+                  "value": "scenario-34",
+                  "start": "p62-1",
+                  "end": "p62-81"
+                },
+                {
+                  "value": "scenario-34",
+                  "start": "p77-1",
+                  "end": "p77-85"
+                },
+                {
+                  "value": "scenario-35",
+                  "start": "p65-1",
+                  "end": "p65-24"
+                },
+                {
+                  "value": "scenario-36",
+                  "start": "p66-1",
+                  "end": "p66-44"
+                },
+                {
+                  "value": "scenario-36",
+                  "start": "p69-1",
+                  "end": "p69-14"
+                },
+                {
+                  "value": "scenario-37",
+                  "start": "p68-1",
+                  "end": "p68-162"
+                },
+                {
+                  "value": "scenario-38",
+                  "start": "p70-1",
+                  "end": "p70-54"
+                },
+                {
+                  "value": "scenario-39",
+                  "start": "p73-5",
+                  "end": "p73-95"
+                },
+                {
+                  "value": "scenario-40",
+                  "start": "p79-1",
+                  "end": "p79-39"
+                },
+                {
+                  "value": "scenario-40",
+                  "start": "p80-14",
+                  "end": "p80-84"
+                },
+                {
+                  "value": "scenario-41",
+                  "start": "p80-1",
+                  "end": "p80-13"
+                },
+                {
+                  "value": "scenario-41",
+                  "start": "p80-85",
+                  "end": "p80-96"
+                },
+                {
+                  "value": "scenario-42",
+                  "start": "p81-1",
+                  "end": "p81-61"
+                },
+                {
+                  "value": "scenario-43",
+                  "start": "p82-1",
+                  "end": "p83-749"
+                },
+                {
+                  "value": "scenario-44",
+                  "start": "p84-1",
+                  "end": "p84-155"
+                },
+                {
+                  "value": "scenario-45",
+                  "start": "p99-65",
+                  "end": "p112-50"
+                },
+                {
+                  "value": "scenario-45",
+                  "start": "p145-1",
+                  "end": "p145-1069"
+                },
+                {
+                  "value": "scenario-45",
+                  "start": "p185-29",
+                  "end": "p198-628"
+                },
+                {
+                  "value": "scenario-46",
+                  "start": "p113-1",
+                  "end": "p115-171"
+                },
+                {
+                  "value": "scenario-47",
+                  "start": "p119-115",
+                  "end": "p121-178"
+                },
+                {
+                  "value": "scenario-48",
+                  "start": "p122-1",
+                  "end": "p129-50"
+                },
+                {
+                  "value": "scenario-49",
+                  "start": "p146-1",
+                  "end": "p148-179"
+                },
+                {
+                  "value": "scenario-50",
+                  "start": "p149-75",
+                  "end": "p149-1012"
+                },
+                {
+                  "value": "scenario-51",
+                  "start": "p151-1",
+                  "end": "p154-1202"
+                },
+                {
+                  "value": "scenario-51",
+                  "start": "p208-1",
+                  "end": "p212-1174"
+                },
+                {
+                  "value": "scenario-52",
+                  "start": "p155-1",
+                  "end": "p155-182"
+                },
+                {
+                  "value": "scenario-53",
+                  "start": "p156-43",
+                  "end": "p162-37"
+                },
+                {
+                  "value": "scenario-53",
+                  "start": "p164-1",
+                  "end": "p169-589"
+                },
+                {
+                  "value": "scenario-54",
+                  "start": "p170-172",
+                  "end": "p176-86"
+                },
+                {
+                  "value": "scenario-55",
+                  "start": "p176-88",
+                  "end": "p184-199"
+                },
+                {
+                  "value": "scenario-56",
+                  "start": "p199-1",
+                  "end": "p206-1116"
+                },
+                {
+                  "value": "scenario-57",
+                  "start": "p207-78",
+                  "end": "p207-92"
+                },
+                {
+                  "value": "scenario-58",
+                  "start": "p220-3",
+                  "end": "p222-723"
+                }
+              ]
+            }
+          },
+          "modality_rule": {
+            "constant": "visible"
+          },
+          "pair_id_rule": {
+            "null": true
+          },
+          "sequence_id_rule": {
+            "null": true
+          },
+          "timestamp_rule": {
+            "null": true
+          },
+          "yolo": {
+            "image_globs": [
+              "images/**/*.jpg"
+            ],
+            "image_root": "images",
+            "label_root": "labels",
+            "class_names": {
+              "0": "coal_miner"
+            },
+            "missing_label_policy": "error",
+            "excluded_image_stems": [
+              "0010171",
+              "0010172",
+              "p12-1",
+              "p12-2",
+              "p63-1"
+            ]
+          }
+        },
+        "minimal_sample_records": [
+          {
+            "record_id": "train-0000001",
+            "raw_group_id": "scenario-01",
+            "member_path": "DsLMF/data2023_yolo/coal_miner_data2023_yolo/images/train/0000001.jpg",
+            "modality": "visible"
+          },
+          {
+            "record_id": "train-0000853",
+            "raw_group_id": "scenario-02",
+            "member_path": "DsLMF/data2023_yolo/coal_miner_data2023_yolo/images/train/0000853.jpg",
+            "modality": "visible"
+          },
+          {
+            "record_id": "train-0001507",
+            "raw_group_id": "scenario-03",
+            "member_path": "DsLMF/data2023_yolo/coal_miner_data2023_yolo/images/train/0001507.jpg",
+            "modality": "visible"
+          }
+        ]
+      }
+    ],
+    "primary_rgbt_dataset": {
+      "dataset_id": "llvip_v1",
+      "dataset_version": "official-google-drive-1VTlT3Y7e1h-Zsne4zahjx5q0TK2ClMVv",
+      "source_location": "local_verified_official_download",
+      "source_path_or_url": "G:/datasets/mining1/archives/llvip_v1.zip",
+      "archive_sha256": "b3b55475c093ac54663c467859eb31a82b840b53a7196ad1887cb547e4518b45",
+      "license_id": "LLVIP-NONCOMMERCIAL-RESEARCH-TERMS",
+      "license_evidence_path": "evidence/data/source_snapshots/llvip_v1/term_of_use_and_license.md",
+      "transfer_route": "local_existing_upload",
+      "selection_evidence": "仅依据官方许可、完整配对结构、person 本体、26 个采集前缀、跨官方划分无组重叠和真实最小适配测试选择；未读取模型预测或性能。",
+      "adapter_contract": {
+        "schema_version": 1,
+        "kind": "voc_detection",
+        "archive_subdir": ".",
+        "record_id_rule": {
+          "regex": {
+            "source": "relative_path",
+            "pattern": "LLVIP/(?P<modality>visible|infrared)/(?P<split>train|test)/(?P<record>[0-9]{6})[.]jpg",
+            "template": "{modality}-{record}"
+          }
+        },
+        "raw_group_rule": {
+          "regex": {
+            "source": "relative_path",
+            "pattern": "LLVIP/(?:visible|infrared)/(?:train|test)/(?P<group>[0-9]{2})[0-9]{4}[.]jpg",
+            "template": "capture-{group}"
+          }
+        },
+        "modality_rule": {
+          "regex": {
+            "source": "relative_path",
+            "pattern": "LLVIP/(?P<modality>visible|infrared)/(?:train|test)/[0-9]{6}[.]jpg",
+            "template": "{modality}"
+          }
+        },
+        "pair_id_rule": {
+          "regex": {
+            "source": "relative_path",
+            "pattern": "LLVIP/(?:visible|infrared)/(?:train|test)/(?P<record>[0-9]{6})[.]jpg",
+            "template": "pair-{record}"
+          }
+        },
+        "sequence_id_rule": {
+          "regex": {
+            "source": "relative_path",
+            "pattern": "LLVIP/(?:visible|infrared)/(?:train|test)/(?P<group>[0-9]{2})[0-9]{4}[.]jpg",
+            "template": "capture-{group}"
+          }
+        },
+        "timestamp_rule": {
+          "regex": {
+            "source": "relative_path",
+            "pattern": "LLVIP/(?:visible|infrared)/(?:train|test)/[0-9]{2}(?P<order>[0-9]{4})[.]jpg",
+            "template": "{order}"
+          }
+        },
+        "voc": {
+          "image_globs": [
+            "LLVIP/visible/**/*.jpg",
+            "LLVIP/infrared/**/*.jpg"
+          ],
+          "image_root": "LLVIP",
+          "annotation_root": "LLVIP/Annotations",
+          "annotation_path_rule": "image_stem",
+          "class_names": [
+            "person"
+          ],
+          "missing_annotation_policy": "error",
+          "invalid_bbox_policy": "drop",
+          "difficult_policy": "drop",
+          "image_selection": "all",
+          "coordinate_convention": "voc_xyxy"
+        }
+      },
+      "minimal_sample_records": [
+        {
+          "record_id": "visible-010001",
+          "raw_group_id": "capture-01",
+          "member_path": "LLVIP/visible/train/010001.jpg",
+          "modality": "visible"
+        },
+        {
+          "record_id": "infrared-010001",
+          "raw_group_id": "capture-01",
+          "member_path": "LLVIP/infrared/train/010001.jpg",
+          "modality": "infrared"
+        },
+        {
+          "record_id": "visible-190001",
+          "raw_group_id": "capture-19",
+          "member_path": "LLVIP/visible/test/190001.jpg",
+          "modality": "visible"
+        },
+        {
+          "record_id": "infrared-190001",
+          "raw_group_id": "capture-19",
+          "member_path": "LLVIP/infrared/test/190001.jpg",
+          "modality": "infrared"
+        }
+      ]
+    },
+    "methane_dataset": {
+      "dataset_id": "mendeley_methane_v1",
+      "dataset_version": "10.17632/yd7vw4c5mk.1",
+      "source_location": "local_existing_verified_official_download",
+      "source_path_or_url": "G:/datasets/mining1/archives/mendeley_methane_v1.zip",
+      "archive_sha256": "405a8b27004a2e318bf213cf209398d3d58b45bb3c7a78f159e69003ff459311",
+      "license_id": "CC-BY-4.0",
+      "license_evidence_path": "evidence/data/source_snapshots/mendeley_methane_v1/dataset_page.html",
+      "transfer_route": "local_existing_upload",
+      "selection_evidence": "仅依据 CC BY 4.0、逐秒煤矿传感器原始记录、官方指定的 MM263/MM264/MM256 目标传感器及与预注册未来风险定义的直接兼容性选择；未读取模型预测或性能。",
+      "adapter_contract": {
+        "schema_version": 1,
+        "kind": "methane_csv",
+        "archive_subdir": ".",
+        "methane": {
+          "input_layout": "wide",
+          "csv_globs": [
+            "methane_data.csv"
+          ],
+          "timestamp_column": "timestamp",
+          "timestamp_components": {
+            "year": "year",
+            "month": "month",
+            "day": "day",
+            "hour": "hour",
+            "minute": "minute",
+            "second": "second"
+          },
+          "value_column": "target_value",
+          "sensor_group_column": "sensor_group_id",
+          "target_sensor_columns": [
+            "MM263",
+            "MM264",
+            "MM256"
+          ],
+          "feature_columns": [
+            "AN311",
+            "AN422",
+            "AN423",
+            "TP1721",
+            "RH1722",
+            "BA1723",
+            "TP1711",
+            "RH1712",
+            "BA1713",
+            "MM252",
+            "MM261",
+            "MM262",
+            "MM263",
+            "MM264",
+            "MM256",
+            "MM211",
+            "CM861",
+            "CR863",
+            "P_864",
+            "TC862",
+            "WM868",
+            "AMP1_IR",
+            "AMP2_IR",
+            "DMP3_IR",
+            "DMP4_IR",
+            "AMP5_IR",
+            "F_SIDE",
+            "V"
+          ],
+          "group_duration_seconds": 86400,
+          "timezone": "UTC",
+          "chunk_rows": 100000,
+          "target_missing_policy": "drop"
+        }
+      },
+      "minimal_sample_records": [
+        {
+          "record_id": "preview-2014-03-02-wide",
+          "raw_group_id": "preview-day-2014-03-02",
+          "member_path": "methane_data.csv",
+          "modality": "methane",
+          "sample_row_limit": 1200
+        }
+      ]
+    }
+  },
+  "claim_fallbacks": {
+    "C-TRANSFER": {
+      "status": "not_applicable",
+      "reason_code": "fewer_than_two_eligible_non_target_coal_sources",
+      "eligible_non_target_coal_dataset_ids": [
+        "dslmfplus_coal_miner_v1"
+      ],
+      "candidate_review_paths": [
+        "evidence/data/source_reviews/dslmfplus_coal_miner_v1.json",
+        "evidence/data/source_reviews/sciencedb_drilling_v1.json",
+        "evidence/data/source_reviews/cumt_helmet_v1.json",
+        "evidence/data/source_reviews/cumt_belt_v1.json"
+      ],
+      "authority_path": "notes/minimal_experiment_plan_rereview_20260715.md",
+      "authority_sha256": "3844c15c8c839995f0d9fb525a88ba88aebd30bbbe23ec028c9ef0e66467d27f"
+    }
+  },
+  "review_inputs": [
+    {
+      "path": "evidence/data/source_reviews/coco2017_person.json",
+      "sha256": "e2a5af6be2dfd8edf88a54c9d6e234cf5a4a7c35dbdbd94e0a3c4a1a2b2fb1e8",
+      "dataset_id": "coco2017_person"
+    },
+    {
+      "path": "evidence/data/source_reviews/cumt_belt_v1.json",
+      "sha256": "cc83838e62b101a9cf56e4f93e3c1cc9bc3771728b8cf8550a21b808b460645d",
+      "dataset_id": "cumt_belt_v1"
+    },
+    {
+      "path": "evidence/data/source_reviews/cumt_helmet_v1.json",
+      "sha256": "fd407ae7761be2432366348da0cfcdd37686d1d3ba0a742d88295e60779349e6",
+      "dataset_id": "cumt_helmet_v1"
+    },
+    {
+      "path": "evidence/data/source_reviews/dsdpm66_coal_miner_v1.json",
+      "sha256": "675a6e30ee4cdc27757612783fd7ecddaccabf0f111d58fa1c21af00b76682f2",
+      "dataset_id": "dsdpm66_coal_miner_v1"
+    },
+    {
+      "path": "evidence/data/source_reviews/dslmfplus_coal_miner_v1.json",
+      "sha256": "4364e6631d6e66463cb4e1177c0cb13256d30df14f1c80451e034228036e787d",
+      "dataset_id": "dslmfplus_coal_miner_v1"
+    },
+    {
+      "path": "evidence/data/source_reviews/llvip_v1.json",
+      "sha256": "6cbd8cdeb78f4303764c5d690a53e23b0be5094f80a21a2244a589167e54cd45",
+      "dataset_id": "llvip_v1"
+    },
+    {
+      "path": "evidence/data/source_reviews/mendeley_methane_v1.json",
+      "sha256": "bd9bc13be8fb6f831a02ba03316658bfde0743669ed46355509d3100ddb3f30e",
+      "dataset_id": "mendeley_methane_v1"
+    },
+    {
+      "path": "evidence/data/source_reviews/sciencedb_drilling_v1.json",
+      "sha256": "d72342aed4b900153da7259910908522afb8fd0fbd641ddec68945bddb640717",
+      "dataset_id": "sciencedb_drilling_v1"
+    }
+  ]
+}

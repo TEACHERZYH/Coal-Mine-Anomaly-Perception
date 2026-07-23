@@ -1,0 +1,52 @@
+{
+  "acceptance_checks": [
+    {"evidence": "I040 ledger, receipt, and review are pass; the joint I000-I050 regression is green.", "id": "dependency_I040", "status": "pass"},
+    {"evidence": "Tests read protocol_lock.template.yaml and bind mean, calibrated-logit, reliability, two-layer graph, memory controls, seeds, and the 136-member policy grid.", "id": "protocol_binding", "status": "pass"},
+    {"evidence": "Mean and trainable calibrated-logit baselines handle partial availability and explicitly abstain with neutral probability when all branches are missing.", "id": "fusion_baselines", "status": "pass"},
+    {"evidence": "Reliability supervision and robust median/IQR quality scaling can fit only on D_e_tr; unavailable inputs are masked without producing non-finite tensors.", "id": "reliability_and_quality", "status": "pass"},
+    {"evidence": "The confirmatory graph accepts only unique bidirectional non-self observed_pair edges, audits pair feature names, uses two edge-conditioned layers, and emits edge traces.", "id": "graph_contract", "status": "pass"},
+    {"evidence": "The no-graph branch receives no edge tensors and has exactly the same trainable parameter count as full; no-reliability uses availability-only weights.", "id": "structural_ablations", "status": "pass"},
+    {"evidence": "Memory beta, K, hysteresis, alarm, and abstention values are restricted to the preregistered grid; policy selection reads only D_e_pol and enforces coverage and event constraints.", "id": "memory_policy", "status": "pass"},
+    {"evidence": "No-memory requires the corresponding full SHA-256 checkpoint; mask-only priors fit only D_e_tr; temporal and pair-alignment controls use deterministic derangements and locked test strata/seeds.", "id": "mechanism_and_shortcut_controls", "status": "pass"},
+    {"evidence": "S1 threshold selection reads only D_b_sel, enforces the locked 0.10-0.90 grid, applies false-alarm feasibility first, and preserves a diagnostic blocked result when infeasible.", "id": "s1_selection", "status": "pass"},
+    {"evidence": "Methane event evaluation constructs intervals, matches predictions chronologically one-to-one, counts duplicates and misses, and reports valid hours plus lead-time median and IQR.", "id": "methane_event_metrics", "status": "pass"},
+    {"evidence": "Episode evaluation requires episode_id and strictly increasing step_index, prevents cross-episode event/flip merging, breaks prediction events on abstention, and reports explicit counts and coverage.", "id": "episode_event_metrics", "status": "pass"},
+    {"evidence": "Tests cover all-missing, all-abstain, no prediction, no truth, prior continuing alarms, repeated alarms, boundary separation, and blocked selection cases.", "id": "edge_cases", "status": "pass"},
+    {"evidence": "Fusion feature and edge schemas reject episode, skeleton, group, source-component, pair, pool, label, truth, future, and test provenance shortcuts.", "id": "leakage_boundary", "status": "pass"},
+    {"evidence": "Frozen I050 command passed 7/7, supplementary event tests passed 7/7, compileall passed, and I000-I050 passed 39/39.", "id": "pytest_compile_regression", "status": "pass"},
+    {"evidence": "Only synthetic arrays, tensors, traces, and edge tables were used; no full dataset extraction, remote connection, or Slurm job occurred.", "id": "scope_boundary", "status": "pass"},
+    {"evidence": "Accepted receipt has 20 verified input hashes with zero mismatch and SHA-256 c9ce220dfbf94d469f878e729fcc81e873d80109f908d46c48245f2e01ae8dea.", "id": "receipt_integrity", "status": "pass"}
+  ],
+  "advance_allowed": true,
+  "attempt": 5,
+  "command_entry": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/preflight/run_selected_python.ps1 -Module pytest tests/test_episode_fusion.py",
+  "command_script_sha256": "bac1165c7ab717b2b5e33ef76ea92cf8fe8858b9a2efb12a0725f1aece4f300f",
+  "dependency_status": {"I040": "pass"},
+  "findings": [
+    "Attempt 1 was retained as a failed test expectation because the fixture had not supplied K consecutive high-memory updates.",
+    "Attempt 2 passed its command but was rejected until parameter matching, explicit event diagnostics, locked grids, all-missing behavior, robust scaling, and shortcut controls were executable.",
+    "Attempt 3 passed the then-current tests but was rejected after static review found cross-episode boundary leakage and protocol-lock bypasses in edge features, policy values, and mask-only priors.",
+    "Attempt 4 retained the expected malformed-stratum assertion mismatch introduced by contract hardening; the corrected fixture now separately tests singleton and malformed strata.",
+    "I050 is local synthetic implementation evidence only. It does not assert dataset readiness, trained performance, graph eligibility, or any manuscript result."
+  ],
+  "output_artifacts": [
+    {"bytes": 934, "path": "evidence/implementation/I050_attempt1_failed_memory_expectation.json", "sha256": "46533f85771ce76f141339905a021b8bd404cba0b24fbe8f0eb82725cf6a1bfb"},
+    {"bytes": 913, "path": "evidence/implementation/I050_attempt2_incomplete_contract_review.json", "sha256": "511c7df590a9d8d54169121d9ebd05af4354a570d7a26db94a055133249c6aec"},
+    {"bytes": 847, "path": "evidence/implementation/I050_attempt3_incomplete_episode_boundaries_and_locks.json", "sha256": "cbff1175c315231532612ff238bb890f26fe3fae81fa585008947815ef8b289e"},
+    {"bytes": 889, "path": "evidence/implementation/I050_attempt4_failed_stratum_expectation.json", "sha256": "f12e7a21def518b2cdfe331f60b1c4e292e2a0668376d37091eabcad279a0fbf"},
+    {"bytes": 6885, "path": "evidence/implementation/I050_test_receipt.json", "sha256": "c9ce220dfbf94d469f878e729fcc81e873d80109f908d46c48245f2e01ae8dea"}
+  ],
+  "remediation_validation": {
+    "accepted_attempt": 5,
+    "accepted_receipt_sha256": "c9ce220dfbf94d469f878e729fcc81e873d80109f908d46c48245f2e01ae8dea",
+    "compileall_result": "pass",
+    "formal_command_result": "7 passed in 43.62s",
+    "joint_regression_result": "39 passed in 24.57s",
+    "old_host_or_project_reference_match_count": 0,
+    "supplementary_event_result": "7 passed in 17.43s"
+  },
+  "reviewed_at": "2026-07-15T09:29:21.1378779+00:00",
+  "schema_version": 1,
+  "status": "pass",
+  "step_id": "I050"
+}

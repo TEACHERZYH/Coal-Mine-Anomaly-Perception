@@ -1,0 +1,10 @@
+claim_id,status,gate_id,gate_sha256,evidence_paths_json,permitted_wording
+C-DATA,supported,G1,42c7578e0e8faf87b962c1bd3ded1571eef846b847881185f6234401e1c0df25,"[""data/locked/file_manifest.parquet"", ""data/locked/split_manifest.parquet""]",可复现的有边界公开异构证据空间
+C-TRANSFER,removed,G3,0c3bd2fcb0453d1e9b9273aedd11d84fd8fea542d97d49d15b89e2e62a9aaa19,"[""results/final/statistical_tests.json""]",仅限预注册方向和 10% 目标组的预算匹配迁移效应
+C-THERMAL,supported,G2,dedcdc9c1cb67916ba918a250db9c30ef079494a8d70d2c053a475dc4222cb4c,"[""evidence/step_reviews/E100.json"", ""evidence/reviews/E100_job19760_thermal_completion_review.json""]",可见光和热分支输入有效性，不含融合优越性或设备温升
+C-METHANE,negative,G2,dedcdc9c1cb67916ba918a250db9c30ef079494a8d70d2c053a475dc4222cb4c,"[""results/S1/metrics.parquet"", ""results/final/statistical_tests.json""]",purged 时间角色下的未来风险事件评分
+C-ROBUST,removed,G4,46536096b70fd9ba2a4adb5f24aeac8d2078aace9b1975321360cab1b22723e8,"[""results/final/statistical_tests.json""]",仅限两类三等级确定性可见度代理退化
+C-FUSION,removed,G5,0bc2b61cfd6ccc8c6129c2298b2633502c69ddad221adb480daeb3a6c5531736,"[""evidence/episode/E310_not_applicable_amendment_v4.json"", ""results/final/statistical_tests.json""]",仅限 fusion-eligible multibranch concept-event 人群
+C-GRAPH,removed,G5,0bc2b61cfd6ccc8c6129c2298b2633502c69ddad221adb480daeb3a6c5531736,"[""data/locked/graph_eligibility_lock.json"", ""evidence/episode/E310_not_applicable_amendment_v4.json""]",仅限 observed-pair 图资格子集，并受 Holm、shuffle 和 edge trace 约束
+C-MEMORY,removed,G5,0bc2b61cfd6ccc8c6129c2298b2633502c69ddad221adb480daeb3a6c5531736,"[""evidence/episode/E310_not_applicable_amendment_v4.json"", ""results/final/statistical_tests.json""]",同 checkpoint no-memory 控制下的事件记忆效应
+C-EFFICIENCY,limited,G6,c4b4fd1cefb46524ae3679195526ccadf0312d8cd3b03aa5ace054c603efbdb0,"[""results/C1/efficiency.parquet"", ""results/C1/efficiency_scope.csv""]",同一 3090 allocation 内的分模块离线测量，不代表现场端到端性能
